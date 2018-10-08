@@ -10,10 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class FrmLogin extends JFrame {
+public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtLegajo;
+	private JTextField txtUsuario;
 	private JTextField txtPass;
 
 	/**
@@ -23,7 +23,7 @@ public class FrmLogin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmLogin frame = new FrmLogin();
+					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,34 +35,34 @@ public class FrmLogin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmLogin() {
+	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 301, 237);
+		setBounds(100, 100, 294, 212);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Legajo");
+		JLabel lblNewLabel = new JLabel("Usuario");
 		lblNewLabel.setBounds(10, 54, 46, 14);
 		contentPane.add(lblNewLabel);
 		
-		txtLegajo = new JTextField();
-		txtLegajo.setBounds(118, 51, 142, 20);
-		contentPane.add(txtLegajo);
-		txtLegajo.setColumns(10);
+		txtUsuario = new JTextField();
+		txtUsuario.setBounds(86, 51, 174, 20);
+		contentPane.add(txtUsuario);
+		txtUsuario.setColumns(10);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
 		lblContrasea.setBounds(10, 85, 86, 14);
 		contentPane.add(lblContrasea);
 		
 		txtPass = new JTextField();
-		txtPass.setBounds(118, 82, 142, 20);
+		txtPass.setBounds(86, 82, 174, 20);
 		contentPane.add(txtPass);
 		txtPass.setColumns(10);
 		
 		JButton btnIngresar = new JButton("Ingresar");
-		btnIngresar.setBounds(171, 116, 89, 23);
+		btnIngresar.setBounds(171, 124, 89, 23);
 		contentPane.add(btnIngresar);
 	}
 }
