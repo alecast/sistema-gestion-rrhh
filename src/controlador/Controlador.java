@@ -13,7 +13,7 @@ public class Controlador {
 	}
 	
 	public void inicializar() {
-		vista.pack();
+		vista.setTitle("Inicio de sesión");
 		vista.setVisible(true);
 	}
 }
