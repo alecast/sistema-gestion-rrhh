@@ -1,6 +1,5 @@
 package controlador;
 
-import datos.UsuarioDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import datos.UsuarioDAO;
+
 /**
- * Servlet implementation class loginServlet
+ * Servlet implementation class UsuarioServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/UsuarioServlet")
+public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public UsuarioServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,24 +28,17 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String user = request.getParameter("userLogin");
-		String pass = request.getParameter("passLogin");
-		UsuarioDAO userDAO = new UsuarioDAO();
-		if (userDAO.validarUsuario(user, pass)) {
-			request.setAttribute("nombreUsuario", user);
-			request.getRequestDispatcher("/Menu.jsp").forward(request, response);
-		} else {
-			request.getRequestDispatcher("/Login.jsp").forward(request, response);
-		}
-		
-		
+		String btn = request.getParameter("btnUsuario");
+		UsuarioDAO usuDAO = new UsuarioDAO();
+		if(btn.equals("alta")) {
+			
+		};
 	}
 
 }

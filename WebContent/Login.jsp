@@ -13,10 +13,10 @@
             <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" action="LoginServlet" method="post">
+            <form class="form-signin" action="MainServlet" method="post">
                 <input type="text" name="userLogin" class="form-control" placeholder="Usuario" required autofocus>
                 <input type="password" name="passLogin" class="form-control" placeholder="Contraseña" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Inicia sesión</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="btnMain" value="login">Inicia sesión</button>
             </form><!-- /form -->
             <a href="#" class="forgot-password">
                 ¿Olvidó su contraseña?

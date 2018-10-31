@@ -3,12 +3,15 @@ import modelo.UsuarioVO;
 import java.sql.*;
 
 public class UsuarioDAO {
+	private Connection con = null;
+	private Statement st = null;
+	private ResultSet rs = null;
 
 	public boolean validarUsuario(String user, String pass) {
 		boolean valido = false;
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
+		con = null;
+		st = null;
+		rs = null;
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
@@ -20,8 +23,24 @@ public class UsuarioDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBConnection.closeConnection();
 		}
 		return valido;
 	}
-	
+	public boolean altaUsuario(UsuarioVO user) {
+		boolean exito = false;
+		con = null;
+		st = null;
+		rs = null;
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			//rs = st.executeQuery("insert ")
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exito;
+	}
 }

@@ -8,6 +8,9 @@
 </head>
 <body>
 	<h1>Bienvenido ${nombreUsuario} </h1>
-	<input type="button" value="Usuarios">
 </body>
+	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
+	    <button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button>
+	    <button type="submit" name="btnMain" value="empleado" >Gestión de empleados(sin implementar)</button>
+	</form>
 </html>
