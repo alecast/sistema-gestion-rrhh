@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	
-	private static String conString = "jdbc:mysql://localhost:3306/gestionrrhh?serverTimezone=UTC";
+	private static String conString = "jdbc:mysql://localhost:3306/javapro?serverTimezone=UTC";
 	private static String user = "root";
 	private static String pass = "root";
 	static Connection con = null;
