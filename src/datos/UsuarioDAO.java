@@ -5,6 +5,7 @@ import java.sql.*;
 public class UsuarioDAO {
 	private Connection con = null;
 	private Statement st = null;
+	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 
 	public boolean validarUsuario(String user, String pass) {
@@ -28,6 +29,7 @@ public class UsuarioDAO {
 		}
 		return valido;
 	}
+	
 	public boolean altaUsuario(UsuarioVO user) {
 		boolean exito = false;
 		con = null;
@@ -35,8 +37,13 @@ public class UsuarioDAO {
 		rs = null;
 		try {
 			con = DBConnection.createConnection();
-			st = con.createStatement();
-			//rs = st.executeQuery("insert ")
+			ps = con.prepareStatement("INSERT INTO USUARIO VALUES(?,?,?,?)");
+			ps.setString(1,user.getNombre_usuario());
+			ps.setString(2,user.getContraseña());
+			ps.setInt(3, user.getId_tipo_usuario());
+			ps.setInt(4, user.getLegajo());
+			ps.executeUpdate();
+			exito = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
