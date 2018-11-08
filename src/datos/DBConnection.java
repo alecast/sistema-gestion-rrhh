@@ -2,7 +2,7 @@ package datos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+//dddddd
 public class DBConnection {
 	
 	private static String conString = "jdbc:sqlserver://localhost:1433;databaseName=gestionrrhh;integratedSecurity=true";
