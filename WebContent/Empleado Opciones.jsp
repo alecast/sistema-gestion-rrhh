@@ -11,13 +11,13 @@
 
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/UsuarioServlet" method="post">
+	<form action="${pageContext.request.contextPath}/EmpleadoServlet" method="post">
 		<table>
 			<tr><td>Gestión de Usuarios</td></tr>
-			<tr><td><button type="submit" name="btnUsuario" value="alta" >Agregar Empleado</button></td></tr>
-			<tr><td><button type="submit" name="btnUsuario" value="baja" >Eliminar Empleado</button></td></tr>
-			<tr><td><button type="submit" name="btnUsuario" value="modificacion" >Modificar Empleado</button></td></tr>
-			<tr><td><button type="submit" name="btnUsuario" value="listado" >Listado de Empleados</button></td></tr>
+			<tr><td><button type="submit" name="btnEmpleado" value="alta" >Agregar Empleado</button></td></tr>
+			<tr><td><button type="submit" name="btnEmpleado" value="baja" >Eliminar Empleado</button></td></tr>
+			<tr><td><button type="submit" name="btnEmpleado" value="modificacion" >Modificar Empleado</button></td></tr>
+			<tr><td><button type="submit" name="btnEmpleado" value="listado" >Listado de Empleados</button></td></tr>
 		</table>
 	</form>
 </body>

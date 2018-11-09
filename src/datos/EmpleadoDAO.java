@@ -6,7 +6,7 @@ import datos.DBConnection;
 
 public class EmpleadoDAO {
 	private Connection con = null;
-	private Statement st = null;
+	private PreparedStatement psst = null;
 	private ResultSet rs = null;
  
 	
@@ -25,26 +25,25 @@ public void Insertar(int dni,int cuil, String nombre, String apellido, String do
         String query = "INSERT INTO Empleado(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible) values (?,?,' ?', '?', '?', ?,'?', '?', ?, '?', ?)";
 
         try {
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            PreparedStatement psst = con.prepareStatement(query);
          
             
-         /*   rs.setInt       (1, DNI);
-            rs.setInt       (2, cuil);
-            rs.setString    (3, nombre);
-            rs.setString    (4, apellido);
-            rs.setString    (5, domicilio);
-            rs.setInt       (6, telefono);
-            rs.setString    (7, estado_civil);
-            rs.setString    (8, fecha_ingreso);
-            rs.setInt       (9, antiguedad);
-            rs.setString    (10, estado);
-            rs.setInt       (11, cant_disponible);
-         */   // Indicamos que comience la actualización de la tabla en nuestra base de datos
-            st.executeUpdate(query);
+            psst.setInt (1, dni);
+            psst.setInt       (2, cuil);
+            psst.setString    (3, nombre);
+            psst.setString    (4, apellido);
+            psst.setString    (5, domicilio);
+            psst.setInt       (6, telefono);
+            psst.setString    (7, estado_civil);
+            psst.setString    (8, fecha_ingreso);
+            psst.setInt       (9, antiguedad);
+            psst.setString    (10, estado);
+            psst.setInt       (11, cant_disponible);
+            // Indicamos que comience la actualización de la tabla en nuestra base de datos
+            psst.executeUpdate(query);
 
             // Cerramos las conexiones, en orden inverso a su apertura
-            st.close();
+            psst.close();
             con.close();
 
             System.out.println("Llamada agregada con éxito a la base de datos.");
