@@ -3,6 +3,9 @@ package modelo;
 //Usando el patrón VO (value object), esto sería que esta clase refleja los valores de la base de datos
 //
 public class EmpleadoVO {
+	
+
+	
 	private int legajo;
 	private String nombre;
 	private String apellido;
@@ -15,7 +18,7 @@ public class EmpleadoVO {
 	private int        antiguedad;
 	private String   estado;
 	private int       cant_disponible;
-	
+
 	public int getLegajo() {
 		return legajo;
 	}
@@ -38,7 +41,7 @@ public class EmpleadoVO {
 		return DNI;
 	}
 	public void setDNI(int dNI) {
-		DNI = dNI;
+		this.DNI = dNI;
 	}
 	public int getCuil() {
 		return cuil;
@@ -90,8 +93,29 @@ public class EmpleadoVO {
 	}
 	
 	
-	
-	
+	  public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, String fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
+	     this.legajo = legajo ;
+	     this.DNI = dni;
+	     this.nombre = nombre;
+		 this.apellido = apellido;
+		 this.cuil = cuil;
+	     this.domicilio = domicilio;
+		 this.telefono = telefono;
+		 this.estado_civil = estado_civil;
+		 this.fecha_ingreso = fecha_ingreso;
+		 this.antiguedad = antiguedad;
+		 this.estado = estado;
+		 this.cant_disponible = cant_disponible;
+		
+	   
+	  
+	  
+	  }
+
+		 
+
+
+
 	
 
 }

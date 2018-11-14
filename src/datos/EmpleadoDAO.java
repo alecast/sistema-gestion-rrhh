@@ -2,6 +2,12 @@ package datos;
 import modelo.EmpleadoVO;
 import java.sql.*;
 import datos.DBConnection;
+import controlador.DateServlet;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 
 public class EmpleadoDAO {
@@ -11,9 +17,10 @@ public class EmpleadoDAO {
  
 	
    
+//public void AltaEmpleado(empleado EmpleadoVO);
+//EmpleadoVO empleado = new EmpleadoVO();
 
-public void Insertar(int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, String fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
-
+/*public void Insertar(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, String fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
 
     // Establecer conexión con la base de datos
       //  Connection con = new Connection();
@@ -28,7 +35,7 @@ public void Insertar(int dni,int cuil, String nombre, String apellido, String do
             PreparedStatement psst = con.prepareStatement(query);
          
             
-            psst.setInt (1, dni);
+            psst.setInt       (1, dni);
             psst.setInt       (2, cuil);
             psst.setString    (3, nombre);
             psst.setString    (4, apellido);
@@ -51,4 +58,99 @@ public void Insertar(int dni,int cuil, String nombre, String apellido, String do
             System.out.println("Error!, la llamada no pudo ser agregada a la base de datos.");
         }
 }
+*/
+
+
+public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
+	
+	// TODO Auto-generated method stub
+	String query = "INSERT INTO Empleado(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible) values (?,?,?,?,?,?,?,?,?,?,?)";
+
+	// try {
+		 con = DBConnection.createConnection();
+		 //Connection con = new connection();
+		
+         psst = con.prepareStatement(query);
+ 
+         
+      /* empleaVO.setDNI(dni);
+         empleaVO.setNombre("cuil");
+         empleaVO.setApellido("nombre");
+         empleaVO.setApellido("apellido");
+         empleaVO.setApellido("domicilio");
+         empleaVO.setApellido("telefono");
+         empleaVO.setApellido("estado_civil");
+         empleaVO.setApellido("fecha_ingreso");
+         empleaVO.setApellido("antiguedad");
+         empleaVO.setApellido("estado");
+         empleaVO.setApellido("cant_disponible");
+         
+        */ 
+         int dni = ((EmpleadoVO) empleaVO).getDNI();
+         int cuil = ((EmpleadoVO) empleaVO).getCuil();
+         String nombre = ((EmpleadoVO) empleaVO).getNombre();
+         String apellido = ((EmpleadoVO) empleaVO).getApellido();
+         String domicilio = ((EmpleadoVO) empleaVO).getDomicilio();
+         int telefono = ((EmpleadoVO) empleaVO).getTelefono();
+         String estado_civil = ((EmpleadoVO) empleaVO).getEstado_civil();
+         String fecha_ingreso = ((EmpleadoVO) empleaVO).getFecha_ingreso();
+         int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
+         String estado = ((EmpleadoVO) empleaVO).getEstado();
+         int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
+
+        //  Date f = DateServlet.ParseFecha(fecha_ingreso); 
+          
+          DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+          java.util.Date date;
+          try {
+              date = dateFormat.parse(fecha_ingreso);
+              System.out.println(date.toString()); // Wed Dec 04 00:00:00 CST 2013
+
+              String output = dateFormat.format(date);
+              System.out.println(output); // 2013-12-04
+          } 
+          catch (ParseException e) {
+              e.printStackTrace();
+          }
+          
+         psst.setInt       (1, dni);
+         psst.setInt       (2, cuil);
+         psst.setString    (3, nombre);
+         psst.setString    (4, apellido);
+         psst.setString    (5, domicilio);
+         psst.setInt       (6, telefono);
+         psst.setString    (7, estado_civil);
+         psst.setDate      (8, fecha_ingreso);
+         psst.setInt       (9, antiguedad); 
+         psst.setString    (10, estado);
+         psst.setInt       (11, cant_disponible);
+        
+         
+    /*
+        
+         psst.setObject(1 , empleaVO.getDNI());
+         psst.setObject(2 , empleaVO.getCuil());
+         psst.setObject(3 , empleaVO.getNombre());
+         psst.setObject(4 , empleaVO.getApellido());
+         psst.setObject(5 , empleaVO.getDomicilio());
+         psst.setObject(6 , empleaVO.getTelefono());
+         psst.setObject(7 , empleaVO.getEstado_civil());
+         psst.setObject(8 , empleaVO.getFecha_ingreso());
+         psst.setObject(9 , empleaVO.getAntiguedad());
+         psst.setObject(10 , empleaVO.getEstado());
+         psst.setObject(11 , empleaVO.getCant_disponible());
+
+        */
+   
+         // Indicamos que comience la actualización de la tabla en nuestra base de datos
+          psst.executeUpdate();
+
+         // Cerramos las conexiones, en orden inverso a su apertura
+         psst.close();
+         con.close();
+
+	
+	
+}
+
 }

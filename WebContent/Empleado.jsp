@@ -40,7 +40,7 @@
    <input type="Radio" name= "estado_civil" value="Divorsiado"> Divorsiado/a  <br/>
    <input type="Radio" name= "estado_civil" value="Viudo"> Viudo/a<br/>
     Fecha Ingreso:
-    <input type="text" name="fecha_i">
+    <input type="text" name="fecha_ingreso" size="10" maxlength="10" >
     <br/>
    Antiguedad:
     <input type="text" name="antiguedad">
@@ -49,7 +49,7 @@
     <input type="text" name="estado">
     <br/>
    Cantidad de dias:
-    <input type="text" name="cant_dias">
+    <input type="text" name="cant_disponible">
     <br/>
    Tipo de Empleado:
     <select name="Tipo de Empleado">
@@ -66,7 +66,7 @@
     </select>
     <br/>
     <!--<input type="submit" name="btnEmpleado" value="Cancelar"> <input type="submit" name="btnEmpleado" value="Cargar Empleado"> -->
-     <td><td><button type="submit" name="btnEmpleado" value="Cancelar" >Cancelar</button></td></tr> <tr><td><button type="submit" name="btnEmpleado" value="CargarE" >Cargar Empleado</button></td></tr>
+     <button type="submit" name="btnEmpleado" value="Cancelar" >Cancelar</button><button type="submit" name="btnEmpleado" value="CargarE" >Cargar Empleado</button>
     </h5>
 </form>
 </body>
