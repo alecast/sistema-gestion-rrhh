@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * Servlet implementation class DateServlet
@@ -41,18 +43,22 @@ public class DateServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	public static Date ParseFecha(String fecha_ingreso)
+	public static java.sql.Date ParseFecha(String fecha_ingreso)
     {
-        SimpleDateFormat formato = new SimpleDateFormat("DD/MM/YYYY");
-        java.util.Date fechaDate = null;
+		java.util.Date date = new java.util.Date();
+		
+		
+        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+      //  java.sql.Date fechaDate = null;
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
         try {
-            fechaDate = formato.parse(fecha_ingreso);
+            sqlDate = (java.sql.Date) formato.parse(fecha_ingreso);
         } 
         catch (ParseException ex) 
         {
             System.out.println(ex);
         }
-        return (Date) fechaDate;
+        return (java.sql.Date) sqlDate;
     }
 
 

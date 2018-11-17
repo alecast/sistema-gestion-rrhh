@@ -2,7 +2,6 @@ package datos;
 import modelo.EmpleadoVO;
 import java.sql.*;
 import datos.DBConnection;
-import controlador.DateServlet;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -71,7 +70,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
 		 //Connection con = new connection();
 		
          psst = con.prepareStatement(query);
- 
+        
          
       /* empleaVO.setDNI(dni);
          empleaVO.setNombre("cuil");
@@ -85,7 +84,11 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          empleaVO.setApellido("estado");
          empleaVO.setApellido("cant_disponible");
          
-        */ 
+        */
+         
+         java.sql.Date f =  convertJavaDateToSqlDate(((EmpleadoVO) empleaVO).getFecha_ingreso());
+         
+        
          int dni = ((EmpleadoVO) empleaVO).getDNI();
          int cuil = ((EmpleadoVO) empleaVO).getCuil();
          String nombre = ((EmpleadoVO) empleaVO).getNombre();
@@ -93,16 +96,17 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          String domicilio = ((EmpleadoVO) empleaVO).getDomicilio();
          int telefono = ((EmpleadoVO) empleaVO).getTelefono();
          String estado_civil = ((EmpleadoVO) empleaVO).getEstado_civil();
-         String fecha_ingreso = ((EmpleadoVO) empleaVO).getFecha_ingreso();
+       //  java.sql.Date fecha_ingreso = ((EmpleadoVO) empleaVO).getFecha_ingreso();
          int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
          String estado = ((EmpleadoVO) empleaVO).getEstado();
          int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
 
+      
         //  Date f = DateServlet.ParseFecha(fecha_ingreso); 
           
-          DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-          java.util.Date date;
-          try {
+        //  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+         // java.util.Date date;
+        /*  try {
               date = dateFormat.parse(fecha_ingreso);
               System.out.println(date.toString()); // Wed Dec 04 00:00:00 CST 2013
 
@@ -111,7 +115,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
           } 
           catch (ParseException e) {
               e.printStackTrace();
-          }
+          }*/
           
          psst.setInt       (1, dni);
          psst.setInt       (2, cuil);
@@ -120,7 +124,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          psst.setString    (5, domicilio);
          psst.setInt       (6, telefono);
          psst.setString    (7, estado_civil);
-         psst.setDate      (8, fecha_ingreso);
+         psst.setDate      (8, f);
          psst.setInt       (9, antiguedad); 
          psst.setString    (10, estado);
          psst.setInt       (11, cant_disponible);
@@ -152,5 +156,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
 	
 	
 }
-
+public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+    return new java.sql.Date(date.getTime());
+}
 }

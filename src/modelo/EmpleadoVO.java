@@ -1,5 +1,8 @@
 package modelo;
 
+
+import java.util.Date;
+
 //Usando el patrón VO (value object), esto sería que esta clase refleja los valores de la base de datos
 //
 public class EmpleadoVO {
@@ -14,7 +17,7 @@ public class EmpleadoVO {
 	private String  domicilio;
 	private int    telefono;
 	private String     estado_civil;
-	private String     fecha_ingreso;
+	private Date     fecha_ingreso;
 	private int        antiguedad;
 	private String   estado;
 	private int       cant_disponible;
@@ -67,10 +70,10 @@ public class EmpleadoVO {
 	public void setEstado_civil(String estado_civil) {
 		this.estado_civil = estado_civil;
 	}
-	public String getFecha_ingreso() {
+	public Date getFecha_ingreso() {
 		return fecha_ingreso;
 	}
-	public void setFecha_ingreso(String fecha_ingreso) {
+	public void setFecha_ingreso(Date fecha_ingreso) {
 		this.fecha_ingreso = fecha_ingreso;
 	}
 	public int getAntiguedad() {
@@ -93,7 +96,7 @@ public class EmpleadoVO {
 	}
 	
 	
-	  public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, String fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
+	  public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
 	     this.legajo = legajo ;
 	     this.DNI = dni;
 	     this.nombre = nombre;
@@ -102,7 +105,7 @@ public class EmpleadoVO {
 	     this.domicilio = domicilio;
 		 this.telefono = telefono;
 		 this.estado_civil = estado_civil;
-		 this.fecha_ingreso = fecha_ingreso;
+		 this.fecha_ingreso =  fecha_ingreso;
 		 this.antiguedad = antiguedad;
 		 this.estado = estado;
 		 this.cant_disponible = cant_disponible;
