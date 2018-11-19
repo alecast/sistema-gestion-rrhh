@@ -11,6 +11,6 @@
 </body>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 	    <button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button>
-	    <button type="submit" name="btnMain" value="empleado" >Gestión de empleados(sin implementar)</button>
+	    <button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button>
 	</form>
 </html>

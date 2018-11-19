@@ -2,24 +2,24 @@ package datos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+//dddddd
 public class DBConnection {
 	
-	private static String conString = "jdbc:mysql://localhost:3306/gestionrrhh?serverTimezone=UTC";
-	private static String user = "root";
-	private static String pass = "root";
+	private static String conString = "jdbc:sqlserver://localhost:1433;databaseName=gestionrrhh;integratedSecurity=true";
+	private static String user = "";
+	private static String pass = "";
 	static Connection con = null;
 	
 	public static Connection createConnection() {
 		//Driver para mysql DB
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
-			con = DriverManager.getConnection(conString,user,pass); //Conecta a la DB
+			con = DriverManager.getConnection(conString); //Conecta a la DB
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
