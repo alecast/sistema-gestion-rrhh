@@ -45,7 +45,7 @@ public class MainServlet extends HttpServlet {
 			} else {
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			}		
-		} else if(btn.equals("usuario")) request.getRequestDispatcher("/Usuario.jsp").forward(request, response);
+		} else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
 		  else if(btn.equals("empleado")) request.getRequestDispatcher("/Empleado.jsp").forward(request, response);
 		  else if(btn.equals("Cargar Empleado")) request.getRequestDispatcher("/EmpleadoNuevo.jsp").forward(request, response);
 	}

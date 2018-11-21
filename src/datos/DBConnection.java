@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class DBConnection {
 	
 	private static String conString = "jdbc:sqlserver://localhost:1433;databaseName=gestionrrhh;integratedSecurity=true";
+	//private static String conString = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=gestionrrhh;integratedSecurity=true";
 	private static String user = "";
 	private static String pass = "";
 	static Connection con = null;

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Gestión de Usuarios</title>
 </head>
 <body>
 	<form action="${pageContext.request.contextPath}/UsuarioServlet" method="post">
@@ -13,7 +13,7 @@
 			<tr><td><button type="submit" name="btnUsuario" value="alta" >Agregar usuario</button></td></tr>
 			<tr><td><button type="submit" name="btnUsuario" value="baja" >Eliminar usuario</button></td></tr>
 			<tr><td><button type="submit" name="btnUsuario" value="modificacion" >Modificar usuario</button></td></tr>
-			<tr><td><button type="submit" name="btnUsuario" value="listado" >Listado de usuarios</button></td></tr>
+			<tr><td><button type="submit" name="btnUsuario" value="listado" >Listar usuarios</button></td></tr>
 		</table>
 	</form>
 </body>
