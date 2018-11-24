@@ -41,30 +41,39 @@ public class UsuarioServlet extends HttpServlet {
 		// Preparar devolución de mensajes
         Map<String, String> messages = new HashMap<String, String>();
         request.setAttribute("messages", messages);
-        messages.put("pass","");
         
 		String btn = request.getParameter("btnUsuario"); 
 		UsuarioDAO usuDAO = new UsuarioDAO();
 		if(btn.equals("alta")) {
 			request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
 		};
+		if(btn.equals("busqueda")) {
+			request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
+		};
 		if(btn.equals("confirmaAlta")) {
 			UsuarioVO usuVO = new UsuarioVO();
+			String legajo = request.getParameter("legajo");
+			String nombreUsuario = request.getParameter("nombreUsuario");
 			String pass = request.getParameter("passUsuario");
 			String pass2 = request.getParameter("pass2Usuario"); 
-			if(!pass.equals(pass2)) {
-				messages.put("pass", "Las contraseñas no coinciden");
+			if(legajo.isEmpty() || nombreUsuario.isEmpty() || pass.isEmpty() || pass2.isEmpty()) {
+				messages.put("error","Debe completar todos los campos");
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
 			} else {
-				messages.put("pass","Coinciden");
-				usuVO.setNombre_usuario(request.getParameter("nombreUsuario"));
-				usuVO.setContraseña(request.getParameter("passUsuario"));
-				usuVO.setId_tipo_usuario((Integer.parseInt(request.getParameter("tipoUsuario")))); //Convertir a objeto
-				usuVO.setLegajo((Integer.parseInt(request.getParameter("legajo")))); //Validar contra base
-				
-				usuDAO.altaUsuario(usuVO);
+				if(!pass.equals(pass2)) {
+					messages.put("error", "Las contraseñas no coinciden");
+					request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
+				} else {
+					usuVO.setNombre_usuario(request.getParameter("nombreUsuario"));
+					usuVO.setContraseña(request.getParameter("passUsuario"));
+					usuVO.setId_tipo_usuario((Integer.parseInt(request.getParameter("tipoUsuario")))); //Convertir a objeto
+					usuVO.setLegajo((Integer.parseInt(request.getParameter("legajo")))); //Validar contra base, debería ser un objeto Empleado
+					
+					if(usuDAO.altaUsuario(usuVO)) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Opciones.jsp").forward(request,response);
+				}
 			}
 		}
+		if(btn.equals("volverOpciones")) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Opciones.jsp").forward(request,response);
 	}
 
 }

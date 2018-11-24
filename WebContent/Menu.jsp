@@ -10,7 +10,9 @@
 	<h1>Bienvenido ${nombreUsuario} </h1>
 </body>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
-	    <button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button>
-	    <button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button>
+		<table>
+			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
+	    	<tr><td><button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
+		</table>
 	</form>
 </html>
