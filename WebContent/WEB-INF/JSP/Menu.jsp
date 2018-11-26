@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,15 +11,8 @@
 	<h1>Bienvenido ${nombreUsuario} </h1>
 </body>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
-<<<<<<< HEAD:WebContent/Menu.jsp
 	    <button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button>
 	    <button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button>
 	    <button type="submit" name="btnMain" value="licencia" >Gestión de Licencias</button>
-=======
-		<table>
-			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
-	    	<tr><td><button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
-		</table>
->>>>>>> master:WebContent/WEB-INF/JSP/Menu.jsp
 	</form>
 </html>

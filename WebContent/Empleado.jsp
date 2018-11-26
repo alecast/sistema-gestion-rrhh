@@ -65,12 +65,8 @@
       <option value="empleado">Empleado
     </select>
     <br/>
-<<<<<<< HEAD
     <!--<input type="submit" name="btnEmpleado" value="Cancelar"> <input type="submit" name="btnEmpleado" value="Cargar Empleado"> -->
      <button type="submit" name="btnEmpleado" value="Cancelar" >Cancelar</button><button type="submit" name="btnEmpleado" value="CargarE" >Cargar Empleado</button>
-=======
-    	<input type="submit" value="Cancelar"> <input type="submit" value="Cargar Empleado">
->>>>>>> master
     </h5>
 </form>
 </body>
