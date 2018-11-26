@@ -41,7 +41,7 @@ public class MainServlet extends HttpServlet {
 			UsuarioDAO userDAO = new UsuarioDAO();
 			if (userDAO.validarUsuario(user, pass)) {
 				request.setAttribute("nombreUsuario", user);
-				request.getRequestDispatcher("/Menu.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 			} else {
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			}		

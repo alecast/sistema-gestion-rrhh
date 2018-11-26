@@ -62,7 +62,7 @@
       <option value="empleado">Empleado
     </select>
     <br/>
-     <p><input type="submit" value="Cancelar"> <input type="submit" value="Cargar Empleado"></p>
+    	<input type="submit" value="Cancelar"> <input type="submit" value="Cargar Empleado">
     </h5>
 </form>
 </body>

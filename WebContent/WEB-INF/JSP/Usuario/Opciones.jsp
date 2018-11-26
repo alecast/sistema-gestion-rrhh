@@ -13,6 +13,7 @@
 			<tr><td><button type="submit" name="btnUsuario" value="alta" >Agregar usuario</button></td></tr>
 			<tr><td><button type="submit" name="btnUsuario" value="busqueda" >Buscar usuario</button></td></tr>
 			<tr><td><button type="submit" name="btnUsuario" value="listado" >Listar usuarios</button></td></tr>
+			<tr><td><button type="submit" name="btnUsuario" value="volverMenu">Volver</button></td></tr>
 		</table>
 	</form>
 </body>

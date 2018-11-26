@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Alta Usuario</title>
-<style> .error { color : red ; } </style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/Estilos.css">
 </head>
 <body>
 	<h3> Nuevo Usuario </h3>
@@ -23,7 +23,7 @@
 			</td></tr>
 			<tr><td><span class="error">${messages.error}</span></td></tr>
 			<tr><td>
-				<button type="submit" name="btnUsuario" value="volverOpciones">Cancelar</button>
+				<button type="submit" name="btnUsuario" value="volverOpciones">Volver</button>
 				<button type="submit" name="btnUsuario" value="confirmaAlta">Aceptar</button>
 			</td></tr>
 		</table>
