@@ -22,6 +22,25 @@
 				<button type="submit" name="btnUsuario" value="aceptarBusqueda">Aceptar</button>
 			</td></tr>
 		</table>
+				<c:if test="${not empty listaUsuarios}">
+				<table>
+				    <tr>
+				        <th>ID</th>
+				        <th>Nombre Usuario</th>
+				        <th>Legajo</th>
+				    </tr>
+				    <c:forEach items="${listaUsuarios}" var="usuario">
+				        <tr>
+				            <td>${usuario.id_usuario}</td>
+				            <td><c:out value="${usuario.nombre_usuario}" /></td>
+							<td><c:out value="${usuario.legajo}" /></td>
+							<td><button type="submit" name="btnUsuario" value="modificarUsuario${usuario.id_usuario}">Modificar</button></td>
+							<td><button type="submit" name="btnUsuario" value="eliminarUsuario${usuario.id_usuario}">Eliminar</button></td>
+				        </tr>
+			    	</c:forEach>
+			    	<tr><td><span >${messages.baja}</span></td></tr>
+				</table>
+		</c:if>
 		<c:if test="${not empty listaUsuariosLike}">
 				<table>
 				    <tr>

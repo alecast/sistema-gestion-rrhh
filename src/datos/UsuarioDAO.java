@@ -90,4 +90,30 @@ public class UsuarioDAO {
 		
 		return eliminado;
 	}
+	
+	public List<UsuarioVO> getListaEmpleados(){
+		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
+		con = null;
+		st = null;
+		rs = null;
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			rs = st.executeQuery("select * from usuario");
+			while(rs.next()) {
+				UsuarioVO u = new UsuarioVO();
+				u.setContraseña(rs.getString("contraseña"));
+				u.setId_tipo_usuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setId_usuario(rs.getInt("id_usuario"));
+				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
+				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				listaUsuarios.add(u);
+			}			
+			rs.close();
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+		  finally { DBConnection.closeConnection(); }
+		
+		return listaUsuarios;
+	}
 }

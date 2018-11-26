@@ -46,7 +46,6 @@ public class UsuarioServlet extends HttpServlet {
 		String btn = request.getParameter("btnUsuario"); //Botón que se usa como disparador de las diferentes acciones		
 		//Botones de redireccionamiento puro
 		if(btn.equals("alta")) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
-		if(btn.equals("busqueda")) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
 		if(btn.equals("volverOpciones")) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Opciones.jsp").forward(request,response);
 		if(btn.equals("volverMenu")) request.getRequestDispatcher("WEB-INF/JSP/Menu.jsp").forward(request, response);
 		//Botones con funcionalidad
@@ -76,6 +75,14 @@ public class UsuarioServlet extends HttpServlet {
 				}
 			}
 		}
+		//Ingreso a búsqueda, traer listado entero
+		if(btn.equals("busqueda")) {
+			UsuarioDAO usuDAO = new UsuarioDAO();
+			List<UsuarioVO> listaUsuarios = usuDAO.getListaEmpleados();
+			request.setAttribute("listaUsuarios", listaUsuarios);
+			request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
+		}
+
 		//Búsqueda de Usuario con like nombre_usuario
 		if(btn.equals("aceptarBusqueda")) {
 			String nombreLike = request.getParameter("nombreLike");
