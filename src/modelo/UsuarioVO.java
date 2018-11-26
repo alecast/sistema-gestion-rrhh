@@ -7,7 +7,6 @@ public class UsuarioVO {
 	private String contraseña;
 	private int id_tipo_usuario;
 	private int legajo;
-	private int id_usuario_licencia;
 	
 	public int getId_usuario() {
 		return id_usuario;
@@ -39,12 +38,4 @@ public class UsuarioVO {
 	public void setLegajo(int legajo) {
 		this.legajo = legajo;
 	}
-	public int getId_usuario_licencia() {
-		return id_usuario_licencia;
-	}
-	public void setId_usuario_licencia(int id_usuario_licencia) {
-		this.id_usuario_licencia = id_usuario_licencia;
-	}
-
-
 }

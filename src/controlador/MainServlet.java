@@ -41,13 +41,13 @@ public class MainServlet extends HttpServlet {
 			UsuarioDAO userDAO = new UsuarioDAO();
 			if (userDAO.validarUsuario(user, pass)) {
 				request.setAttribute("nombreUsuario", user);
-				request.getRequestDispatcher("/Menu.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 			} else {
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			}		
-		} else if(btn.equals("usuario")) request.getRequestDispatcher("/Usuario.jsp").forward(request, response);
-		  else if(btn.equals("empleado")) request.getRequestDispatcher("/Empleado Opciones.jsp").forward(request, response);
-		  
+		} else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
+		  else if(btn.equals("empleado")) request.getRequestDispatcher("/Empleado.jsp").forward(request, response);
+		
 	}
 
 }
