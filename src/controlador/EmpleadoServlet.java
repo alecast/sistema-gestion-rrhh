@@ -47,14 +47,14 @@ public class EmpleadoServlet extends HttpServlet {
 		EmpleadoDAO empleDAO = new EmpleadoDAO();
 		if(btnEmpleado.equals("alta"))
 			{
-			request.getRequestDispatcher("/Empleado.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado.jsp").forward(request, response);
 			}
 		else if (btnEmpleado.equals("CargarE"))
 			
 			
 				{ 
 			 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				request.getRequestDispatcher("/EmpleadoNuevo.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/JSP/Empleado/EmpleadoNuevo.jsp").forward(request, response);
 		     //  int Legajo = Integer.parseInt(request.getParameter("Legajo"));
 			   int DNI = Integer.parseInt(request.getParameter("DNI"));
 			   int cuil = Integer.parseInt(request.getParameter("cuil"));
@@ -108,7 +108,7 @@ public class EmpleadoServlet extends HttpServlet {
 			     }*/ }
 		else if(btnEmpleado.equals("Cancelar"))
 				{
-			request.getRequestDispatcher("/Empleado Opciones.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
 				}
         	}
          

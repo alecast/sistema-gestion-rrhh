@@ -14,7 +14,7 @@
  <h3> Nuevo Empleado </h3>
 <form action="EmpleadoServlet" method="post">
     <h5>Legajo:
-    <input type="text" name="legajo" size="3">
+    <input type="text" name="legajo" size="3" disabled>
     <br/>
     DNI:
     <input type="text" name="DNI" size="8" maxlength="8">

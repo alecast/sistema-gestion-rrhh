@@ -97,11 +97,11 @@ public class EmpleadoVO {
 	
 	
 	  public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
-	     this.legajo = legajo ;
-	     this.DNI = dni;
-	     this.nombre = nombre;
-		 this.apellido = apellido;
-		 this.cuil = cuil;
+	     this.setLegajo(legajo) ;
+	     this.setDNI(dni);
+	     this.setNombre(nombre);
+		 this.setApellido(apellido);
+		 this.setCuil(cuil);
 	     this.domicilio = domicilio;
 		 this.telefono = telefono;
 		 this.estado_civil = estado_civil;
