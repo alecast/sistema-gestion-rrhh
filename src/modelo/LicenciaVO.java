@@ -79,19 +79,14 @@ public class LicenciaVO {
 		this.id_usuario_licencia = id_usuario_licencia;
 	}
 	
-	 public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
-	     this.legajo = legajo ;
-	     this.DNI = dni;
-	     this.nombre = nombre;
-		 this.apellido = apellido;
-		 this.cuil = cuil;
-	     this.domicilio = domicilio;
-		 this.telefono = telefono;
-		 this.estado_civil = estado_civil;
-		 this.fecha_ingreso =  fecha_ingreso;
-		 this.antiguedad = antiguedad;
-		 this.estado = estado;
-		 this.cant_disponible = cant_disponible;
+	 public LicenciaVO(int id_licencia, Date fecha_inicio, Date fecha_fin, LocalDateTime fecha_solicitud, int cant_dias, String descripcion) {
+	     this.id_licencia = id_licencia ;
+	     this.fecha_inicio = fecha_inicio;
+	     this.fecha_fin = fecha_fin;
+		 this.fecha_solicitud = fecha_solicitud;
+		 this.cant_dias = cant_dias;
+	     this.descripcion = descripcion;
 
 
+	 }
 }
