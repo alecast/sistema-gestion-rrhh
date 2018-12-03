@@ -70,24 +70,56 @@ public class EmpleadoServlet extends HttpServlet {
 			}
 			  
 			
+			   
+			//   java.sql.Date f =  convertJavaDateToSqlDate(fecha_ingreso);
+			  
+					   
+		/*		   
+					 java.sql.Date f = DateServlet.ParseFecha(request.getParameter("fecha_ingreso")); 
+				          
+				         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				         java.sql.Date date;
+				          try {
+				              date = (java.sql.Date)dateFormat.parse("fecha_ingreso");
+				              System.out.println(date.toString()); // Wed Dec 04 00:00:00 CST 2013
+
+				              String output = dateFormat.format(date);
+				              System.out.println(output); // 2013-12-04
+				          } 
+				          catch (ParseException e) {
+				              e.printStackTrace();
+				          
+				          }
+			   
+			   */
+			   
 			   EmpleadoVO empleaVO = new EmpleadoVO (5 , DNI, cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
-       
+           //  try { // empleDAO.Alta(empleaVO);
                     try {
 						empleDAO.AltaEmpleado( empleaVO);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-	 }
+			//	empleDAO.Insertar(DNI,cuil,request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("domicilio"),telefono ,request.getParameter("estado_civil"),request.getParameter("fecha_ingreso"), antiguedad ,request.getParameter("estado"), cant_disponible);    
+			//	} catch(Exception e) 
+            /*        {
+			         System.out.println("Error!, Servlet");
+			     }*/ }
 		else if(btnEmpleado.equals("Cancelar"))
 				{
 			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
 				}
-		else if(btnEmpleado.equals("volverMenu"))
-		{
-			request.getRequestDispatcher("WEB-INF/JSP/Menu.jsp").forward(request, response);
-		}
-     }
+        	}
          
+     /*	else
+		{
+			request.getRequestDispatcher("/Empleado Opciones.jsp").forward(request, response);
+		}*/
+		//( btnEmpleado.equals("Modificar")
 
+/*
+public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+    return new java.sql.Date(date.getTime());
+}*/
 }
