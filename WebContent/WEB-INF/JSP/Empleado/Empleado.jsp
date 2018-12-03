@@ -16,11 +16,8 @@
     <h5>Legajo:
     <input type="text" name="legajo" size="3" disabled>
     <br/>
-    DNI:
-    <input type="text" name="DNI" size="8" maxlength="8">
-    <br/>
     Cuil:
-    <input type="text" name="cuil" size="2" maxlength="2">-<input type="text" name="DNI">-<input type="text" name="cuil2" size="1" maxlength="1">
+    <input type="text" name="cuil" size="2" maxlength="2">-<input type="text" name="DNI" size="8" maxlength="8">-<input type="text" name="cuil2" size="1" maxlength="1">
     <br/>
     Nombre:
     <input type="text" name="nombre">
@@ -32,7 +29,7 @@
     <input type="text" name="domicilio">
     <br/>  
     Telefono:
-    <input type="text" name="telefono">
+    <input type="text" name="telefono" size="8" maxlength="8">
     <br/>  
     Estado civil:<br/>
     <input type="Radio" name="estado_civil" value= "Soltero"checked> Soltero/a <br/>
@@ -44,9 +41,6 @@
     <br/>
    Antiguedad:
     <input type="text" name="antiguedad">
-    <br/>
-   Estado:
-    <input type="text" name="estado">
     <br/>
    Cantidad de dias:
     <input type="text" name="cant_disponible">

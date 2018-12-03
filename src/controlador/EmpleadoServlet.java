@@ -93,7 +93,7 @@ public class EmpleadoServlet extends HttpServlet {
 			   
 			   */
 			   
-			   EmpleadoVO empleaVO = new EmpleadoVO (5 , DNI, cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, request.getParameter("estado"), cant_disponible );
+			   EmpleadoVO empleaVO = new EmpleadoVO (5 , DNI, cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
            //  try { // empleDAO.Alta(empleaVO);
                     try {
 						empleDAO.AltaEmpleado( empleaVO);

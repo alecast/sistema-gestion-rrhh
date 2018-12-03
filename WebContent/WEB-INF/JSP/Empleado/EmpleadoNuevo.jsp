@@ -35,7 +35,7 @@
    out.print("<br/>");
    out.print("tienes "+ request.getParameter("tipo de Empleado") +" de tipo de Empleado");
    out.print("<br/>");
-   out.print("tienes "+ request.getParameter("Tipo de Categoria") +" de Tipo de Categoria");
+   out.print("tienes "+ request.getParameter("tipo de Categoria") +" de Tipo de Categoria");
    out.print("<br/>");
    
    
