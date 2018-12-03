@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.EmpleadoVO;
+import modelo.UsuarioVO;
 import datos.EmpleadoDAO;
+import datos.UsuarioDAO;
 
 /**
  * Servlet implementation class UsuarioAlta
@@ -69,57 +72,33 @@ public class EmpleadoServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			  
-			
-			   
-			//   java.sql.Date f =  convertJavaDateToSqlDate(fecha_ingreso);
-			  
-					   
-		/*		   
-					 java.sql.Date f = DateServlet.ParseFecha(request.getParameter("fecha_ingreso")); 
-				          
-				         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				         java.sql.Date date;
-				          try {
-				              date = (java.sql.Date)dateFormat.parse("fecha_ingreso");
-				              System.out.println(date.toString()); // Wed Dec 04 00:00:00 CST 2013
-
-				              String output = dateFormat.format(date);
-				              System.out.println(output); // 2013-12-04
-				          } 
-				          catch (ParseException e) {
-				              e.printStackTrace();
-				          
-				          }
-			   
-			   */
-			   
-			   EmpleadoVO empleaVO = new EmpleadoVO (5 , DNI, cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
-           //  try { // empleDAO.Alta(empleaVO);
+				   EmpleadoVO empleaVO = new EmpleadoVO (5 , DNI, "cuil", request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
+         
                     try {
 						empleDAO.AltaEmpleado( empleaVO);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-			//	empleDAO.Insertar(DNI,cuil,request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("domicilio"),telefono ,request.getParameter("estado_civil"),request.getParameter("fecha_ingreso"), antiguedad ,request.getParameter("estado"), cant_disponible);    
-			//	} catch(Exception e) 
-            /*        {
-			         System.out.println("Error!, Servlet");
-			     }*/ }
+			 }
 		else if(btnEmpleado.equals("Cancelar"))
 				{
 			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
 				}
-        	}
-         
-     /*	else
+		else if(btnEmpleado.equals("volverMenu"))
 		{
-			request.getRequestDispatcher("/Empleado Opciones.jsp").forward(request, response);
-		}*/
-		//( btnEmpleado.equals("Modificar")
+			request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
+		}
+		else if(btnEmpleado.equals("busqueda"))
+		{
+	  
+		EmpleadoDAO EmpleDAO = new EmpleadoDAO();
+		List<EmpleadoVO> listaEmpleado = EmpleDAO.getListaEmpleados();
+		request.setAttribute("listaEmpleados", listaEmpleado);
+		request.getRequestDispatcher("/WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);	
+		}
+	   
+		}
+		
+	}
 
-/*
-public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
-    return new java.sql.Date(date.getTime());
-}*/
-}
