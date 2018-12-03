@@ -39,7 +39,7 @@ public class UsuarioDAO {
 			ps = con.prepareStatement("INSERT INTO USUARIO VALUES(?,?,?,?)");
 			ps.setString(1,user.getNombre_usuario());
 			ps.setString(2,user.getContraseña());
-			ps.setInt(3, user.getId_tipo_usuario());
+			ps.setInt(3, user.getTipoUsuario().getId_tipo_usuario());
 			ps.setInt(4, user.getLegajo());
 			ps.executeUpdate();
 			exito = true;
@@ -62,7 +62,7 @@ public class UsuarioDAO {
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
-				u.setId_tipo_usuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
 				u.setId_usuario(rs.getInt("id_usuario"));
 				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
@@ -81,13 +81,62 @@ public class UsuarioDAO {
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			rs = st.executeQuery("delete from usuario where id_usuario = "+id_usuario);
+			st.executeUpdate("delete from usuario where id_usuario = "+id_usuario);
 			eliminado = true;
-			rs.close();
 			st.close();
 		} catch (SQLException e) { e.printStackTrace();} 
 		finally { DBConnection.closeConnection();}
 		
 		return eliminado;
+	}
+	
+	public boolean modificarUsuario(String pass, int tipoUsuario, int idUsuario) {
+		boolean modifico = false;
+		if (pass.isEmpty()){
+			try {
+				con = DBConnection.createConnection();
+				st = con.createStatement();
+				st.executeUpdate("update usuario set id_tipo_usuario = "+tipoUsuario+" where id_usuario="+idUsuario);
+				modifico = true;
+				st.close();
+			} catch (SQLException e) { e.printStackTrace();} 
+			finally { DBConnection.closeConnection();}	
+		} else {
+			try {
+				con = DBConnection.createConnection();
+				st = con.createStatement();
+				st.executeUpdate("update usuario set id_tipo_usuario = "+tipoUsuario+", contraseña='"+pass+"' where id_usuario="+idUsuario);
+				modifico = true;
+				st.close();
+			} catch (SQLException e) { e.printStackTrace();} 
+			finally { DBConnection.closeConnection();}
+		}
+		return modifico;
+	}
+	
+	public List<UsuarioVO> getListaEmpleados(){
+		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
+		con = null;
+		st = null;
+		rs = null;
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			rs = st.executeQuery("select * from usuario");
+			while(rs.next()) {
+				UsuarioVO u = new UsuarioVO();
+				u.setContraseña(rs.getString("contraseña"));
+				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setId_usuario(rs.getInt("id_usuario"));
+				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
+				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				listaUsuarios.add(u);
+			}			
+			rs.close();
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+		  finally { DBConnection.closeConnection(); }
+		
+		return listaUsuarios;
 	}
 }
