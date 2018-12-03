@@ -5,9 +5,9 @@ public class UsuarioVO {
 	private int id_usuario;
 	private String nombre_usuario;
 	private String contraseña;
-	private int id_tipo_usuario;
+	//private int id_tipo_usuario;
+	private Tipo_usuarioVO tipo_usuario;
 	private int legajo;
-	private int id_usuario_licencia;
 	
 	public int getId_usuario() {
 		return id_usuario;
@@ -27,11 +27,19 @@ public class UsuarioVO {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
+	/*
 	public int getId_tipo_usuario() {
 		return id_tipo_usuario;
 	}
 	public void setId_tipo_usuario(int id_tipo_usuario) {
 		this.id_tipo_usuario = id_tipo_usuario;
+	}
+	*/
+	public void setTipoUsuario(int id_tipo_usuario) {
+		this.tipo_usuario = new Tipo_usuarioVO(id_tipo_usuario);
+	}
+	public Tipo_usuarioVO getTipoUsuario() {
+		return tipo_usuario;
 	}
 	public int getLegajo() {
 		return legajo;
@@ -39,12 +47,4 @@ public class UsuarioVO {
 	public void setLegajo(int legajo) {
 		this.legajo = legajo;
 	}
-	public int getId_usuario_licencia() {
-		return id_usuario_licencia;
-	}
-	public void setId_usuario_licencia(int id_usuario_licencia) {
-		this.id_usuario_licencia = id_usuario_licencia;
-	}
-
-
 }

@@ -1,17 +1,20 @@
 package datos;
 import modelo.UsuarioVO;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class UsuarioDAO {
 	private Connection con = null;
 	private Statement st = null;
+	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 
 	public boolean validarUsuario(String user, String pass) {
 		boolean valido = false;
-		con = null;
-		st = null;
-		rs = null;
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
@@ -21,26 +24,119 @@ public class UsuarioDAO {
 				String u = rs.getString("nombre_usuario"); // Obtengo el nombre_usuario de la consulta
 				if (!rs.wasNull()) valido = true; // Si el getString de arriba no dio nulo, el usuario es valido
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBConnection.closeConnection();
-		}
+			rs.close();
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}
+		
 		return valido;
 	}
+	
 	public boolean altaUsuario(UsuarioVO user) {
 		boolean exito = false;
+		try {
+			con = DBConnection.createConnection();
+			ps = con.prepareStatement("INSERT INTO USUARIO VALUES(?,?,?,?)");
+			ps.setString(1,user.getNombre_usuario());
+			ps.setString(2,user.getContraseña());
+			ps.setInt(3, user.getTipoUsuario().getId_tipo_usuario());
+			ps.setInt(4, user.getLegajo());
+			ps.executeUpdate();
+			exito = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exito;
+	}
+	
+	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike){
+		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
 		con = null;
 		st = null;
 		rs = null;
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			//rs = st.executeQuery("insert ")
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			rs = st.executeQuery("select * from usuario where nombre_usuario like '%"+nombreLike+"%'");
+			while(rs.next()) {
+				UsuarioVO u = new UsuarioVO();
+				u.setContraseña(rs.getString("contraseña"));
+				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setId_usuario(rs.getInt("id_usuario"));
+				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
+				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				listaUsuarios.add(u);
+			}			
+			rs.close();
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+		  finally { DBConnection.closeConnection(); }
+		
+		return listaUsuarios;
+	}
+
+	public boolean eliminarUsuario(int id_usuario) {
+		boolean eliminado = false;
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("delete from usuario where id_usuario = "+id_usuario);
+			eliminado = true;
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}
+		
+		return eliminado;
+	}
+	
+	public boolean modificarUsuario(String pass, int tipoUsuario, int idUsuario) {
+		boolean modifico = false;
+		if (pass.isEmpty()){
+			try {
+				con = DBConnection.createConnection();
+				st = con.createStatement();
+				st.executeUpdate("update usuario set id_tipo_usuario = "+tipoUsuario+" where id_usuario="+idUsuario);
+				modifico = true;
+				st.close();
+			} catch (SQLException e) { e.printStackTrace();} 
+			finally { DBConnection.closeConnection();}	
+		} else {
+			try {
+				con = DBConnection.createConnection();
+				st = con.createStatement();
+				st.executeUpdate("update usuario set id_tipo_usuario = "+tipoUsuario+", contraseña='"+pass+"' where id_usuario="+idUsuario);
+				modifico = true;
+				st.close();
+			} catch (SQLException e) { e.printStackTrace();} 
+			finally { DBConnection.closeConnection();}
 		}
-		return exito;
+		return modifico;
+	}
+	
+	public List<UsuarioVO> getListaEmpleados(){
+		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
+		con = null;
+		st = null;
+		rs = null;
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			rs = st.executeQuery("select * from usuario");
+			while(rs.next()) {
+				UsuarioVO u = new UsuarioVO();
+				u.setContraseña(rs.getString("contraseña"));
+				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setId_usuario(rs.getInt("id_usuario"));
+				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
+				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				listaUsuarios.add(u);
+			}			
+			rs.close();
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+		  finally { DBConnection.closeConnection(); }
+		
+		return listaUsuarios;
 	}
 }
