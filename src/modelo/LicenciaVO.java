@@ -78,6 +78,20 @@ public class LicenciaVO {
 	public void setId_usuario_licencia(int id_usuario_licencia) {
 		this.id_usuario_licencia = id_usuario_licencia;
 	}
+	
+	 public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
+	     this.legajo = legajo ;
+	     this.DNI = dni;
+	     this.nombre = nombre;
+		 this.apellido = apellido;
+		 this.cuil = cuil;
+	     this.domicilio = domicilio;
+		 this.telefono = telefono;
+		 this.estado_civil = estado_civil;
+		 this.fecha_ingreso =  fecha_ingreso;
+		 this.antiguedad = antiguedad;
+		 this.estado = estado;
+		 this.cant_disponible = cant_disponible;
 
 
 }
