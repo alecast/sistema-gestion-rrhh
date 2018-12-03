@@ -66,7 +66,7 @@ public class UsuarioServlet extends HttpServlet {
 				} else {
 					usuVO.setNombre_usuario(request.getParameter("nombreUsuario"));
 					usuVO.setContraseña(request.getParameter("passUsuario"));
-					usuVO.setId_tipo_usuario((Integer.parseInt(request.getParameter("tipoUsuario")))); //Convertir a objeto
+					usuVO.setTipoUsuario(((Integer.parseInt(request.getParameter("tipoUsuario"))))); //Convertir a objeto
 					usuVO.setLegajo((Integer.parseInt(request.getParameter("legajo")))); //Validar contra base, debería ser un objeto Empleado
 					UsuarioDAO usuDAO = new UsuarioDAO();
 					if(usuDAO.altaUsuario(usuVO)) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Opciones.jsp").forward(request,response);
@@ -109,7 +109,37 @@ public class UsuarioServlet extends HttpServlet {
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);	
 			}
 		}
-		
+		//Modificación de Usuario
+		//El botón Modificar Usuario tiene un value igual a "ModificarUsuario" + el indice que trae de Base de datos
+		if(btn.contains("modificarUsuario")) { //Se fija que se haya apretado alguno de los "modificarUsuario"
+			int index = Integer.parseInt(btn.substring(16,btn.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
+			String nombreUsuario = request.getParameter("nombreUsuario"+btn.substring(16,btn.length()));
+			request.setAttribute("idUsuario", index);
+			request.setAttribute("nombreUsuario", nombreUsuario);
+			request.getRequestDispatcher("WEB-INF/JSP/Usuario/Modifica.jsp").forward(request, response);	
+		}
+		//Aceptar modifición de Usuario
+		//El botón Aceptar tiene un value igual a "AceptaModifica" + el indice que trae de Base de datos
+		if(btn.contains("aceptaModifica")) { //
+			String pass = request.getParameter("userPass");
+			String pass2 = request.getParameter("userPass2");
+			if(!pass.equals(pass2)) {
+				messages.put("error", "Las contraseñas no coinciden");
+				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Modifica.jsp").forward(request, response);
+			} else {
+				int index = Integer.parseInt(btn.substring(14,btn.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
+				int tipoUsuario = Integer.parseInt(request.getParameter("tipoUsuario"));
+				UsuarioDAO usuDAO = new UsuarioDAO();
+				if(usuDAO.modificarUsuario(pass,tipoUsuario,index)) {
+					messages.put("baja", "Usuario modificado exitosamente.");
+					List<UsuarioVO> listaUsuarios = usuDAO.getListaEmpleados();
+					request.setAttribute("listaUsuarios", listaUsuarios);
+					request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);				
+				} else {
+					messages.put("baja", "No se pudo modificar al usuario.");
+					request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);	
+				}
+			}
+		}
 	}
-
 }

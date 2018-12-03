@@ -1,0 +1,25 @@
+@charset "ISO-8859-1";
+.error {
+	color : red;
+}
+.success {
+	color : green;	
+}
+.masterHeader
+{
+	background-color: lightgray;
+	width: 100%;
+	text-align: center;
+	padding: 1%;
+}
+.login {
+	width: 330px;
+	text-align: center;
+}
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
