@@ -1,6 +1,8 @@
 @charset "ISO-8859-1";
 body {
+
    /* background-image:url("https://t3mexico.mx/home/wp-content/uploads/2018/09/2-7-e1497459707200.jpg" );*/
+
     color:#FFFFFF;
 }
 
@@ -19,7 +21,9 @@ h5{
 }
 
 body {
+
 /*background-image: url ("http://cdn2.marketingandweb.es/wp-content/uploads/2017/09/Marketing-and-Web-Miguel-2.jpg");*/
+
 background-repeat: no-repeat;
 background-attachment: fixed;
 background-attachment: center;

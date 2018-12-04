@@ -78,6 +78,15 @@ public class LicenciaVO {
 	public void setId_usuario_licencia(int id_usuario_licencia) {
 		this.id_usuario_licencia = id_usuario_licencia;
 	}
+	
+	 public LicenciaVO(int id_licencia, Date fecha_inicio, Date fecha_fin, LocalDateTime fecha_solicitud, int cant_dias, String descripcion) {
+	     this.id_licencia = id_licencia ;
+	     this.fecha_inicio = fecha_inicio;
+	     this.fecha_fin = fecha_fin;
+		 this.fecha_solicitud = fecha_solicitud;
+		 this.cant_dias = cant_dias;
+	     this.descripcion = descripcion;
 
 
+	 }
 }

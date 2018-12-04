@@ -1,23 +1,19 @@
 package datos;
-import modelo.EmpleadoVO;
-import modelo.UsuarioVO;
-
+import modelo.LicenciaVO;
 import java.sql.*;
 import datos.DBConnection;
-
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 
 
-public class EmpleadoDAO {
+public class LicenciaDAO {
 	private Connection con = null;
 	private PreparedStatement psst = null;
 	private ResultSet rs = null;
-    private Statement st = null;
+ 
 	
    
 //public void AltaEmpleado(empleado EmpleadoVO);
@@ -64,10 +60,10 @@ public class EmpleadoDAO {
 */
 
 
-public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
+public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Empleado(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible) values (?,?,?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Licencia(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible) values (?,?,?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -94,7 +90,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          
         
          int dni = ((EmpleadoVO) empleaVO).getDNI();
-         String cuil = ((EmpleadoVO) empleaVO).getCuil();
+         int cuil = ((EmpleadoVO) empleaVO).getCuil();
          String nombre = ((EmpleadoVO) empleaVO).getNombre();
          String apellido = ((EmpleadoVO) empleaVO).getApellido();
          String domicilio = ((EmpleadoVO) empleaVO).getDomicilio();
@@ -122,7 +118,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
           }*/
           
          psst.setInt       (1, dni);
-         psst.setString       (2, cuil);
+         psst.setInt       (2, cuil);
          psst.setString    (3, nombre);
          psst.setString    (4, apellido);
          psst.setString    (5, domicilio);
@@ -158,47 +154,8 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          con.close();
 
 	
-	}
-
-
-public List<EmpleadoVO> getListaEmpleados(){
-	List<EmpleadoVO> listaEmpleado = new ArrayList<EmpleadoVO>();
-	con = null;
-	st = null;
-	rs = null;
 	
-	try {
-		con = DBConnection.createConnection();
-		st = con.createStatement();
-		rs = st.executeQuery("select * from empleado");
-		while(rs.next()) {
-			EmpleadoVO emp = new EmpleadoVO();
-		
-			emp.setLegajo(rs.getInt("legajo")) ;
-			emp.setDNI(rs.getInt("dni"));
-			emp.setNombre(rs.getString("nombre"));
-			emp.setApellido(rs.getString("apellido"));
-			emp.setCuil(rs.getString("cuil"));
-			emp.setDomicilio(rs.getString("domicilio")) ;
-			emp.setTelefono(rs.getInt("telefono"));
-			emp.setEstado_civil(rs.getString("estado_civil"));
-			emp.setFecha_ingreso(rs.getDate("fecha_ingreso"));
-			emp.setAntiguedad(rs.getInt("antiguedad")) ;
-			emp.setEstado(rs.getString("estado"));
-			emp.setCant_disponible(rs.getInt("cant_disponible"));
-			
-			
-			listaEmpleado.add(emp);
-		}			
-		rs.close();
-		st.close();
-	} catch (SQLException e) { e.printStackTrace();}
-	  finally { DBConnection.closeConnection(); }
-	
-	return listaEmpleado;
 }
-
-
 public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
     return new java.sql.Date(date.getTime());
 }

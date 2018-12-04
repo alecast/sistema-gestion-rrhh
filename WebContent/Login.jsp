@@ -10,6 +10,11 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Estilos.css">
 </head> 
 <body>
+
+<!-- dentro de lps div es html. 
+	el form es un formulario
+	el a es un link -->
+
 <div class="vertical-center">
     <div class="container login">
 	    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
@@ -23,6 +28,5 @@
 	        ¿Olvidó su contraseña?
 	    </a>
     </div><!-- /container -->
-</div>
 </body>
 </html>
