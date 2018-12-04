@@ -9,7 +9,7 @@
 </head>
 <body>
  <h3> Nuevo Empleado </h3>
-<form action="EmpleadoNuevo.jsp" method="post">
+<form action="${pageContext.request.contextPath}/EmpleadoServlet" method="post">
     <h5>Legajo:
     <input type="text" name="legajo" size="3" disabled>
     <br/>
