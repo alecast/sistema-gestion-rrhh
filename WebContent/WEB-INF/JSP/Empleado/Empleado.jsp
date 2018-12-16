@@ -32,7 +32,7 @@
     <input type="text" name="telefono" size="8" maxlength="8">
     <br/>  
     Estado civil:<br/>
-    <input type="Radio" name="estado_civil" value= "Soltero"checked> Soltero/a <br/>
+   <input type="Radio" name="estado_civil" value= "Soltero"checked> Soltero/a <br/>
    <input type="Radio" name= "estado_civil" value="Casado"> Casado/a <br/>
    <input type="Radio" name= "estado_civil" value="Divorsiado"> Divorsiado/a  <br/>
    <input type="Radio" name= "estado_civil" value="Viudo"> Viudo/a<br/>
@@ -47,16 +47,16 @@
     <br/>
    Tipo de Empleado:
     <select name="Tipo de Empleado">
-      <option value="sistemas">Area sistemas
-      <option value="recursos">Area recursos
+      <option value="sistemas">Area sistemas</option>
+      <option value="recursos">Area recursos</option>
     </select>
     <br/>
    Tipo de categoria:
     <select name="Tipo de Categoria">
-      <option value="coordinador">Coordinador
-      <option value="secretario">Secretario
-      <option value="sub_secretario">Sub secretario
-      <option value="empleado">Empleado
+      <option value="coordinador">Coordinador</option>
+      <option value="secretario">Secretario</option>
+      <option value="sub_secretario">Sub secretario</option>
+      <option value="empleado">Empleado</option>
     </select>
     <br/>
     <!--<input type="submit" name="btnEmpleado" value="Cancelar"> <input type="submit" name="btnEmpleado" value="Cargar Empleado"> -->
