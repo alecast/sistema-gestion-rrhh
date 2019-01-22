@@ -28,5 +28,6 @@
 	        ¿Olvidó su contraseña?
 	    </a>
     </div><!-- /container -->
+</div>
 </body>
 </html>

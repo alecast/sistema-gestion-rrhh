@@ -84,7 +84,8 @@ public class LicenciaServlet extends HttpServlet {
 			}
 			  
 			
-			   
+			/* DESCOMENTAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 			   LicenciaVO licenVO = new LicenciaVO (id_licencia, cant_dias, fecha_inicio, fecha_fin, fecha_solicitud, request.getParameter("descripcion") );
            //  try { // empleDAO.Alta(empleaVO);
                     try {

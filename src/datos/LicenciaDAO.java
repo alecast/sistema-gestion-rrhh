@@ -85,7 +85,7 @@ public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
          empleaVO.setApellido("cant_disponible");
          
         */
-         
+         /* DESCOMENTAR
          java.sql.Date f =  convertJavaDateToSqlDate(((EmpleadoVO) empleaVO).getFecha_ingreso());
          
         
@@ -100,7 +100,7 @@ public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
          int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
          String estado = ((EmpleadoVO) empleaVO).getEstado();
          int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
-
+		*/
       
         //  Date f = DateServlet.ParseFecha(fecha_ingreso); 
           
@@ -116,7 +116,8 @@ public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
           catch (ParseException e) {
               e.printStackTrace();
           }*/
-          
+         
+         /*
          psst.setInt       (1, dni);
          psst.setInt       (2, cuil);
          psst.setString    (3, nombre);
@@ -128,7 +129,7 @@ public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
          psst.setInt       (9, antiguedad); 
          psst.setString    (10, estado);
          psst.setInt       (11, cant_disponible);
-        
+         */
          
     /*
         
