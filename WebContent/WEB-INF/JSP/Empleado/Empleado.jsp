@@ -14,7 +14,7 @@
  <h3> Nuevo Empleado </h3>
 <form action="EmpleadoServlet" method="post">
     <h5>Legajo:
-    <input type="text" name="legajo" size="3" disabled>
+    <input type="text" name="legajo" size="3" disabled placeholder="${j}">
     <br/>
     Cuil:
     <input type="text" name="cuil" size="2" maxlength="2">-<input type="text" name="DNI" size="8" maxlength="8">-<input type="text" name="cuil2" size="1" maxlength="1">
@@ -59,6 +59,8 @@
       <option value="empleado">Empleado</option>
     </select>
     <br/>
+    
+    <span class="error">${messages.error}</span>
     <!--<input type="submit" name="btnEmpleado" value="Cancelar"> <input type="submit" name="btnEmpleado" value="Cargar Empleado"> -->
      <button type="submit" name="btnEmpleado" value="Cancelar" >Cancelar</button><button type="submit" name="btnEmpleado" value="CargarE" >Cargar Empleado</button>
     </h5>

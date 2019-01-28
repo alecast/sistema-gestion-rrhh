@@ -117,10 +117,14 @@ public List<EmpleadoVO> getListaEmpleadosPorNombre(String CampoLike, String Radi
 	con = null;
 	st = null;
 	rs = null;
+	
 	try {
+		String Q ="select * from empleado where "+RadioBusquedaPor+" like '%"+CampoLike+"%' and estado not like 'Inactivo'";
+		if (Ch_inactivo.contains("Inactivo")) Q = "select * from empleado where "+RadioBusquedaPor+" like '%"+CampoLike+"%'";
+		
 		con = DBConnection.createConnection();
 		st = con.createStatement();
-		rs = st.executeQuery("select * from empleado where "+RadioBusquedaPor+" like '%"+CampoLike+"%' and estado not like'%"+Ch_inactivo+"%'");
+		rs = st.executeQuery(Q);
 		while(rs.next()) {
 			EmpleadoVO emp = new EmpleadoVO();
 			
@@ -153,7 +157,7 @@ public void BajarEmpleado(String EstadoEmpleado, int legajo) {
 	try {
 		con = DBConnection.createConnection();
 		st = con.createStatement();
-		st.executeUpdate("update empleado set estado = "+EstadoEmpleado+" where legajo ="+legajo+"");
+		st.executeUpdate("update empleado set estado = '"+EstadoEmpleado+"' where legajo ="+legajo+"");
 		
 		st.close();
 	} catch (SQLException e) { e.printStackTrace();} 
@@ -162,6 +166,104 @@ public void BajarEmpleado(String EstadoEmpleado, int legajo) {
 	
 	
 }
+public EmpleadoVO getEmpleado(int legajo)
+{
+	
+	EmpleadoVO emp = new EmpleadoVO();
+	con = null;
+	st = null;
+	rs = null;
+	
+	try {
+		
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select * from empleado where legajo ='"+legajo+"' "); 
+		while(rs.next()) {
+			
+			
+			emp.setLegajo(rs.getInt("legajo")) ;
+			emp.setDNI(rs.getInt("dni"));
+			emp.setNombre(rs.getString("nombre"));
+			emp.setApellido(rs.getString("apellido"));
+			emp.setCuil(rs.getString("cuil"));
+			emp.setDomicilio(rs.getString("domicilio")) ;
+			emp.setTelefono(rs.getInt("telefono"));
+			emp.setEstado_civil(rs.getString("estado_civil"));
+			emp.setFecha_ingreso(rs.getDate("fecha_ingreso"));
+			emp.setAntiguedad(rs.getInt("antiguedad")) ;
+			emp.setEstado(rs.getString("estado"));
+			emp.setCant_disponible(rs.getInt("cant_disponible"));
+			
+			
+		}
+		rs.close();
+		st.close();
+		
+	} catch (SQLException e) { e.printStackTrace();} 
+	finally { DBConnection.closeConnection();}
+	return emp;
+}
+public EmpleadoVO getEmpleadoPorDni(int dni)
+{
+	
+	EmpleadoVO emp = new EmpleadoVO();
+	con = null;
+	st = null;
+	rs = null;
+	
+	try {
+		
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select * from empleado where dni ='"+dni+"' "); 
+		while(rs.next()) {
+			
+			
+			emp.setLegajo(rs.getInt("legajo")) ;
+			emp.setDNI(rs.getInt("dni"));
+			emp.setNombre(rs.getString("nombre"));
+			emp.setApellido(rs.getString("apellido"));
+			emp.setCuil(rs.getString("cuil"));
+			emp.setDomicilio(rs.getString("domicilio")) ;
+			emp.setTelefono(rs.getInt("telefono"));
+			emp.setEstado_civil(rs.getString("estado_civil"));
+			emp.setFecha_ingreso(rs.getDate("fecha_ingreso"));
+			emp.setAntiguedad(rs.getInt("antiguedad")) ;
+			emp.setEstado(rs.getString("estado"));
+			emp.setCant_disponible(rs.getInt("cant_disponible"));
+			
+			
+		}
+		rs.close();
+		st.close();
+		
+	} catch (SQLException e) { e.printStackTrace();} 
+	finally { DBConnection.closeConnection();}
+	return emp;
+}
 
+public int getMaxLegajo()
+
+{   int Legajo=0;
+	con = null;
+	st = null;
+	rs = null;
+try {
+		
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select max(legajo+1) as s from empleado "); 
+		while( rs.next()){
+		Legajo = rs.getInt("s");
+		}
+	
+
+rs.close();
+st.close();
+
+} catch (SQLException e) { e.printStackTrace();} 
+finally { DBConnection.closeConnection();}
+return Legajo;}
 
 }

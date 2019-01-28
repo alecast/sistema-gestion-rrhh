@@ -85,12 +85,12 @@
   			  </select>
 		  	</div>
 		  	
-		      <input type="hidden" name="nombreEmpleado${nombreEmpleado}" value="${legajo}">
+		      <input type="hidden" name="nombreEmpleado${nombreEmpleado}" value="${Legajo}">
 		  	<div class="form-gruop"><span class="error">${messages.error}</span></div>
 		  	<div class="form-group">
 		  		<button type="submit" name="btnEmpleado" value="volverOpciones">Volver</button>
-		  		<button type="submit" name="btnEmpleado" value="aceptaModifica${legajo}">Aceptar</button>		  	
-		  		<button type="submit" name="btnEmpleado" value="Inactivo${legajo}">Dar de baja Empleado</button>			
+		  		<button type="submit" name="btnEmpleado" value="aceptaModifica${Legajo}">Aceptar</button>		  	
+		  		<button type="submit" name="btnEmpleado" value="Inactivo${Legajo}">Dar de baja Empleado</button>			
 		  	</div>			
 		</form>
 	</div>

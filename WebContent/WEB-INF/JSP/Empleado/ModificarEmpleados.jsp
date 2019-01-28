@@ -21,7 +21,7 @@
 			     <input type="Radio" name= "RadioBusquedaPor" value="dni"checked> DNI
   				 <input type="Radio" name= "RadioBusquedaPor" value="nombre"> Nombre
   				 <input type="Radio" name= "RadioBusquedaPor" value="apellido"> Apellido
-  				 <input type="Radio" name= "RadioBusquedaPor" value="legajo"> Legajo </td>                     <td>  Excluir empleados inactivos <input type="checkbox" name= "Ch_inactivo" value="Inactivo" checked></tr>
+  				 <input type="Radio" name= "RadioBusquedaPor" value="legajo"> Legajo </td>                     <td>  Incluir empleados inactivos <input type="checkbox" name= "Ch_inactivo" value="Inactivo"></tr>
 			
 			<tr><td><span class="error">${messages.error}</span></td></tr>
 			<tr><td>
