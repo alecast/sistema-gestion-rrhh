@@ -41,7 +41,7 @@ public class UsuarioDAO {
 			ps.setString(2,user.getContraseña());
 			ps.setInt(3, user.getTipoUsuario().getId_tipo_usuario());
 			ps.setInt(4, user.getEmpleado().getLegajo());
-			ps.setString(5, user.getEstado());
+			ps.setString(5, "Activo");
 			ps.executeUpdate();
 			exito = true;
 		} catch (SQLException e) {
@@ -51,15 +51,18 @@ public class UsuarioDAO {
 		return exito;
 	}
 	
-	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike){
+	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike, boolean activo){
 		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
 		con = null;
 		st = null;
 		rs = null;
+		String query = "";
+		if (activo) query = "select * from usuario where nombre_usuario like '%"+nombreLike+"%' and estado != 'Inactivo'"; 
+		else query = "select * from usuario where nombre_usuario like '%"+nombreLike+"%'";
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			rs = st.executeQuery("select * from usuario where nombre_usuario like '%"+nombreLike+"%'");
+			rs = st.executeQuery(query);
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
@@ -67,6 +70,7 @@ public class UsuarioDAO {
 				u.setId_usuario(rs.getInt("id_usuario"));
 				u.setEmpleado(rs.getInt("legajo"));
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				u.setEstado(rs.getString("estado"));
 				listaUsuarios.add(u);
 			}			
 			rs.close();
@@ -128,15 +132,18 @@ public class UsuarioDAO {
 		return modifico;
 	}
 	
-	public List<UsuarioVO> getListaUsuarios(){
+	public List<UsuarioVO> getListaUsuarios(boolean activo){
 		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
 		con = null;
 		st = null;
 		rs = null;
+		String query = "";
+		if (activo) query = "select * from usuario where estado != 'Inactivo'"; 
+		else query = "select * from usuario";
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			rs = st.executeQuery("select * from usuario");
+			rs = st.executeQuery(query);
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
@@ -144,6 +151,7 @@ public class UsuarioDAO {
 				u.setId_usuario(rs.getInt("id_usuario"));
 				u.setEmpleado(rs.getInt("legajo")); 
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				u.setEstado(rs.getString("estado"));
 				listaUsuarios.add(u);
 			}			
 			rs.close();

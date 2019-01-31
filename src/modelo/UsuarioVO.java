@@ -1,5 +1,7 @@
 package modelo;
 
+import datos.EmpleadoDAO;;
+
 public class UsuarioVO {
 	
 	private int id_usuario;
@@ -24,7 +26,8 @@ public class UsuarioVO {
 		this.id_usuario = id_usuario;
 	}
 	public void setEmpleado(int legajo) {
-		this.empleado = getEmpleado(int legajo);
+		EmpleadoDAO empleDAO = new EmpleadoDAO();
+		this.empleado = empleDAO.getEmpleado(legajo);
 	}
 	public EmpleadoVO getEmpleado() {
 		return empleado;

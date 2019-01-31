@@ -102,13 +102,13 @@ public class EmpleadoVO {
 	     this.setNombre(nombre);
 		 this.setApellido(apellido);
 		 this.setCuil(cuil);
-	     this.domicilio = domicilio;
-		 this.telefono = telefono;
-		 this.estado_civil = estado_civil;
-		 this.fecha_ingreso =  fecha_ingreso;
-		 this.antiguedad = antiguedad;
-		 this.estado = estado;
-		 this.cant_disponible = cant_disponible;
+	     this.setDomicilio(domicilio);
+		 this.setTelefono(telefono);
+		 this.setEstado_civil(estado_civil);
+		 this.setFecha_ingreso(fecha_ingreso);
+		 this.setAntiguedad(antiguedad);
+		 this.setEstado(estado);
+		 this.setCant_disponible(cant_disponible);
 		
 	   
 	  

@@ -2,7 +2,6 @@
 <head>
 <title>Nuevo Empleado</title>
 </head>
-
 <body>
  
  Se Cargo el nuevo Empleado

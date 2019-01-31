@@ -23,6 +23,7 @@
 	        <input type="text" name="userLogin" class="form-control" placeholder="Usuario" required autofocus>
 	        <input type="password" name="passLogin" class="form-control" placeholder="Contraseña" required>
 	        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="btnMain" value="login">Inicia sesión</button>
+	    <span class="error">${messages.error}</span>
 	    </form><!-- /form -->
 	    <a href="#" class="forgot-password">
 	        ¿Olvidó su contraseña?
