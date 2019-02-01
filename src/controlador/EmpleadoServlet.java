@@ -68,35 +68,48 @@ public class EmpleadoServlet extends HttpServlet {
 			 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				//request.getRequestDispatcher("/WEB-INF/JSP/Empleado/EmpleadoNuevo.jsp").forward(request, response);
 		     //  int Legajo = Integer.parseInt(request.getParameter("Legajo"));
+			   
+			   String Cuil=(request.getParameter("Cuil1")+request.getParameter("DNI")+request.getParameter("Cuil2"));
 			   int DNI = Integer.parseInt(request.getParameter("DNI"));
-			  // int cuil = Integer.parseInt(request.getParameter("cuil"));
 			   int telefono = Integer.parseInt(request.getParameter("telefono"));
 			   int antiguedad = Integer.parseInt(request.getParameter("antiguedad"));
 			   int cant_disponible = Integer.parseInt(request.getParameter("cant_disponible"));
 			   Date fecha_ingreso = null;
+			   
+			   int x = empleDAO.getMaxLegajo();
+			   int tipo = Integer.parseInt(request.getParameter("tipoEmpleado"));
+			   int categoria = Integer.parseInt(request.getParameter("tipoCategoria"));
+			   
 			try {
 				fecha_ingreso = dateFormat.parse(request.getParameter("fecha_ingreso"));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			     if( empleDAO.getEmpleadoPorDni(DNI).equals(null)){
+			     if( empleDAO.getEmpleadoPorDni(DNI)!=(null)){
 			       
-				   EmpleadoVO empleaVO = new EmpleadoVO (1000 , DNI, "cuil", request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
+				   EmpleadoVO empleaVO = new EmpleadoVO (1000 , DNI, Cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
          
                     try {
 						empleDAO.AltaEmpleado( empleaVO);
+						empleDAO.AltaTipo(x,tipo,fecha_ingreso);
+					    empleDAO.AltaCategoria(x,categoria,fecha_ingreso);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}}
+					}
+                    request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
+			    	    
+			     }
+			   
+		    	 
 			     else {
 			    	 messages.put("error","Ya existe un empleado con ese numero de DNI");
 			    	 request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado.jsp").forward(request, response);
 			    	 
 			     }
 			 }
-		else if(btnEmpleado.equals("Cancelar"))
+		 else if(btnEmpleado.equals("Cancelar"))
 				{
 			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
 				}
@@ -180,5 +193,8 @@ public class EmpleadoServlet extends HttpServlet {
 	
 	
 	}
+
+	
+	
 	}
 

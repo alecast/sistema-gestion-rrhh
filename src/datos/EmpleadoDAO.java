@@ -266,4 +266,69 @@ st.close();
 finally { DBConnection.closeConnection();}
 return Legajo;}
 
+
+
+
+public void AltaTipo(int x ,int tipo ,java.util.Date fecha) throws SQLException {
+	
+	// TODO Auto-generated method stub
+	String query = "INSERT INTO Empleado_tipo(legajo, id_tipo_empleado, fecha_alta ) values (?,?,?)";
+
+	
+		 con = DBConnection.createConnection();
+		
+		
+       psst = con.prepareStatement(query);
+      
+
+       java.sql.Date f =  convertJavaDateToSqlDate(fecha);
+       
+     
+        
+       psst.setInt       (1, x);
+       psst.setInt    (2, tipo);
+       psst.setDate      (3, f);
+      
+       
+
+       // Indicamos que comience la actualización de la tabla en nuestra base de datos
+        psst.executeUpdate();
+
+       // Cerramos las conexiones, en orden inverso a su apertura
+       psst.close();
+       con.close();
+
+	
+}
+public void AltaCategoria(int x ,int categoria ,java.util.Date fecha) throws SQLException {
+	
+	// TODO Auto-generated method stub
+	String query = "INSERT INTO Empleado_Categoria(legajo, id_tipo_categoria, fecha_alta ) values (?,?,?)";
+
+	
+		 con = DBConnection.createConnection();
+		
+		
+       psst = con.prepareStatement(query);
+      
+
+       java.sql.Date f =  convertJavaDateToSqlDate(fecha);
+       
+     
+        
+       psst.setInt       (1, x);
+       psst.setInt    (2, categoria);
+       psst.setDate      (3, f);
+      
+       
+
+       // Indicamos que comience la actualización de la tabla en nuestra base de datos
+        psst.executeUpdate();
+
+       // Cerramos las conexiones, en orden inverso a su apertura
+       psst.close();
+       con.close();
+
+	
+}
 }
