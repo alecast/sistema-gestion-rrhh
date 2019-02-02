@@ -16,6 +16,7 @@ public class UsuarioDAO {
 	public boolean validarUsuario(String user, String pass) {
 		boolean valido = false;
 		try {
+			
 			con = DBConnection.createConnection();
 			st = con.createStatement();
 			rs = st.executeQuery("select nombre_usuario,contraseña from usuario where nombre_usuario = '"+user+"' and contraseña = '"+pass+"'");

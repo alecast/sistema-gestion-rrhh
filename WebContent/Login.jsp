@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Inicio de Sesión</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">   		
 <script src="js/bootstrap.min.js"></script> 
@@ -28,5 +29,6 @@
 	        ¿Olvidó su contraseña?
 	    </a>
     </div><!-- /container -->
+    </div>
 </body>
 </html>

@@ -17,6 +17,7 @@
 		<table>
 			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
 	    	<tr><td><button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
+	    	<tr><td><button type="submit" name="btnMain" value="licencia" >Gestión de licencias</button></td></tr>
 		</table>
 	</form>
 </div>

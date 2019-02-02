@@ -2,19 +2,18 @@ package datos;
 import modelo.LicenciaVO;
 import java.sql.*;
 import datos.DBConnection;
-import java.sql.Date;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class LicenciaDAO {
 	private Connection con = null;
 	private PreparedStatement psst = null;
 	private ResultSet rs = null;
- 
-	
+	private Statement st = null;
    
 //public void AltaEmpleado(empleado EmpleadoVO);
 //EmpleadoVO empleado = new EmpleadoVO();
@@ -59,49 +58,35 @@ public class LicenciaDAO {
 }
 */
 
-
-public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
+public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Licencia(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible) values (?,?,?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, usuario_aprobado, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
 		 //Connection con = new connection();
 		
          psst = con.prepareStatement(query);
-        
          
-      /* empleaVO.setDNI(dni);
-         empleaVO.setNombre("cuil");
-         empleaVO.setApellido("nombre");
-         empleaVO.setApellido("apellido");
-         empleaVO.setApellido("domicilio");
-         empleaVO.setApellido("telefono");
-         empleaVO.setApellido("estado_civil");
-         empleaVO.setApellido("fecha_ingreso");
-         empleaVO.setApellido("antiguedad");
-         empleaVO.setApellido("estado");
-         empleaVO.setApellido("cant_disponible");
-         
-        */
-         
-         java.sql.Date f =  convertJavaDateToSqlDate(((EmpleadoVO) empleaVO).getFecha_ingreso());
-         
-        
-         int dni = ((EmpleadoVO) empleaVO).getDNI();
-         int cuil = ((EmpleadoVO) empleaVO).getCuil();
-         String nombre = ((EmpleadoVO) empleaVO).getNombre();
-         String apellido = ((EmpleadoVO) empleaVO).getApellido();
-         String domicilio = ((EmpleadoVO) empleaVO).getDomicilio();
-         int telefono = ((EmpleadoVO) empleaVO).getTelefono();
-         String estado_civil = ((EmpleadoVO) empleaVO).getEstado_civil();
-       //  java.sql.Date fecha_ingreso = ((EmpleadoVO) empleaVO).getFecha_ingreso();
-         int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
-         String estado = ((EmpleadoVO) empleaVO).getEstado();
-         int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
+        // int id_licencia = ((LicenciaVO) licenVO).getId_licencia();
+         java.sql.Date f =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_inicio());
+         java.sql.Date g =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_fin());
+         java.sql.Date h =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_solicitud());
+         int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
+         String descripcion = ((LicenciaVO) licenVO).getDescripcion();
+         String motivo = ((LicenciaVO) licenVO).getMotivo();
+         String certificado = ((LicenciaVO) licenVO).getCertificado();
+         int usuario_aprobado = ((LicenciaVO) licenVO).getUsuario_aprobado();
+         int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();          
 
-      
+
+       //  Date fecha_inicio = ((LicenciaVO) licenVO).getFecha_inicio();
+       //  Date fecha_fin = ((LicenciaVO) licenVO).getFecha_fin();     
+       //  setLocalDateTime fecha_solicitud = ((LicenciaVO) licenVO).getFecha_solicitud();         
+
+       //  java.sql.Date fecha_ingreso = ((EmpleadoVO) empleaVO).getFecha_ingreso();
+
         //  Date f = DateServlet.ParseFecha(fecha_ingreso); 
           
         //  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -115,19 +100,23 @@ public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
           } 
           catch (ParseException e) {
               e.printStackTrace();
-          }*/
-          
-         psst.setInt       (1, dni);
-         psst.setInt       (2, cuil);
-         psst.setString    (3, nombre);
-         psst.setString    (4, apellido);
-         psst.setString    (5, domicilio);
-         psst.setInt       (6, telefono);
-         psst.setString    (7, estado_civil);
-         psst.setDate      (8, f);
-         psst.setInt       (9, antiguedad); 
-         psst.setString    (10, estado);
-         psst.setInt       (11, cant_disponible);
+          }*/          
+
+         //psst.setInt            (1, id_licencia);
+         psst.setDate           (1, f);
+         psst.setDate           (2, g);
+         psst.setDate  			(3, h);
+         psst.setInt            (4, cant_dias);
+         psst.setString         (5, descripcion);
+         psst.setString         (6, motivo);
+         psst.setString         (7, certificado);
+         psst.setInt            (8, usuario_aprobado);         
+         psst.setInt         	(9, id_empleado_licencia);
+         
+  //       psst.setString         (6, motivo);
+  //       psst.setString         (7, certificado);
+   //      psst.setInt            (8, usuario_aprobado); 
+    //     psst.setInt            (9, 1);
         
          
     /*
@@ -147,16 +136,95 @@ public void AltaEmpleado(LicenciaVO licenVO) throws SQLException {
         */
    
          // Indicamos que comience la actualización de la tabla en nuestra base de datos
-          psst.executeUpdate();
+         psst.executeUpdate();
+
 
          // Cerramos las conexiones, en orden inverso a su apertura
          psst.close();
          con.close();
-
-	
 	
 }
+
+public void AltaEstadoLicencia (String estado, int id_licencia, Date fecha_solicitud ) {
+	
+	// TODO Auto-generated method stub
+	String query = "INSERT INTO Estado_lic(estado,fecha_cambio, id_licencia) values (?,?,?)";
+
+	// try {
+		 con = DBConnection.createConnection();
+		 //Connection con = new connection();
+		
+         try {
+        	 java.sql.Date f =  convertJavaDateToSqlDate(fecha_solicitud);
+        	 psst = con.prepareStatement(query);         
+        	 psst.setString         (1, estado);
+        	 psst.setDate  			(2, f);
+        	 psst.setInt            (3, id_licencia);
+        	
+        	 psst.executeUpdate();
+        	 psst.close();
+        	 con.close();
+         } catch (SQLException e) {}
+	
+}
+
+public int ultimoIdLicencia()
+{ 
+	int p =0;
+	try {
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select MAX(id_licencia+1)as numero from Licencia");
+		
+		while (rs.next()) { //Se fija si hay una fila resultado de la consulta
+			p = rs.getInt("numero"); // Obtengo el nombre_usuario de la consulta			
+		}
+		
+		rs.close();
+		st.close();		
+		
+	} catch (SQLException e) { e.printStackTrace();} 
+	finally { DBConnection.closeConnection();}
+	return p;
+	
+	
+			
+			
+	}
 public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
     return new java.sql.Date(date.getTime());
+
+}
+
+public LicenciaVO getLicencia(int id_licencia) {
+	
+	LicenciaVO lic = new LicenciaVO();
+	con = null;
+	st = null;
+	rs = null;
+	
+	try {		
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select * from licencia where id_licencia ='"+id_licencia+"' "); 
+		while(rs.next()) 
+		{
+			lic.setId_licencia(rs.getInt("id_licencia"));
+			lic.setDescripcion(rs.getString("descripcion"));
+			lic.setFecha_inicio(rs.getDate("fecha_inicio"));
+			lic.setFecha_fin(rs.getDate("fecha_fin"));
+			lic.setFecha_solicitud(rs.getDate("fecha_solicitud"));
+			lic.setCant_dias(rs.getInt("cant_dias"));
+			lic.setMotivo(rs.getString("motivo"));
+			lic.setCertificado(rs.getString("certificado")) ;
+			lic.setUsuario_aprobado(rs.getInt("usuario_aprobado"));
+			lic.setId_empleado_licencia(rs.getInt("id_empleado_licencia"));		
+		}
+		rs.close();
+		st.close();
+		
+	} catch (SQLException e) { e.printStackTrace();} 
+	finally { DBConnection.closeConnection();}
+return lic;
 }
 }
