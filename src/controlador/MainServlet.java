@@ -56,7 +56,7 @@ public class MainServlet extends HttpServlet {
 
 		  else if(btn.equals("empleado")) request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);		
 
-		  else if(btn.equals("licencia")) request.getRequestDispatcher("/LicenciaOpciones.jsp").forward(request, response);
+		  else if(btn.equals("licencia")) request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);
 		
 
 	}

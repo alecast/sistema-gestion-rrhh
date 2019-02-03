@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -15,9 +14,11 @@
 <div class="container">
 	<h1>Bienvenido ${nombreUsuario} </h1>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
-	    <button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button>
-	    <button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button>
-	    <button type="submit" name="btnMain" value="licencia" >Gestión de Licencias</button>
+		<table>
+			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
+	    	<tr><td><button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
+	    	<tr><td><button type="submit" name="btnMain" value="licencia" >Gestión de licencias</button></td></tr>
+		</table>
 	</form>
 </div>
 </body>
