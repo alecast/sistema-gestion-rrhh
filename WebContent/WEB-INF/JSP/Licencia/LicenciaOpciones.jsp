@@ -18,9 +18,12 @@
 		<table>
 			<tr><td><h1>Gestión de Licencias</h1></td></tr>
 			<tr><td><button type="submit" name="btnLicencia" value="alta" >Nueva Licencia</button></td></tr>
+			<!-- 
 			<tr><td><button type="submit" name="btnLicencia" value="baja" >Eliminar Licencia</button></td></tr>
 			<tr><td><button type="submit" name="btnLicencia" value="modificacion" >Modificar Licencia</button></td></tr>
+			 -->
 			<tr><td><button type="submit" name="btnLicencia" value="listado" >Listado de Licencias</button></td></tr>
+			<tr><td><button type="submit" name="btnLicencia" value="volverMenu" >Volver</button></td></tr>
 		</table>
 	</form>
 </body>
