@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
 <title>Inicio de Sesión</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">   		
 <script src="js/bootstrap.min.js"></script> 
@@ -24,11 +23,11 @@
 	        <input type="text" name="userLogin" class="form-control" placeholder="Usuario" required autofocus>
 	        <input type="password" name="passLogin" class="form-control" placeholder="Contraseña" required>
 	        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="btnMain" value="login">Inicia sesión</button>
+	    <span class="error">${messages.error}</span>
 	    </form><!-- /form -->
 	    <a href="#" class="forgot-password">
 	        ¿Olvidó su contraseña?
 	    </a>
     </div><!-- /container -->
-    </div>
+</div>
 </body>
-</html>

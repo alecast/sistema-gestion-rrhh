@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import datos.EmpleadoDAO;
 import datos.UsuarioDAO;
+import modelo.EmpleadoVO;
 import modelo.UsuarioVO;
 
 /**
@@ -57,28 +59,49 @@ public class UsuarioServlet extends HttpServlet {
 			String pass = request.getParameter("passUsuario");
 			String pass2 = request.getParameter("pass2Usuario"); 
 			if(legajo.isEmpty() || nombreUsuario.isEmpty() || pass.isEmpty() || pass2.isEmpty()) {
-				messages.put("error","Debe completar todos los campos");
+				messages.put("error","Debe completar todos los campos.");
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
 			} else {
 				if(!pass.equals(pass2)) {
-					messages.put("error", "Las contraseñas no coinciden");
+					messages.put("error", "Las contraseñas no coinciden.");
 					request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
 				} else {
-					usuVO.setNombre_usuario(request.getParameter("nombreUsuario"));
-					usuVO.setContraseña(request.getParameter("passUsuario"));
-					usuVO.setTipoUsuario(((Integer.parseInt(request.getParameter("tipoUsuario"))))); //Convertir a objeto
-					usuVO.setLegajo((Integer.parseInt(request.getParameter("legajo")))); //Validar contra base, debería ser un objeto Empleado
-					UsuarioDAO usuDAO = new UsuarioDAO();
-					if(usuDAO.altaUsuario(usuVO)) request.getRequestDispatcher("WEB-INF/JSP/Usuario/Opciones.jsp").forward(request,response);
-					else request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
-					messages.put("error", "No se pudo agregar el usuario correctamente");
+					EmpleadoDAO empleDAO = new EmpleadoDAO();
+					EmpleadoVO empleVO = empleDAO.getEmpleado(Integer.parseInt(legajo));
+					// Consulto en base por un empleado con ese legajo, a lo que trae, lo comparto con el legajo ingresado
+					if( empleVO.getLegajo() != Integer.parseInt(legajo)) {
+						messages.put("error", "No existe empleado para el legajo ingresado.");
+						request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);	
+					} else  {
+						if (empleVO.getEstado().equals("Inactivo")) {
+							messages.put("error", "El empleado ingresado no está activo actualmente.");
+							request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);	
+						} else {
+							usuVO.setNombre_usuario(nombreUsuario);
+							usuVO.setContraseña(pass);
+							usuVO.setTipoUsuario(((Integer.parseInt(request.getParameter("tipoUsuario"))))); 
+							usuVO.setEmpleado((Integer.parseInt(legajo))); 
+							UsuarioDAO usuDAO = new UsuarioDAO();
+							if(usuDAO.altaUsuario(usuVO)) {
+								messages.put("success", "Usuario registrado exitosamente.");
+								request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
+							} else {
+								messages.put("error", "No se pudo agregar el usuario correctamente.");
+								request.getRequestDispatcher("WEB-INF/JSP/Usuario/Alta.jsp").forward(request, response);
+							}
+						}
+					}
 				}
 			}
 		}
 		//Ingreso a búsqueda, traer listado entero
 		if(btn.equals("busqueda")) {
+			String activo = request.getParameter("chbUsuInactivo"); //Checkbox para buscar usuarios inactivos
+			boolean usuActivo = true; 
 			UsuarioDAO usuDAO = new UsuarioDAO();
-			List<UsuarioVO> listaUsuarios = usuDAO.getListaEmpleados();
+			List<UsuarioVO> listaUsuarios;
+			if (activo != null) usuActivo = false;
+			listaUsuarios = usuDAO.getListaUsuarios(usuActivo);
 			request.setAttribute("listaUsuarios", listaUsuarios);
 			request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
 		}
@@ -87,11 +110,14 @@ public class UsuarioServlet extends HttpServlet {
 		if(btn.equals("aceptarBusqueda")) {
 			String nombreLike = request.getParameter("nombreLike");
 			if(nombreLike.isEmpty()) {
-				messages.put("error","Debe completar todos los campos");
+				messages.put("error","Debe completar todos los campos.");
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);	
 			} else {
+				String activo = request.getParameter("chbUsuInactivo"); //Checkbox para buscar usuarios inactivos
+				boolean usuActivo = true; 
 				UsuarioDAO usuDAO = new UsuarioDAO();
-				List<UsuarioVO> listaUsuariosLike = usuDAO.getListaUsuariosPorNombre(nombreLike);
+				if (activo != null) usuActivo = false;
+				List<UsuarioVO> listaUsuariosLike = usuDAO.getListaUsuariosPorNombre(nombreLike,usuActivo);
 				request.setAttribute("listaUsuariosLike", listaUsuariosLike);
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
 			}
@@ -101,8 +127,10 @@ public class UsuarioServlet extends HttpServlet {
 		if(btn.contains("eliminarUsuario")) { //Se fija que se haya apretado alguno de los "eliminarUsuario"
 			int index = Integer.parseInt(btn.substring(15,btn.length())); //Índice que saca del value en el JSP, lo usa para eliminar ese usuario
 			UsuarioDAO usuDAO = new UsuarioDAO();
-			if(usuDAO.eliminarUsuario(index)) {
-				messages.put("baja", "Se eliminó al usuario correctamente");
+			if(usuDAO.bajaUsuario(index)) {
+				messages.put("baja", "Se eliminó al usuario correctamente.");
+				List<UsuarioVO> listaUsuarios = usuDAO.getListaUsuarios(true);
+				request.setAttribute("listaUsuarios", listaUsuarios);
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);				
 			} else {
 				messages.put("baja", "No se pudo eliminar el usuario");
@@ -124,7 +152,7 @@ public class UsuarioServlet extends HttpServlet {
 			String pass = request.getParameter("userPass");
 			String pass2 = request.getParameter("userPass2");
 			if(!pass.equals(pass2)) {
-				messages.put("error", "Las contraseñas no coinciden");
+				messages.put("error", "Las contraseñas no coinciden.");
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Modifica.jsp").forward(request, response);
 			} else {
 				int index = Integer.parseInt(btn.substring(14,btn.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
@@ -132,7 +160,7 @@ public class UsuarioServlet extends HttpServlet {
 				UsuarioDAO usuDAO = new UsuarioDAO();
 				if(usuDAO.modificarUsuario(pass,tipoUsuario,index)) {
 					messages.put("baja", "Usuario modificado exitosamente.");
-					List<UsuarioVO> listaUsuarios = usuDAO.getListaEmpleados();
+					List<UsuarioVO> listaUsuarios = usuDAO.getListaUsuarios(true);
 					request.setAttribute("listaUsuarios", listaUsuarios);
 					request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);				
 				} else {

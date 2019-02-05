@@ -1,19 +1,36 @@
 package modelo;
 
+import datos.EmpleadoDAO;;
+
 public class UsuarioVO {
 	
 	private int id_usuario;
+	private EmpleadoVO empleado;
 	private String nombre_usuario;
 	private String contraseña;
 	//private int id_tipo_usuario;
 	private Tipo_usuarioVO tipo_usuario;
-	private int legajo;
+	//private int legajo;	
+	private String estado;
 	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	public int getId_usuario() {
 		return id_usuario;
 	}
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
+	}
+	public void setEmpleado(int legajo) {
+		EmpleadoDAO empleDAO = new EmpleadoDAO();
+		this.empleado = empleDAO.getEmpleado(legajo);
+	}
+	public EmpleadoVO getEmpleado() {
+		return empleado;
 	}
 	public String getNombre_usuario() {
 		return nombre_usuario;
@@ -41,10 +58,12 @@ public class UsuarioVO {
 	public Tipo_usuarioVO getTipoUsuario() {
 		return tipo_usuario;
 	}
+	/*
 	public int getLegajo() {
 		return legajo;
 	}
 	public void setLegajo(int legajo) {
 		this.legajo = legajo;
 	}
+	*/
 }

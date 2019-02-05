@@ -6,6 +6,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.EmpleadoVO;
+
 import datos.EmpleadoDAO;
+import datos.UsuarioDAO;
+
 
 /**
  * Servlet implementation class UsuarioAlta
@@ -38,88 +44,157 @@ public class EmpleadoServlet extends HttpServlet {
 	}
 
 	/**
+	 * @param btn 
 	 * @param fecha_ingreso 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		 Map<String, String> messages = new HashMap<String, String>();
+	        request.setAttribute("messages", messages);
 		String btnEmpleado = request.getParameter("btnEmpleado");
 		EmpleadoDAO empleDAO = new EmpleadoDAO();
 		if(btnEmpleado.equals("alta"))
 			{
-			request.getRequestDispatcher("/Empleado.jsp").forward(request, response);
+			
+			int j = empleDAO.getMaxLegajo();
+			request.setAttribute("j", j);
+			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado.jsp").forward(request, response);
 			}
 		else if (btnEmpleado.equals("CargarE"))
 			
 			
 				{ 
 			 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				request.getRequestDispatcher("/EmpleadoNuevo.jsp").forward(request, response);
+				//request.getRequestDispatcher("/WEB-INF/JSP/Empleado/EmpleadoNuevo.jsp").forward(request, response);
 		     //  int Legajo = Integer.parseInt(request.getParameter("Legajo"));
+			   
+			   String Cuil=(request.getParameter("Cuil1")+request.getParameter("DNI")+request.getParameter("Cuil2"));
 			   int DNI = Integer.parseInt(request.getParameter("DNI"));
-			   int cuil = Integer.parseInt(request.getParameter("cuil"));
 			   int telefono = Integer.parseInt(request.getParameter("telefono"));
 			   int antiguedad = Integer.parseInt(request.getParameter("antiguedad"));
 			   int cant_disponible = Integer.parseInt(request.getParameter("cant_disponible"));
 			   Date fecha_ingreso = null;
+			   
+			   int x = empleDAO.getMaxLegajo();
+			   int tipo = Integer.parseInt(request.getParameter("tipoEmpleado"));
+			   int categoria = Integer.parseInt(request.getParameter("tipoCategoria"));
+			   
 			try {
 				fecha_ingreso = dateFormat.parse(request.getParameter("fecha_ingreso"));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			  
-			
-			   
-			//   java.sql.Date f =  convertJavaDateToSqlDate(fecha_ingreso);
-			  
-					   
-		/*		   
-					 java.sql.Date f = DateServlet.ParseFecha(request.getParameter("fecha_ingreso")); 
-				          
-				         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				         java.sql.Date date;
-				          try {
-				              date = (java.sql.Date)dateFormat.parse("fecha_ingreso");
-				              System.out.println(date.toString()); // Wed Dec 04 00:00:00 CST 2013
-
-				              String output = dateFormat.format(date);
-				              System.out.println(output); // 2013-12-04
-				          } 
-				          catch (ParseException e) {
-				              e.printStackTrace();
-				          
-				          }
-			   
-			   */
-			   
-			   EmpleadoVO empleaVO = new EmpleadoVO (5 , DNI, cuil, request.getParameter("nombre"), "apellido", "domicilio", telefono, "estado_civil", fecha_ingreso, antiguedad,"estado", cant_disponible );
-           //  try { // empleDAO.Alta(empleaVO);
+			     if( empleDAO.getEmpleadoPorDni(DNI)!=(null)){
+			       
+				   EmpleadoVO empleaVO = new EmpleadoVO (1000 , DNI, Cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
+         
                     try {
 						empleDAO.AltaEmpleado( empleaVO);
+						empleDAO.AltaTipo(x,tipo,fecha_ingreso);
+					    empleDAO.AltaCategoria(x,categoria,fecha_ingreso);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-			//	empleDAO.Insertar(DNI,cuil,request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("domicilio"),telefono ,request.getParameter("estado_civil"),request.getParameter("fecha_ingreso"), antiguedad ,request.getParameter("estado"), cant_disponible);    
-			//	} catch(Exception e) 
-            /*        {
-			         System.out.println("Error!, Servlet");
-			     }*/ }
-		else if(btnEmpleado.equals("Cancelar"))
+                    request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
+			    	    
+			     }
+			   
+		    	 
+			     else {
+			    	 messages.put("error","Ya existe un empleado con ese numero de DNI");
+			    	 request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado.jsp").forward(request, response);
+			    	 
+			     }
+			 }
+		 else if(btnEmpleado.equals("Cancelar"))
 				{
-			request.getRequestDispatcher("/Empleado Opciones.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
 				}
-        	}
-         
-     /*	else
+		else if(btnEmpleado.equals("volverMenu"))
 		{
-			request.getRequestDispatcher("/Empleado Opciones.jsp").forward(request, response);
-		}*/
-		//( btnEmpleado.equals("Modificar")
+			request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
+		}
+		else if(btnEmpleado.equals("volverOpciones"))
+		{
+			request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);
+		}
+		else if(btnEmpleado.equals("busqueda"))
+		{
+	  
+		EmpleadoDAO EmpleDAO = new EmpleadoDAO();
+		List<EmpleadoVO> listaEmpleado = EmpleDAO.getListaEmpleados();
+		request.setAttribute("listaEmpleados", listaEmpleado);
+		request.getRequestDispatcher("/WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);	
+		}
+		
+		else if(btnEmpleado.contains("modificar")) { //Se fija que se haya apretado alguno de los "modificarUsuario"
+			int index = Integer.parseInt(btnEmpleado.substring(9,btnEmpleado.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
+			String nombreEmpleado = request.getParameter("nombreEmpleado"+btnEmpleado.substring(9,btnEmpleado.length()));
+			request.setAttribute("Legajo", index);
+			request.setAttribute("nombreEmpleado", nombreEmpleado);
+			request.getRequestDispatcher("WEB-INF/JSP/Empleado/Modificar_Empleados.jsp").forward(request, response);	
+		}
+		else if(btnEmpleado.equals("aceptarBusqueda")) {
+			String CampoLike = request.getParameter("CampoLike");
+			String RadioBusquedaPor = request.getParameter("RadioBusquedaPor");
+			String Ch_inactivo = request.getParameter("Ch_inactivo");
+			if(CampoLike.isEmpty()) {
+				messages.put("error","Debe completar todos los campos");
+				request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);	
+			} else {
+				if(Ch_inactivo==null) {
+				 Ch_inactivo="";
+					
+				}
+				
+				EmpleadoDAO EmpleDAO = new EmpleadoDAO();
+				List<EmpleadoVO> listaEmpleadosLike = EmpleDAO.getListaEmpleadosPorNombre(CampoLike,RadioBusquedaPor ,Ch_inactivo );
+				request.setAttribute("listaEmpleadosLike", listaEmpleadosLike);
+				request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);
+			}
+		   }
 
-/*
-public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
-    return new java.sql.Date(date.getTime());
-}*/
-}
+		else if(btnEmpleado.contains("Inactivo")){
+			//String EstadoEmpleado = request.getParameter("nombreEmpleado"+btnEmpleado.substring(0,btnEmpleado.length()));
+			String EstadoEmpleado ="Inactivo";
+			int legajo = Integer.parseInt(btnEmpleado.substring(8,btnEmpleado.length()));
+			EmpleadoDAO EmpleDao= new EmpleadoDAO();
+			//UsuarioDAO UserDao = new UsuarioDAO();
+			// UserDao.bajaUsuarioPorLegajo(legajo);
+		     EmpleDao.BajarEmpleado(EstadoEmpleado,legajo);
+		     request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);
+			
+		}
+		
+	       
+	else if(btnEmpleado.contains("aceptaModifica")) {
+		String CampoLike = request.getParameter("CampoLike");
+		String RadioBusquedaPor = request.getParameter("RadioBusquedaPor");
+		String Ch_inactivo = request.getParameter("Ch_inactivo");
+		if(CampoLike.isEmpty()) {
+			messages.put("error","Debe completar todos los campos");
+			request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);	
+		} else {
+			if(Ch_inactivo==null) {
+			 Ch_inactivo="";
+				
+			}
+			
+			EmpleadoDAO EmpleDAO = new EmpleadoDAO();
+			List<EmpleadoVO> listaEmpleadosLike = EmpleDAO.getListaEmpleadosPorNombre(CampoLike,RadioBusquedaPor ,Ch_inactivo );
+			request.setAttribute("listaEmpleadosLike", listaEmpleadosLike);
+			request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);
+		}
+	   }
+	
+	
+	
+	}
+
+	
+	
+	}
+

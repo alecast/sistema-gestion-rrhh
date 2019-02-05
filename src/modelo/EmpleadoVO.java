@@ -13,7 +13,7 @@ public class EmpleadoVO {
 	private String nombre;
 	private String apellido;
 	private int DNI;
-	private int   cuil;
+	private String   cuil;
 	private String  domicilio;
 	private int    telefono;
 	private String     estado_civil;
@@ -46,10 +46,10 @@ public class EmpleadoVO {
 	public void setDNI(int dNI) {
 		this.DNI = dNI;
 	}
-	public int getCuil() {
+	public String getCuil() {
 		return cuil;
 	}
-	public void setCuil(int cuil) {
+	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
 	public String getDomicilio() {
@@ -96,24 +96,27 @@ public class EmpleadoVO {
 	}
 	
 	
-	  public EmpleadoVO(int legajo,int dni,int cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
-	     this.legajo = legajo ;
-	     this.DNI = dni;
-	     this.nombre = nombre;
-		 this.apellido = apellido;
-		 this.cuil = cuil;
-	     this.domicilio = domicilio;
-		 this.telefono = telefono;
-		 this.estado_civil = estado_civil;
-		 this.fecha_ingreso =  fecha_ingreso;
-		 this.antiguedad = antiguedad;
-		 this.estado = estado;
-		 this.cant_disponible = cant_disponible;
+	  public EmpleadoVO(int legajo,int dni,String cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
+	     this.setLegajo(legajo) ;
+	     this.setDNI(dni);
+	     this.setNombre(nombre);
+		 this.setApellido(apellido);
+		 this.setCuil(cuil);
+	     this.setDomicilio(domicilio);
+		 this.setTelefono(telefono);
+		 this.setEstado_civil(estado_civil);
+		 this.setFecha_ingreso(fecha_ingreso);
+		 this.setAntiguedad(antiguedad);
+		 this.setEstado(estado);
+		 this.setCant_disponible(cant_disponible);
 		
 	   
 	  
 	  
 	  }
+	public EmpleadoVO() {
+		// TODO Auto-generated constructor stub
+	}
 
 		 
 
