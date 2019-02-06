@@ -143,7 +143,7 @@ public class EmpleadoServlet extends HttpServlet {
 		else if(btnEmpleado.contains("modificar")) { //Se fija que se haya apretado alguno de los "modificarUsuario"
 			int index = Integer.parseInt(btnEmpleado.substring(9,btnEmpleado.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
 			String nombreEmpleado = request.getParameter("nombreEmpleado"+btnEmpleado.substring(9,btnEmpleado.length()));
-			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			//DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			EmpleadoDAO EmpleDAO = new EmpleadoDAO();
 			EmpleadoVO EmpleVO = new EmpleadoVO();
 			EmpleVO = EmpleDAO.getEmpleado(index);
@@ -213,8 +213,8 @@ public class EmpleadoServlet extends HttpServlet {
 			String EstadoEmpleado ="Inactivo";
 			int legajo = Integer.parseInt(btnEmpleado.substring(8,btnEmpleado.length()));
 			EmpleadoDAO EmpleDao= new EmpleadoDAO();
-			//UsuarioDAO UserDao = new UsuarioDAO();
-			// UserDao.bajaUsuarioPorLegajo(legajo);
+			UsuarioDAO UserDao = new UsuarioDAO();
+			 UserDao.bajaUsuarioPorLegajo(legajo);
 		     EmpleDao.BajarEmpleado(EstadoEmpleado,legajo);
 		     request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);
 			

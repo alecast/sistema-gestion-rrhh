@@ -100,6 +100,8 @@
 		  		  
 		  		<button type="submit" class="btn btn-danger" name="btnEmpleado" value="volverOpciones">Cancelar</button>	
 		  		<button type="submit" class="btn btn-success" name="btnEmpleado" value="CargarE">Aceptar</button>  	
+		  		
+                 <input class="btn btn-primary" type="reset" value="Limpiar campos">
 		 			
 		  	</div>			
 		</form>
