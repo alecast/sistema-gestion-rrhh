@@ -2,6 +2,9 @@ package controlador;
 
 import datos.UsuarioDAO;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +37,9 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, String> messages = new HashMap<String, String>();
+        request.setAttribute("messages", messages);
+        
 		String btn = request.getParameter("btnMain");
 		if(btn.equals("login")){	
 			String user = request.getParameter("userLogin");
@@ -43,10 +49,16 @@ public class MainServlet extends HttpServlet {
 				request.setAttribute("nombreUsuario", user);
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 			} else {
+				messages.put("error","Usuario y/o contraseña incorrectos.");				
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			}		
 		} else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
+
 		  else if(btn.equals("empleado")) request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);		
+
+		  else if(btn.equals("licencia")) request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);
+		
+
 	}
 
 }

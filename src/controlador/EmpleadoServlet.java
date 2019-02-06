@@ -1,3 +1,4 @@
+
 package controlador;
 
 import java.io.IOException;
@@ -308,4 +309,3 @@ public class EmpleadoServlet extends HttpServlet {
 	
 	}
 }
-

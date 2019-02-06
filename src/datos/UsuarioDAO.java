@@ -36,11 +36,12 @@ public class UsuarioDAO {
 		boolean exito = false;
 		try {
 			con = DBConnection.createConnection();
-			ps = con.prepareStatement("INSERT INTO USUARIO VALUES(?,?,?,?)");
+			ps = con.prepareStatement("INSERT INTO USUARIO VALUES(?,?,?,?,?)");
 			ps.setString(1,user.getNombre_usuario());
 			ps.setString(2,user.getContraseña());
 			ps.setInt(3, user.getTipoUsuario().getId_tipo_usuario());
-			ps.setInt(4, user.getLegajo());
+			ps.setInt(4, user.getEmpleado().getLegajo());
+			ps.setString(5, "Activo");
 			ps.executeUpdate();
 			exito = true;
 		} catch (SQLException e) {
@@ -50,22 +51,26 @@ public class UsuarioDAO {
 		return exito;
 	}
 	
-	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike){
+	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike, boolean activo){
 		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
 		con = null;
 		st = null;
 		rs = null;
+		String query = "";
+		if (activo) query = "select * from usuario where nombre_usuario like '%"+nombreLike+"%' and estado != 'Inactivo'"; 
+		else query = "select * from usuario where nombre_usuario like '%"+nombreLike+"%'";
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			rs = st.executeQuery("select * from usuario where nombre_usuario like '%"+nombreLike+"%'");
+			rs = st.executeQuery(query);
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
-				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); 
 				u.setId_usuario(rs.getInt("id_usuario"));
-				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
+				u.setEmpleado(rs.getInt("legajo"));
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				u.setEstado(rs.getString("estado"));
 				listaUsuarios.add(u);
 			}			
 			rs.close();
@@ -76,12 +81,25 @@ public class UsuarioDAO {
 		return listaUsuarios;
 	}
 
-	public boolean eliminarUsuario(int id_usuario) {
+	public boolean bajaUsuario(int id_usuario) {
 		boolean eliminado = false;
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			st.executeUpdate("delete from usuario where id_usuario = "+id_usuario);
+			st.executeUpdate("update usuario set estado = 'Inactivo' where id_usuario = "+id_usuario);
+			eliminado = true;
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}
+		
+		return eliminado;
+	}
+	public boolean bajaUsuarioPorLegajo(int legajo) {
+		boolean eliminado = false;
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("update usuario set estado = 'Inactivo' where legajo = "+legajo);
 			eliminado = true;
 			st.close();
 		} catch (SQLException e) { e.printStackTrace();} 
@@ -114,22 +132,26 @@ public class UsuarioDAO {
 		return modifico;
 	}
 	
-	public List<UsuarioVO> getListaEmpleados(){
+	public List<UsuarioVO> getListaUsuarios(boolean activo){
 		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
 		con = null;
 		st = null;
 		rs = null;
+		String query = "";
+		if (activo) query = "select * from usuario where estado != 'Inactivo'"; 
+		else query = "select * from usuario";
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			rs = st.executeQuery("select * from usuario");
+			rs = st.executeQuery(query);
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
-				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); //Debería ser un llamado a un objeto
+				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); 
 				u.setId_usuario(rs.getInt("id_usuario"));
-				u.setLegajo(rs.getInt("legajo")); //Debería ser un llamado a un objeto
+				u.setEmpleado(rs.getInt("legajo")); 
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
+				u.setEstado(rs.getString("estado"));
 				listaUsuarios.add(u);
 			}			
 			rs.close();

@@ -1,9 +1,8 @@
 package modelo;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
+//import java.time.LocalDateTime;
+//import javax.print.attribute.standard.DateTimeAtCompleted;
 
 public class LicenciaVO {
 	
@@ -11,12 +10,12 @@ public class LicenciaVO {
 	private String descripcion;
 	private Date fecha_inicio;
 	private Date fecha_fin;
-	private LocalDateTime fecha_solicitud;
+	private Date fecha_solicitud;
 	private int cant_dias;
 	private String motivo;
 	private String certificado;
 	private int usuario_aprobado;
-	private int id_usuario_licencia;
+	private int id_empleado_licencia;
 	
 	public int getId_licencia() {
 		return id_licencia;
@@ -42,10 +41,10 @@ public class LicenciaVO {
 	public void setFecha_fin(Date fecha_fin) {
 		this.fecha_fin = fecha_fin;
 	}
-	public LocalDateTime getFecha_solicitud() {
+	public Date getFecha_solicitud() {
 		return fecha_solicitud;
 	}
-	public void setFecha_solicitud(LocalDateTime fecha_solicitud) {
+	public void setFecha_solicitud(Date fecha_solicitud) {
 		this.fecha_solicitud = fecha_solicitud;
 	}
 	public int getCant_dias() {
@@ -72,12 +71,31 @@ public class LicenciaVO {
 	public void setUsuario_aprobado(int usuario_aprobado) {
 		this.usuario_aprobado = usuario_aprobado;
 	}
-	public int getId_usuario_licencia() {
-		return id_usuario_licencia;
+	public int getId_empleado_licencia() {
+		return id_empleado_licencia;
 	}
-	public void setId_usuario_licencia(int id_usuario_licencia) {
-		this.id_usuario_licencia = id_usuario_licencia;
+	public void setId_empleado_licencia(int id_empleado_licencia) {
+		this.id_empleado_licencia = id_empleado_licencia;
 	}
-
-
+	
+	 public LicenciaVO(int id_licencia, Date fecha_inicio, Date fecha_fin, Date fecha_solicitud, int cant_dias, String descripcion, String motivo, String certificado, int usuario_aprobado, int id_empleado_licencia) {
+	     this.setId_licencia(id_licencia);
+	     this.setFecha_inicio(fecha_inicio);
+	     this.setFecha_fin(fecha_fin);
+		 this.setFecha_solicitud(fecha_solicitud);
+		 this.setCant_dias(cant_dias);
+	     this.setDescripcion(descripcion);
+		 this.setMotivo(motivo);
+		 this.setCertificado(certificado);
+		 this.setUsuario_aprobado(usuario_aprobado);
+	     this.setId_empleado_licencia(id_empleado_licencia);
+	 }
+	 
+	public LicenciaVO(int id_licencia2, int cant_dias2, Date fecha_inicio2, Date fecha_fin2, Date fecha_solicitud2,
+			String descripcion2) {
+		// TODO Auto-generated constructor stub
+	}
+	public LicenciaVO() {
+		// TODO Auto-generated constructor stub
+	}
 }

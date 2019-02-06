@@ -10,6 +10,11 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Estilos.css">
 </head> 
 <body>
+
+<!-- dentro de lps div es html. 
+	el form es un formulario
+	el a es un link -->
+
 <div class="vertical-center">
     <div class="container login">
 	    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
@@ -18,6 +23,7 @@
 	        <input type="text" name="userLogin" class="form-control" placeholder="Usuario" required autofocus>
 	        <input type="password" name="passLogin" class="form-control" placeholder="Contraseña" required>
 	        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="btnMain" value="login">Inicia sesión</button>
+	    <span class="error">${messages.error}</span>
 	    </form><!-- /form -->
 	    <a href="#" class="forgot-password">
 	        ¿Olvidó su contraseña?
@@ -25,4 +31,3 @@
     </div><!-- /container -->
 </div>
 </body>
-</html>

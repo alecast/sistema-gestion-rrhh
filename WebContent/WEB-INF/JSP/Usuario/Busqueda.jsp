@@ -15,7 +15,10 @@
 <div class="container">
 	<form action="${pageContext.request.contextPath}/UsuarioServlet" method="post">
 		<table>
-			<tr><td>Nombre Usuario: <input type="text" name="nombreLike" ></td></tr>
+			<tr>
+				<td>Nombre Usuario: <input type="text" name="nombreLike" ></td>
+				<td><input type="checkbox" name="chbUsuInactivo" value="Inactivo"> Incluir usuarios inactivos
+			</tr>
 			<!-- 
 			<tr><td>Ingrese alguno de siguientes campos:</td></tr>
 			<tr><td>ID Usuario: <input type="text" name="idUsuario"></td></tr>  
@@ -33,14 +36,18 @@
 					        <th scope="col">ID</th>
 					        <th scope="col">Nombre Usuario</th>
 					        <th scope="col">Legajo</th>
+					        <th scope="col">Estado</th>
 					    </tr>
 					</thead>
 				    <c:forEach items="${listaUsuarios}" var="usuario">
 				        <tr>
 				            <td>${usuario.id_usuario}</td>
-				            <td><c:out value="${usuario.nombre_usuario}" /></td>
-				            <td><input type="hidden" name="nombreUsuario${usuario.id_usuario}" value="${usuario.nombre_usuario}"></td>
-							<td><c:out value="${usuario.legajo}" /></td>
+				            <td>
+					            <c:out value="${usuario.nombre_usuario}" />
+					            <input type="hidden" name="nombreUsuario${usuario.id_usuario}" value="${usuario.nombre_usuario}">
+					        </td>
+							<td><c:out value="${usuario.empleado.legajo}"/></td>
+							<td>${usuario.estado}</td>
 							<td><button type="submit" name="btnUsuario" value="modificarUsuario${usuario.id_usuario}">Modificar</button></td>
 							<td><button type="submit" name="btnUsuario" value="eliminarUsuario${usuario.id_usuario}">Eliminar</button></td>
 				        </tr>
@@ -55,13 +62,18 @@
 					        <th scope="col">ID</th>
 					        <th scope="col">Nombre Usuario</th>
 					        <th scope="col">Legajo</th>
+					        <th scope="col">Estado</th>
 					    </tr>
 					</thead>
 				    <c:forEach items="${listaUsuariosLike}" var="usuario">
 				        <tr>
 				            <td>${usuario.id_usuario}</td>
-				            <td><c:out value="${usuario.nombre_usuario}" /></td>
-							<td><c:out value="${usuario.legajo}" /></td>
+				            <td>
+					            <c:out value="${usuario.nombre_usuario}" />
+					            <input type="hidden" name="nombreUsuario${usuario.id_usuario}" value="${usuario.nombre_usuario}">
+					        </td>				            
+							<td><c:out value="${usuario.empleado.legajo}" /></td>
+							<td>${usuario.estado}</td>
 							<td><button type="submit" name="btnUsuario" value="modificarUsuario${usuario.id_usuario}">Modificar</button></td>
 							<td><button type="submit" name="btnUsuario" value="eliminarUsuario${usuario.id_usuario}">Eliminar</button></td>
 				        </tr>

@@ -26,6 +26,7 @@
 				</select>
 			</td></tr>
 			<tr><td><span class="error">${messages.error}</span></td></tr>
+			<tr><td><span >${messages.success}</span></td></tr>
 			<tr><td>
 				<button type="submit" name="btnUsuario" value="volverOpciones">Volver</button>
 				<button type="submit" name="btnUsuario" value="confirmaAlta">Aceptar</button>
