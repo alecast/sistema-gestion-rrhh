@@ -162,8 +162,8 @@ public class EmpleadoServlet extends HttpServlet {
 			String EstadoEmpleado ="Inactivo";
 			int legajo = Integer.parseInt(btnEmpleado.substring(8,btnEmpleado.length()));
 			EmpleadoDAO EmpleDao= new EmpleadoDAO();
-			//UsuarioDAO UserDao = new UsuarioDAO();
-			// UserDao.bajaUsuarioPorLegajo(legajo);
+			 UsuarioDAO UserDao = new UsuarioDAO();
+			 UserDao.bajaUsuarioPorLegajo(legajo);
 		     EmpleDao.BajarEmpleado(EstadoEmpleado,legajo);
 		     request.getRequestDispatcher("WEB-INF/JSP/Empleado/ModificarEmpleados.jsp").forward(request, response);
 			

@@ -64,7 +64,7 @@ public class LicenciaDAO {
 public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, usuario_aprobado, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -80,7 +80,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          String descripcion = ((LicenciaVO) licenVO).getDescripcion();
          String motivo = ((LicenciaVO) licenVO).getMotivo();
          String certificado = ((LicenciaVO) licenVO).getCertificado();
-         int usuario_aprobado = ((LicenciaVO) licenVO).getUsuario_aprobado();
+         int legajo_adm = ((LicenciaVO) licenVO).getUsuario_aprobado();
          int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();          
 
 
@@ -113,7 +113,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          psst.setString         (5, descripcion);
          psst.setString         (6, motivo);
          psst.setString         (7, certificado);
-         psst.setInt            (8, usuario_aprobado);         
+         psst.setInt            (8, legajo_adm);         
          psst.setInt         	(9, id_empleado_licencia);
          
   //       psst.setString         (6, motivo);
@@ -151,7 +151,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 public void AltaEstadoLicencia (String estado, int id_licencia, Date fecha_solicitud ) {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Estado_lic(estado,fecha_cambio, id_licencia) values (?,?,?)";
+	String query = "INSERT INTO Estado_lic(estado,fecha_iniciacion, id_licencia) values (?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
