@@ -266,8 +266,115 @@ st.close();
 finally { DBConnection.closeConnection();}
 return Legajo;}
 
+public void modificarEmpleado(EmpleadoVO empleaVO) {
+	
+
+    java.sql.Date f =  convertJavaDateToSqlDate(((EmpleadoVO) empleaVO).getFecha_ingreso());
+    
+    int legajo = ((EmpleadoVO) empleaVO).getLegajo();
+    int dni = ((EmpleadoVO) empleaVO).getDNI();
+    String cuil = ((EmpleadoVO) empleaVO).getCuil();
+    String nombre = ((EmpleadoVO) empleaVO).getNombre();
+    String apellido = ((EmpleadoVO) empleaVO).getApellido();
+    String domicilio = ((EmpleadoVO) empleaVO).getDomicilio();
+    int telefono = ((EmpleadoVO) empleaVO).getTelefono();
+    String estado_civil = ((EmpleadoVO) empleaVO).getEstado_civil();
+    int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
+    String estado = ((EmpleadoVO) empleaVO).getEstado();
+    int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
+
+ 
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("update Empleado set dni="+dni+",cuil='"+cuil+"' ,nombre='"+nombre+"',apellido='"+apellido+"',domicilio='"+domicilio+"',telefono= "+telefono+",estado_civil='"+estado_civil+"',fecha_ingreso='"+f+"',antiguedad="+antiguedad+",estado='"+estado+"',cant_disponible="+cant_disponible+"  where legajo="+legajo+"");
+			
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}	
+	
+	}
+	
+
+public void modificarCategoria(int x,int Categoria ,java.util.Date fecha ) {
+	
+
+    java.sql.Date f =  convertJavaDateToSqlDate(fecha);
+    
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("update Empleado_categoria set fecha_baja='"+f+"' where legajo ="+x+" and id_categoria ="+Categoria+"");
+			
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}	
+	
+	}
+	
+
+public void modificarTipo(int x,int tipo ,java.util.Date fecha ) {
+	
+
+    java.sql.Date f =  convertJavaDateToSqlDate(fecha);
+    
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("update Empleado_tipo set fecha_baja='"+f+"' where legajo ="+x+" and id_tipo_empleado ="+tipo+"");
+			
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}	
+	
+	}
+	
 
 
+public int getMaxIdTipo(int legajo)
+
+{   int id=0;
+	con = null;
+	st = null;
+	rs = null;
+try {
+		
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select max(id_Empleado_tipo) as s from Empleado_tipo where legajo = "+legajo+" "); 
+		while( rs.next()){
+		id = rs.getInt("s");
+		}
+	
+
+rs.close();
+st.close();
+
+} catch (SQLException e) { e.printStackTrace();} 
+finally { DBConnection.closeConnection();}
+return id;}
+public int getMaxIdCate(int legajo)
+
+{   int id=0;
+	con = null;
+	st = null;
+	rs = null;
+try {
+		
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select max(id_Empleado_categoria) as s from Empleado_tipo where legajo = "+legajo+" "); 
+		while( rs.next()){
+		id = rs.getInt("s");
+		}
+	
+
+rs.close();
+st.close();
+
+} catch (SQLException e) { e.printStackTrace();} 
+finally { DBConnection.closeConnection();}
+return id;}
 
 public void AltaTipo(int x ,int tipo ,java.util.Date fecha) throws SQLException {
 	
@@ -303,7 +410,7 @@ public void AltaTipo(int x ,int tipo ,java.util.Date fecha) throws SQLException 
 public void AltaCategoria(int x ,int categoria ,java.util.Date fecha) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Empleado_Categoria(legajo, id_tipo_categoria, fecha_alta ) values (?,?,?)";
+	String query = "INSERT INTO Empleado_Categoria(legajo, id_categoria, fecha_alta ) values (?,?,?)";
 
 	
 		 con = DBConnection.createConnection();

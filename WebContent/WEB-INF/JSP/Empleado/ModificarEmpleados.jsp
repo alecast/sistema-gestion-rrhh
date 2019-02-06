@@ -33,6 +33,7 @@
  	
  	
  <c:if test="${not empty listaEmpleados}">
+ <div class="table-responsive {-xl}">
 				<table class="table">
 					<thead class="thead-dark">
 					    <tr>
@@ -81,9 +82,11 @@
 			    	</c:forEach>
 			    	<tr><td><span >${messages.baja}</span></td></tr>
 				</table>
+				</div>
 		</c:if>
 		
 		<c:if test="${not empty listaEmpleadosLike}">
+		<div class="table-responsive {-xl}">
 				<table class="table">
 					<thead class="thead-dark">
 					    <tr>
@@ -124,12 +127,14 @@
 							
 							
 							
-	 
+	
 							
 				        </tr>
 			    	</c:forEach>
 			    	<tr><td><span >${messages.baja}</span></td></tr>
+			    	
 				</table>
+				</div>
 		</c:if>
 			<button type="submit" name="btnEmpleado" value="volverOpciones">Volver</button>
 		</form>
