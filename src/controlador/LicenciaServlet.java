@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,30 +63,25 @@ public class LicenciaServlet extends HttpServlet {
 				Date fecha_inicio = null;
 				Date fecha_fin = null;
 				Date fecha_solicitud = null;
-				int cant_dias = Integer.parseInt(request.getParameter("cant_dias"));
+				//int cant_dias = Integer.parseInt(request.getParameter("cant_dias"));
+				int cant_dias = 0;
 				String motivo = request.getParameter("motivo");
 				String certificado = request.getParameter("certificado");
-				int usuario_aprobado = 1;
+				int legajo_adm = 1;
 				int id_empleado_licencia = 1;
 			   
 			try {
 				fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
-				} catch (ParseException e) {
-					e.printStackTrace();
-					}
-			try {
 				fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
-				} catch (ParseException e) {
-					e.printStackTrace();
-					}
-			try {
 				fecha_solicitud = dateFormat.parse(request.getParameter("fecha_solicitud"));
-				} catch (ParseException e) {
+			    long diffInMillies = Math.abs(fecha_fin.getTime() - fecha_inicio.getTime());
+			    cant_dias = (int)(long)(TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS));
+				request.setAttribute("cant_dias", cant_dias);
+			} catch (ParseException e) {
 					e.printStackTrace();
-					}			
-			   
+			}
 		    // Crea los objetos que van a contener los datos ingresado en licencia_alta
-			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, usuario_aprobado, id_empleado_licencia);
+			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia);
 		    LicenciaDAO licenDAO = new LicenciaDAO();
 		    
 		    
