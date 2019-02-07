@@ -8,9 +8,7 @@ public class UsuarioVO {
 	private EmpleadoVO empleado;
 	private String nombre_usuario;
 	private String contraseña;
-	//private int id_tipo_usuario;
 	private Tipo_usuarioVO tipo_usuario;
-	//private int legajo;	
 	private String estado;
 	
 	public String getEstado() {
@@ -44,26 +42,11 @@ public class UsuarioVO {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
-	/*
-	public int getId_tipo_usuario() {
-		return id_tipo_usuario;
-	}
-	public void setId_tipo_usuario(int id_tipo_usuario) {
-		this.id_tipo_usuario = id_tipo_usuario;
-	}
-	*/
+
 	public void setTipoUsuario(int id_tipo_usuario) {
 		this.tipo_usuario = new Tipo_usuarioVO(id_tipo_usuario);
 	}
 	public Tipo_usuarioVO getTipoUsuario() {
 		return tipo_usuario;
 	}
-	/*
-	public int getLegajo() {
-		return legajo;
-	}
-	public void setLegajo(int legajo) {
-		this.legajo = legajo;
-	}
-	*/
 }
