@@ -82,6 +82,7 @@ public class UsuarioDAO {
 	}
 
 	public boolean bajaUsuario(int id_usuario) {
+
 		boolean eliminado = false;
 		try {
 			con = DBConnection.createConnection();
@@ -94,6 +95,7 @@ public class UsuarioDAO {
 		
 		return eliminado;
 	}
+	
 	public boolean bajaUsuarioPorLegajo(int legajo) {
 		boolean eliminado = false;
 		try {
@@ -160,5 +162,28 @@ public class UsuarioDAO {
 		  finally { DBConnection.closeConnection(); }
 		
 		return listaUsuarios;
+	}
+
+	public UsuarioVO getUsuarioVO(String user, String pass) {
+		UsuarioVO usuVO = new UsuarioVO();
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			rs = st.executeQuery("select * from usuario where nombre_usuario = '"+user+"' and contraseña = '"+pass+"'");
+
+			if(rs.next()) { //Se fija si hay una fila resultado de la consulta
+				usuVO.setId_usuario(rs.getInt("id_usuario"));
+				usuVO.setNombre_usuario(rs.getString("nombre_usuario"));
+				usuVO.setContraseña(rs.getString("contraseña"));
+				usuVO.setTipoUsuario(rs.getInt("id_tipo_usuario"));
+				usuVO.setEmpleado(rs.getInt("legajo"));
+				usuVO.setEstado(rs.getString("estado"));
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}
+		
+		return usuVO;	
 	}
 }
