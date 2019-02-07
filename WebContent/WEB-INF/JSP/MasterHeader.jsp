@@ -14,11 +14,25 @@
 		<div class="loginHeader">
 			<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 				<table>
+				
 					<tr><td>${usuario.nombre_usuario}</td></tr>
 					<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="cerrarSesion">Cerrar Sesión</button></td></tr>
+					
+					
+					
 				</table>
 			</form>
+	 
 		</div>
+		 <form action="${pageContext.request.contextPath}/MainServlet" method="post">
+					<div class="d-flex flex-row-reverse bd-highlight">
+    				<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasCU">
+ 					 Licencias <span class="badge badge-light"></span>
+ 					 <span class="sr-only">unread messages</span>
+					</button>
+					</div>
+					</form>
 	</div>
+
 </body>
 </html>
