@@ -7,10 +7,13 @@
 }
 .masterHeader
 {
+	display: flex;
+	align-items: center;
 	background-color: lightgray;
-	width: 100%;
 	text-align: center;
+	width: 100%;
 	padding: 1%;
+
 }
 .login {
 	width: 330px;
@@ -19,7 +22,12 @@
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
-
   display: flex;
   align-items: center;
+}
+.titleHeader{
+	float: left;
+	margin: auto;
+}
+.loginHeader {
 }

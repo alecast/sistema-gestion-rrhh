@@ -12,7 +12,7 @@
 <jsp:include page="/WEB-INF/JSP/MasterHeader.jsp"/>
 <body>
 <div class="container">
-	<h1>Bienvenido ${nombreUsuario} </h1>
+	<h1>Bienvenido ${usuario.nombre_usuario} </h1>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 		<table>
 			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
