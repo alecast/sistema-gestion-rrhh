@@ -64,11 +64,7 @@ public class LicenciaDAO {
 public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-<<<<<<< HEAD
 	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, legajo, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?,?)";
-=======
-	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
->>>>>>> 3ed7682aa50a9cb9a2d2202b1b85b78781929284
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -85,13 +81,8 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          String descripcion = ((LicenciaVO) licenVO).getDescripcion();
          String motivo = ((LicenciaVO) licenVO).getMotivo();
          String certificado = ((LicenciaVO) licenVO).getCertificado();
-<<<<<<< HEAD
          int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
-=======
-         int legajo_adm = ((LicenciaVO) licenVO).getUsuario_aprobado();
->>>>>>> 3ed7682aa50a9cb9a2d2202b1b85b78781929284
          int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();          
-
 
        //  Date fecha_inicio = ((LicenciaVO) licenVO).getFecha_inicio();
        //  Date fecha_fin = ((LicenciaVO) licenVO).getFecha_fin();     
@@ -118,7 +109,6 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          psst.setDate           (1, f);
          psst.setDate           (2, g);
          psst.setDate  			(3, h);
-<<<<<<< HEAD
          psst.setInt			(4, legajo);
          psst.setInt            (5, cant_dias);
          psst.setString         (6, descripcion);
@@ -126,14 +116,6 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          psst.setString         (8, certificado);
          psst.setInt            (9, legajo_adm);         
          psst.setInt         	(10, id_empleado_licencia);
-=======
-         psst.setInt            (4, cant_dias);
-         psst.setString         (5, descripcion);
-         psst.setString         (6, motivo);
-         psst.setString         (7, certificado);
-         psst.setInt            (8, legajo_adm);         
-         psst.setInt         	(9, id_empleado_licencia);
->>>>>>> 3ed7682aa50a9cb9a2d2202b1b85b78781929284
          
   //       psst.setString         (6, motivo);
   //       psst.setString         (7, certificado);
@@ -207,15 +189,11 @@ public int ultimoIdLicencia()
 		
 	} catch (SQLException e) { e.printStackTrace();} 
 	finally { DBConnection.closeConnection();}
-	return p;
-	
-	
-			
-			
+	return p;			
 	}
+
 public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
     return new java.sql.Date(date.getTime());
-
 }
 
 public LicenciaVO getLicencia(int id_licencia) {
@@ -241,8 +219,7 @@ public LicenciaVO getLicencia(int id_licencia) {
 			lic.setCertificado(rs.getString("certificado")) ;
 			lic.setLegajo_adm(rs.getInt("legajo_adm"));
 			lic.setId_empleado_licencia(rs.getInt("id_empleado_licencia"));
-			lic.setEmpleado(rs.getInt("legajo"));
-			
+			lic.setEmpleado(rs.getInt("legajo"));			
 		}
 		rs.close();
 		st.close();
@@ -288,4 +265,33 @@ public List<LicenciaVO> getListaLicencias() {
 		//return listaLicencias;
 		return listaLicencias;
 	}
+
+public void modificarLicencia(LicenciaVO licenVO) {	
+
+    java.sql.Date f =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_inicio());
+	java.sql.Date g =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_fin());
+	//java.sql.Date h =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_solicitud());
+    
+    int id_licencia = ((LicenciaVO) licenVO).getId_licencia();
+    String descripcion = ((LicenciaVO) licenVO).getDescripcion();
+ //   Date fecha_inicio = ((LicenciaVO) licenVO).getFecha_inicio();
+ //   Date fecha_fin = ((LicenciaVO) licenVO).getFecha_fin();
+ //   Date fecha_solicitud = ((LicenciaVO) licenVO).getFecha_solicitud();
+    int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
+    String motivo = ((LicenciaVO) licenVO).getMotivo();
+    String certificado = ((LicenciaVO) licenVO).getCertificado();
+    int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
+    int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();
+    //LicenciaVO empleado = ((LicenciaVO) licenVO).getEmpleado();
+    	 
+	try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("update Licencia set descripcion='"+descripcion+"',fecha_inicio='"+f+"' ,fecha_fin='"+g+"',cant_dias='"+cant_dias+"',motivo= '"+motivo+"',certificado='"+certificado+"',legajo_adm="+legajo_adm+",id_empleado_licencia='"+id_empleado_licencia+"' where id_licencia = "+id_licencia+"");
+			
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}	
+	
+}
 }

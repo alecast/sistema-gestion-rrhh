@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import datos.EmpleadoDAO;
 import datos.LicenciaDAO;
+import modelo.EmpleadoVO;
 import modelo.LicenciaVO;
 import modelo.UsuarioVO;
 
@@ -89,11 +90,7 @@ public class LicenciaServlet extends HttpServlet {
 					e.printStackTrace();
 			}
 		    // Crea los objetos que van a contener los datos ingresado en licencia_alta
-<<<<<<< HEAD
 			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia,usuVO.getEmpleado());
-=======
-			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia);
->>>>>>> 3ed7682aa50a9cb9a2d2202b1b85b78781929284
 		    LicenciaDAO licenDAO = new LicenciaDAO();
 		    
 		    
@@ -119,9 +116,34 @@ public class LicenciaServlet extends HttpServlet {
 					     
 		     
 	
-		if(btnLicencia.equals("aceptaModifica")) {
-			String pass = request.getParameter("userPass");
-			String pass2 = request.getParameter("userPass2");		
+		if(btnLicencia.contains("aceptaModifica")) {
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			
+			String descripcion = request.getParameter("descripcion");
+			Date fecha_inicio = null;
+			Date fecha_fin = null;
+			Date fecha_solicitud = null;
+			String motivo = request.getParameter("motivo");
+			String certificado = request.getParameter("certificado");
+			
+			try {
+				fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
+				fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
+				//fecha_solicitud = dateFormat.parse(request.getParameter("fecha_solicitud"));
+			} catch (ParseException e) {
+					e.printStackTrace();}
+			
+			UsuarioVO usuVO = new UsuarioVO();
+			
+			int index = Integer.parseInt(btnLicencia.substring(14,btnLicencia.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
+			request.setAttribute("id_licencia", index);
+			
+			LicenciaVO licenVO = new LicenciaVO (index, fecha_inicio, fecha_fin, fecha_solicitud, 1, descripcion, motivo, certificado, 123, 123, usuVO.getEmpleado());
+			LicenciaDAO licenDAO = new LicenciaDAO();
+			licenDAO.modificarLicencia(licenVO);
+			
+			request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);		
         	}
 		
 		if(btnLicencia.equals("volverOpciones")){

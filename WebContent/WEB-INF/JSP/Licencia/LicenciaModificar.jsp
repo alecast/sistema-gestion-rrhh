@@ -35,19 +35,20 @@
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nuevo certificado:</label>
-    			<input type="text" class="form-control" name="certificado" id="userPass2" placeholder="Certificado">	
+    			<input type="text" class="form-control" name="certificado" placeholder="Certificado">	
 			</div>
 		  	
 		    <input type="hidden" name="id_licencia${id_licencia}" value="${Legajo}">
 		  	<div class="form-gruop"><span class="error">${messages.error}</span></div>
 		  	<div class="form-group">
+		  	
 		  		<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>
-		  		<button type="submit" name="btnLicencia" value="aceptaModifica${Legajo}">Aceptar</button>  			
+		  		<button type="submit" name="btnLicencia" value="aceptaModifica${id_licencia}">Aceptar</button>  			
 		  	</div>			
 		</form>
 	</div>
 	
-	<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>
+	<!-- <button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>  -->
 	
 </body>
 </html>
