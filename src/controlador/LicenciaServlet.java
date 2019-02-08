@@ -89,7 +89,11 @@ public class LicenciaServlet extends HttpServlet {
 					e.printStackTrace();
 			}
 		    // Crea los objetos que van a contener los datos ingresado en licencia_alta
+<<<<<<< HEAD
 			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia,usuVO.getEmpleado());
+=======
+			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia);
+>>>>>>> 3ed7682aa50a9cb9a2d2202b1b85b78781929284
 		    LicenciaDAO licenDAO = new LicenciaDAO();
 		    
 		    
