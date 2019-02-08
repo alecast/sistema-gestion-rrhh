@@ -1,6 +1,8 @@
 package modelo;
 import java.util.Date;
 
+import datos.EmpleadoDAO;
+
 //import java.time.LocalDateTime;
 //import javax.print.attribute.standard.DateTimeAtCompleted;
 
@@ -14,8 +16,9 @@ public class LicenciaVO {
 	private int cant_dias;
 	private String motivo;
 	private String certificado;
-	private int usuario_aprobado;
+	private int legajo_adm;
 	private int id_empleado_licencia;
+	private EmpleadoVO empleado;
 	
 	public int getId_licencia() {
 		return id_licencia;
@@ -65,11 +68,11 @@ public class LicenciaVO {
 	public void setCertificado(String certificado) {
 		this.certificado = certificado;
 	}
-	public int getUsuario_aprobado() {
-		return usuario_aprobado;
+	public int getLegajo_adm() {
+		return legajo_adm;
 	}
-	public void setUsuario_aprobado(int usuario_aprobado) {
-		this.usuario_aprobado = usuario_aprobado;
+	public void setLegajo_adm(int legajo_adm) {
+		this.legajo_adm = legajo_adm;
 	}
 	public int getId_empleado_licencia() {
 		return id_empleado_licencia;
@@ -77,8 +80,15 @@ public class LicenciaVO {
 	public void setId_empleado_licencia(int id_empleado_licencia) {
 		this.id_empleado_licencia = id_empleado_licencia;
 	}
+	public void setEmpleado(int legajo) {
+		EmpleadoDAO empleDAO = new EmpleadoDAO();
+		this.empleado = empleDAO.getEmpleado(legajo);
+	}
+	public EmpleadoVO getEmpleado() {
+		return empleado;
+	}
 	
-	 public LicenciaVO(int id_licencia, Date fecha_inicio, Date fecha_fin, Date fecha_solicitud, int cant_dias, String descripcion, String motivo, String certificado, int usuario_aprobado, int id_empleado_licencia) {
+	 public LicenciaVO(int id_licencia, Date fecha_inicio, Date fecha_fin, Date fecha_solicitud, int cant_dias, String descripcion, String motivo, String certificado, int legajo_adm, int id_empleado_licencia, EmpleadoVO empleado) {
 	     this.setId_licencia(id_licencia);
 	     this.setFecha_inicio(fecha_inicio);
 	     this.setFecha_fin(fecha_fin);
@@ -87,8 +97,9 @@ public class LicenciaVO {
 	     this.setDescripcion(descripcion);
 		 this.setMotivo(motivo);
 		 this.setCertificado(certificado);
-		 this.setUsuario_aprobado(usuario_aprobado);
+		 this.setLegajo_adm(legajo_adm);
 	     this.setId_empleado_licencia(id_empleado_licencia);
+	     this.setEmpleado(empleado.getLegajo());
 	 }
 	 
 	public LicenciaVO(int id_licencia2, int cant_dias2, Date fecha_inicio2, Date fecha_fin2, Date fecha_solicitud2,

@@ -64,7 +64,7 @@ public class LicenciaDAO {
 public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, legajo, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -76,11 +76,12 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          java.sql.Date f =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_inicio());
          java.sql.Date g =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_fin());
          java.sql.Date h =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_solicitud());
+         int legajo = ((LicenciaVO) licenVO).getEmpleado().getLegajo();
          int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
          String descripcion = ((LicenciaVO) licenVO).getDescripcion();
          String motivo = ((LicenciaVO) licenVO).getMotivo();
          String certificado = ((LicenciaVO) licenVO).getCertificado();
-         int legajo_adm = ((LicenciaVO) licenVO).getUsuario_aprobado();
+         int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
          int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();          
 
 
@@ -109,12 +110,13 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          psst.setDate           (1, f);
          psst.setDate           (2, g);
          psst.setDate  			(3, h);
-         psst.setInt            (4, cant_dias);
-         psst.setString         (5, descripcion);
-         psst.setString         (6, motivo);
-         psst.setString         (7, certificado);
-         psst.setInt            (8, legajo_adm);         
-         psst.setInt         	(9, id_empleado_licencia);
+         psst.setInt			(4, legajo);
+         psst.setInt            (5, cant_dias);
+         psst.setString         (6, descripcion);
+         psst.setString         (7, motivo);
+         psst.setString         (8, certificado);
+         psst.setInt            (9, legajo_adm);         
+         psst.setInt         	(10, id_empleado_licencia);
          
   //       psst.setString         (6, motivo);
   //       psst.setString         (7, certificado);
@@ -220,8 +222,10 @@ public LicenciaVO getLicencia(int id_licencia) {
 			lic.setCant_dias(rs.getInt("cant_dias"));
 			lic.setMotivo(rs.getString("motivo"));
 			lic.setCertificado(rs.getString("certificado")) ;
-			lic.setUsuario_aprobado(rs.getInt("usuario_aprobado"));
-			lic.setId_empleado_licencia(rs.getInt("id_empleado_licencia"));		
+			lic.setLegajo_adm(rs.getInt("legajo_adm"));
+			lic.setId_empleado_licencia(rs.getInt("id_empleado_licencia"));
+			lic.setEmpleado(rs.getInt("legajo"));
+			
 		}
 		rs.close();
 		st.close();
@@ -254,7 +258,8 @@ public List<LicenciaVO> getListaLicencias() {
 				u.setCant_dias(rs.getInt("cant_dias"));
 				u.setMotivo(rs.getString("motivo"));
 				u.setCertificado(rs.getString("certificado"));
-				u.setUsuario_aprobado(rs.getInt("usuario_aprobado"));
+				u.setLegajo_adm(rs.getInt("legajo_adm"));
+				u.setEmpleado(rs.getInt("legajo"));
 				listaLicencias.add(u);
 			}			
 			rs.close();

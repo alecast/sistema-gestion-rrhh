@@ -15,36 +15,39 @@
 		<form action="${pageContext.request.contextPath}/LicenciaServlet" method="post">
 			<h1>Modificación de Licencia</h1>			
 			<div class="form-group">
-				<h3>Licencia: ${id_licencia} - Legajo: ${Legajo}</h3>	
+				<h3>Licencia: ${id_licencia} - Legajo: ${licencia.empleado.legajo}</h3>	
 			</div>
 			<div class="form-group">
 				<label for="userPass1">Nueva descripción:</label>
-    			<input type="text" class="form-control" name="userPass" id="userPass1" placeholder="Descripción">	
+    			<input type="text" class="form-control" name="descripcion" placeholder="Descripción">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nueva fecha de inicio:</label>
-    			<input type="date" class="form-control" name="userPass2" id="userPass2" placeholder="Fecha de inicio">	
+    			<input type="text" class="form-control" name="fecha_inicio" placeholder="Fecha de inicio">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nueva fecha de finalización:</label>
-    			<input type="date" class="form-control" name="userPass2" id="userPass2" placeholder="Fecha de finalización">	
+    			<input type="text" class="form-control" name="fecha_fin" placeholder="Fecha de finalización">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nuevo motivo:</label>
-    			<input type="text" class="form-control" name="userPass2" id="userPass2" placeholder="Motivo">	
+    			<input type="text" class="form-control" name="motivo" placeholder="Motivo">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nuevo certificado:</label>
-    			<input type="text" class="form-control" name="userPass2" id="userPass2" placeholder="Certificado">	
+    			<input type="text" class="form-control" name="certificado" id="userPass2" placeholder="Certificado">	
 			</div>
 		  	
 		    <input type="hidden" name="id_licencia${id_licencia}" value="${Legajo}">
 		  	<div class="form-gruop"><span class="error">${messages.error}</span></div>
 		  	<div class="form-group">
 		  		<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>
-		  		<button type="submit" name="btnLicencia" value="aceptaModifica${Legajo}">Aceptar</button>		  			
+		  		<button type="submit" name="btnLicencia" value="aceptaModifica${Legajo}">Aceptar</button>  			
 		  	</div>			
 		</form>
 	</div>
+	
+	<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>
+	
 </body>
 </html>
