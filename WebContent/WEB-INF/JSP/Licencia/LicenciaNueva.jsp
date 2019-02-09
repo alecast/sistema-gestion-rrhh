@@ -65,7 +65,7 @@
  <br/>
  
  <div class="form-group">
-		  		<button type="submit" name="btnLicencia" value="volverAlta">Volver</button>	  			
+		  		<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>	  			
 		  	</div>
  
 </body>

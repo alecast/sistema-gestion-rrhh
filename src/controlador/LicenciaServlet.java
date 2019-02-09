@@ -14,8 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import datos.EmpleadoDAO;
 import datos.LicenciaDAO;
+import modelo.EmpleadoVO;
 import modelo.LicenciaVO;
+import modelo.UsuarioVO;
 
 @WebServlet("/LicenciaServlet")
 public class LicenciaServlet extends HttpServlet {
@@ -54,7 +59,11 @@ public class LicenciaServlet extends HttpServlet {
 				
 		// Toma los datos ingresados y los guarda en la base de datos. Pasa a la pagina licencia_nueva
 		else if (btnLicencia.equals("aceptaAlta")){
-			
+				//Obtenemos usuario actual desde sesion
+				HttpSession sesion = request.getSession();
+				UsuarioVO usuVO = new UsuarioVO();
+				usuVO = (UsuarioVO) sesion.getAttribute("usuario");	
+				
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaNueva.jsp").forward(request, response);
 			   
@@ -81,7 +90,7 @@ public class LicenciaServlet extends HttpServlet {
 					e.printStackTrace();
 			}
 		    // Crea los objetos que van a contener los datos ingresado en licencia_alta
-			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia);
+			LicenciaVO licenVO = new LicenciaVO (id_licencia, fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia,usuVO.getEmpleado());
 		    LicenciaDAO licenDAO = new LicenciaDAO();
 		    
 		    
@@ -107,9 +116,34 @@ public class LicenciaServlet extends HttpServlet {
 					     
 		     
 	
-		if(btnLicencia.equals("aceptaModifica")) {
-			String pass = request.getParameter("userPass");
-			String pass2 = request.getParameter("userPass2");		
+		if(btnLicencia.contains("aceptaModifica")) {
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			
+			String descripcion = request.getParameter("descripcion");
+			Date fecha_inicio = null;
+			Date fecha_fin = null;
+			Date fecha_solicitud = null;
+			String motivo = request.getParameter("motivo");
+			String certificado = request.getParameter("certificado");
+			
+			try {
+				fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
+				fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
+				//fecha_solicitud = dateFormat.parse(request.getParameter("fecha_solicitud"));
+			} catch (ParseException e) {
+					e.printStackTrace();}
+			
+			UsuarioVO usuVO = new UsuarioVO();
+			
+			int index = Integer.parseInt(btnLicencia.substring(14,btnLicencia.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
+			request.setAttribute("id_licencia", index);
+			
+			LicenciaVO licenVO = new LicenciaVO (index, fecha_inicio, fecha_fin, fecha_solicitud, 1, descripcion, motivo, certificado, 123, 123, usuVO.getEmpleado());
+			LicenciaDAO licenDAO = new LicenciaDAO();
+			licenDAO.modificarLicencia(licenVO);
+			
+			request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);		
         	}
 		
 		if(btnLicencia.equals("volverOpciones")){
@@ -139,6 +173,18 @@ public class LicenciaServlet extends HttpServlet {
 			}
 		else if(btnLicencia.equals("listarTodo")){
 			
+		}
+		
+		if(btnLicencia.contains("modificarLicencia")) { //Se fija que se haya apretado alguno de los "aceptaModifica"
+			int index = Integer.parseInt(btnLicencia.substring(17,btnLicencia.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
+			request.setAttribute("id_licencia", index);			
+			
+			LicenciaDAO licenDAO = new LicenciaDAO();
+			LicenciaVO licenVO = new LicenciaVO();
+			licenVO = licenDAO.getLicencia(index);
+			request.setAttribute("licencia", licenVO);					
+			
+			request.getRequestDispatcher("WEB-INF/JSP/Licencia/LicenciaModificar.jsp").forward(request, response);	
 		}
 	
 }

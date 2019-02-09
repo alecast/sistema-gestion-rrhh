@@ -47,7 +47,6 @@
 					        <th scope="col">Cantidad de días</th>
 					        <th scope="col">Motivo</th>
 					        <th scope="col">Certificado</th>
-					        <th scope="col">Usuario aprobado</th>
 					    </tr>
 					</thead>
 				    <c:forEach items="${listaLicencias}" var="licencia">
@@ -59,13 +58,7 @@
 				            <td>${licencia.fecha_solicitud}</td>
 				            <td>${licencia.cant_dias}</td>
 				            <td>${licencia.motivo}</td>
-				            <td>${licencia.certificado}</td>
-				            <td>${licencia.usuario_aprobado}</td>
-				            <td>
-					<!--             <c:out value="${licencia.usuario_aprobado}" />
-					            <input type="hidden" name="nombreUsuario${licencia.usuario_aprobado}" value="${licencia.usuario_aprobado}">
-					        </td>
-					 -->        
+				            <td>${licencia.certificado}</td>       
 							
 							<td><button type="submit" name="btnLicencia" value="modificarLicencia${licencia.id_licencia}">Modificar</button></td>
 							<td><button type="submit" name="btnLicencia" value="eliminarLicencia${licencia.id_licencia}">Eliminar</button></td>

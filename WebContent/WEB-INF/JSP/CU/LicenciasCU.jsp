@@ -52,7 +52,7 @@
 				            <td>${estado.licencia.cant_dias}</td>
 				            <td>${estado.licencia.motivo}</td>
 				            <td>${estado.licencia.certificado}</td>
-				            <td>${estado.licencia.usuario_aprobado}</td>
+				            <td>${estado.licencia.legajo_adm}</td>
 				             <td>${estado.estado}</td>
 				            <td>${estado.fecha_iniciacion}</td>
 				            <td>${estado.fecha_finalizacion}</td>
