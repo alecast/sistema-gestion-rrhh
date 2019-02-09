@@ -39,7 +39,7 @@ public class UsuarioDAO {
 			ps = con.prepareStatement("INSERT INTO USUARIO VALUES(?,?,?,?,?)");
 			ps.setString(1,user.getNombre_usuario());
 			ps.setString(2,user.getContraseña());
-			ps.setInt(3, user.getTipoUsuario().getId_tipo_usuario());
+			ps.setInt(3, user.getTipo_usuario().getId_tipo_usuario());
 			ps.setInt(4, user.getEmpleado().getLegajo());
 			ps.setString(5, "Activo");
 			ps.executeUpdate();
@@ -66,7 +66,7 @@ public class UsuarioDAO {
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
-				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); 
+				u.setTipo_usuario(rs.getInt("id_tipo_usuario")); 
 				u.setId_usuario(rs.getInt("id_usuario"));
 				u.setEmpleado(rs.getInt("legajo"));
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
@@ -149,7 +149,7 @@ public class UsuarioDAO {
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
-				u.setTipoUsuario(rs.getInt("id_tipo_usuario")); 
+				u.setTipo_usuario(rs.getInt("id_tipo_usuario")); 
 				u.setId_usuario(rs.getInt("id_usuario"));
 				u.setEmpleado(rs.getInt("legajo")); 
 				u.setNombre_usuario(rs.getString("nombre_usuario"));
@@ -175,7 +175,7 @@ public class UsuarioDAO {
 				usuVO.setId_usuario(rs.getInt("id_usuario"));
 				usuVO.setNombre_usuario(rs.getString("nombre_usuario"));
 				usuVO.setContraseña(rs.getString("contraseña"));
-				usuVO.setTipoUsuario(rs.getInt("id_tipo_usuario"));
+				usuVO.setTipo_usuario(rs.getInt("id_tipo_usuario"));
 				usuVO.setEmpleado(rs.getInt("legajo"));
 				usuVO.setEstado(rs.getString("estado"));
 			}

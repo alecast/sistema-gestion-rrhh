@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +15,10 @@
 	<h1>Bienvenido ${usuario.nombre_usuario} </h1>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 		<table>
+		<c:if test="${usuario.tipo_usuario.descripcion == 'Administrador'}">
 			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
 	    	<tr><td><button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
+	    </c:if>
 	    	<tr><td><button type="submit" name="btnMain" value="licencia" >Gestión de licencias</button></td></tr>
 		</table>
 	</form>

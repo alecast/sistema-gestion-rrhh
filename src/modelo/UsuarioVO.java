@@ -43,10 +43,10 @@ public class UsuarioVO {
 		this.contraseña = contraseña;
 	}
 
-	public void setTipoUsuario(int id_tipo_usuario) {
+	public void setTipo_usuario(int id_tipo_usuario) {
 		this.tipo_usuario = new Tipo_usuarioVO(id_tipo_usuario);
 	}
-	public Tipo_usuarioVO getTipoUsuario() {
+	public Tipo_usuarioVO getTipo_usuario() {
 		return tipo_usuario;
 	}
 }

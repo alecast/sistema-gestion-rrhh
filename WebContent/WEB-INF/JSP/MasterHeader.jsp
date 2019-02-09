@@ -15,6 +15,7 @@
 			<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 				<table>
 					<tr><td>${usuario.nombre_usuario}</td></tr>
+					<tr><td>${usuario.tipo_usuario.descripcion}</td></tr>
 					<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="cerrarSesion">Cerrar Sesión</button></td></tr>
 				</table>
 			</form>
