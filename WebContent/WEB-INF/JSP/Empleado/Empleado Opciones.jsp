@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -12,6 +13,7 @@
 </head>
 
 <body>
+<div class="container">
 	<form action="${pageContext.request.contextPath}/EmpleadoServlet" method="post">
 		<table class="table table-borderless">
 			<tr><td><h1>Gestión de Empleados</h1></td></tr>
@@ -20,5 +22,5 @@
 			<tr><td><button type="submit" class="btn btn-primary" name="btnEmpleado" value="volverMenu">Volver</button></td></tr>
 		</table>
 	</form>
+	</div>
 </body>
-</html>

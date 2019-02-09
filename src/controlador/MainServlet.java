@@ -47,6 +47,7 @@ public class MainServlet extends HttpServlet {
         //Nombre del botón para cualquier input a partir del que se programa la lógica del servlet
 		String btn = request.getParameter("btnMain");
 		
+		
 		//Manejo del Inicio de sesión
 		if(btn.equals("login")){
 			// Valido que no exista una sesión en curso
@@ -82,6 +83,15 @@ public class MainServlet extends HttpServlet {
 			}
 			// Redirecciono a la págino de Logueo
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
+		}
+		
+		
+	   else if(btn.equals("LicenciasCU")) {
+		   
+		   
+		
+		request.getRequestDispatcher("/WEB-INF/JSP/CU/LicenciasCU.jsp").forward(request, response);
+		
 		}
 		
 		// Redirección a JSP de cada funcionalidad
