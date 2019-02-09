@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Listar licencias</title>
+<title>Listar licencias Pendientes</title>
 <link rel="stylesheet" href="css/bootstrap.min.css"> 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Estilos.css">  		
 <script src="js/bootstrap.min.js"></script> 
@@ -14,7 +14,7 @@
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	
 <div class="container">
-	<form action="${pageContext.request.contextPath}/LicenciaServlet" method="post">
+	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 		<table>
 			<tr></tr>
 			
@@ -23,7 +23,7 @@
 			
 			</td></tr>
 		</table>
-				<c:if test="${not empty listaLicencias}">
+				<c:if test="${not empty listaLicenciasPendientes}">
 				<table class="table">
 					<thead class="thead-dark">
 					    <tr>
@@ -36,20 +36,28 @@
 					        <th scope="col">Motivo</th>
 					        <th scope="col">Certificado</th>
 					        <th scope="col">Usuario aprobado</th>
+					        <th scope="col">Estado</th>
+					        <th scope="col">Fecha_ini</th>
+					        <th scope="col">Fecha_Fin</th>
+					        <th scope="col">Motivo</th>
 					    </tr>
 					</thead>
-				    <c:forEach items="${listaLicencias}" var="licencia">
+				    <c:forEach items="${listaLicenciasPendientes}" var="estado">
 				        <tr>
-				            <td>${licencia.id_licencia}</td>
-				            <td>${licencia.descripcion}</td>
-				            <td>${licencia.fecha_inicio}</td>
-				            <td>${licencia.fecha_fin}</td>
-				            <td>${licencia.fecha_solicitud}</td>
-				            <td>${licencia.cant_dias}</td>
-				            <td>${licencia.motivo}</td>
-				            <td>${licencia.certificado}</td>
-				            <td>${licencia.usuario_aprobado}</td>
-				            <td>
+				            <td>${estado.licencia.id_licencia}</td>
+				            <td>${estado.licencia.descripcion}</td>
+				            <td>${estado.licencia.fecha_inicio}</td>
+				            <td>${estado.licencia.fecha_fin}</td>
+				            <td>${estado.licencia.fecha_solicitud}</td>
+				            <td>${estado.licencia.cant_dias}</td>
+				            <td>${estado.licencia.motivo}</td>
+				            <td>${estado.licencia.certificado}</td>
+				            <td>${estado.licencia.usuario_aprobado}</td>
+				             <td>${estado.estado}</td>
+				            <td>${estado.fecha_iniciacion}</td>
+				            <td>${estado.fecha_finalizacion}</td>
+				            <td>${estado.motivo_cambio}</td>
+				          
 				    
 							
 							<td><button type="submit" name="btnLicencia" value="modificarLicencia${licencia.id_licencia}">Modificar</button></td>
@@ -60,7 +68,7 @@
 				</table>
 		</c:if>
 		
-	<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>
+	<button type="submit" name="btnLicencia" value="volverMenu">Volver</button>
 	</form>
 </div>
 </body>

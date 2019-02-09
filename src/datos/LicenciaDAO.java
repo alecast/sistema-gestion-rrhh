@@ -1,4 +1,5 @@
 package datos;
+import modelo.Estado_licVO;
 import modelo.LicenciaVO;
 
 import java.sql.*;
@@ -266,4 +267,48 @@ public List<LicenciaVO> getListaLicencias() {
 		//return listaLicencias;
 		return listaLicencias;
 	}
+public List<Estado_licVO> getListaLicenciasPendientes() {
+	List<Estado_licVO> listaLicenciasPendientes = new ArrayList<Estado_licVO>();
+	con = null;
+	st = null;
+	rs = null;
+	String query = "";
+	query = "select * from V_LicenciaCU where fecha_finalizacion is null and estado = 'Pendiente'"; 
+	
+	try {
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery(query);
+		while(rs.next()) {
+			LicenciaVO u = new LicenciaVO();
+			Estado_licVO e = new Estado_licVO();
+			u.setId_licencia(rs.getInt("id_licencia"));
+			u.setDescripcion(rs.getString("descripcion"));
+			u.setFecha_inicio(rs.getDate("fecha_inicio")); 
+			u.setFecha_fin(rs.getDate("fecha_fin"));
+			u.setFecha_solicitud(rs.getDate("fecha_solicitud")); 
+			u.setCant_dias(rs.getInt("cant_dias"));
+			u.setMotivo(rs.getString("motivo"));
+			u.setCertificado(rs.getString("certificado"));
+			u.setUsuario_aprobado(rs.getInt("legajo_adm"));
+			
+			e.setEstado(rs.getString("estado"));
+			e.setFecha_iniciacion(rs.getDate("fecha_iniciacion"));
+			e.setFecha_finalizacion(rs.getDate("fecha_finalizacion"));
+			e.setMotivo_cambio(rs.getString("motivo_cambio"));
+			
+			e.setLicencia(u);
+			
+			
+			listaLicenciasPendientes.add(e);
+		}			
+		rs.close();
+		st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+	 
+	finally { DBConnection.closeConnection(); }
+	
+	//return listaLicencias;
+	return listaLicenciasPendientes;
+}
 }
