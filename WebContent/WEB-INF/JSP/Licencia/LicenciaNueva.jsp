@@ -48,6 +48,7 @@
    out.print("<br/>");
    out.print("<br/>");
    out.print("	Certificado: "+ request.getParameter("certificado"));
+   out.print("<br/>");
    
    /*
    out.print("tienes "+ request.getParameter("domicilio") +" de domicilio");
@@ -64,7 +65,7 @@
  <br/>
  
  <div class="form-group">
-		  		<button type="submit" name="btnLicencia" value="volverAlta">Volver</button>	  			
+		  		<button type="submit" name="btnLicencia" value="volverOpciones">Volver</button>	  			
 		  	</div>
  
 </body>

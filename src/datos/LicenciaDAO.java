@@ -1,5 +1,7 @@
 package datos;
+import modelo.Estado_licVO;
 import modelo.LicenciaVO;
+
 import java.sql.*;
 import datos.DBConnection;
 
@@ -7,7 +9,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LicenciaDAO {
 	private Connection con = null;
@@ -61,7 +65,7 @@ public class LicenciaDAO {
 public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, usuario_aprobado, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, legajo, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -73,13 +77,13 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          java.sql.Date f =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_inicio());
          java.sql.Date g =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_fin());
          java.sql.Date h =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_solicitud());
+         int legajo = ((LicenciaVO) licenVO).getEmpleado().getLegajo();
          int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
          String descripcion = ((LicenciaVO) licenVO).getDescripcion();
          String motivo = ((LicenciaVO) licenVO).getMotivo();
          String certificado = ((LicenciaVO) licenVO).getCertificado();
-         int usuario_aprobado = ((LicenciaVO) licenVO).getUsuario_aprobado();
+         int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
          int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();          
-
 
        //  Date fecha_inicio = ((LicenciaVO) licenVO).getFecha_inicio();
        //  Date fecha_fin = ((LicenciaVO) licenVO).getFecha_fin();     
@@ -106,12 +110,13 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          psst.setDate           (1, f);
          psst.setDate           (2, g);
          psst.setDate  			(3, h);
-         psst.setInt            (4, cant_dias);
-         psst.setString         (5, descripcion);
-         psst.setString         (6, motivo);
-         psst.setString         (7, certificado);
-         psst.setInt            (8, usuario_aprobado);         
-         psst.setInt         	(9, id_empleado_licencia);
+         psst.setInt			(4, legajo);
+         psst.setInt            (5, cant_dias);
+         psst.setString         (6, descripcion);
+         psst.setString         (7, motivo);
+         psst.setString         (8, certificado);
+         psst.setInt            (9, legajo_adm);         
+         psst.setInt         	(10, id_empleado_licencia);
          
   //       psst.setString         (6, motivo);
   //       psst.setString         (7, certificado);
@@ -148,7 +153,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 public void AltaEstadoLicencia (String estado, int id_licencia, Date fecha_solicitud ) {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Estado_lic(estado,fecha_cambio, id_licencia) values (?,?,?)";
+	String query = "INSERT INTO Estado_lic(estado,fecha_iniciacion, id_licencia) values (?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -185,15 +190,11 @@ public int ultimoIdLicencia()
 		
 	} catch (SQLException e) { e.printStackTrace();} 
 	finally { DBConnection.closeConnection();}
-	return p;
-	
-	
-			
-			
+	return p;			
 	}
+
 public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
     return new java.sql.Date(date.getTime());
-
 }
 
 public LicenciaVO getLicencia(int id_licencia) {
@@ -203,7 +204,7 @@ public LicenciaVO getLicencia(int id_licencia) {
 	st = null;
 	rs = null;
 	
-	try {		
+	try {
 		con = DBConnection.createConnection();
 		st = con.createStatement();
 		rs = st.executeQuery("select * from licencia where id_licencia ='"+id_licencia+"' "); 
@@ -217,14 +218,129 @@ public LicenciaVO getLicencia(int id_licencia) {
 			lic.setCant_dias(rs.getInt("cant_dias"));
 			lic.setMotivo(rs.getString("motivo"));
 			lic.setCertificado(rs.getString("certificado")) ;
-			lic.setUsuario_aprobado(rs.getInt("usuario_aprobado"));
-			lic.setId_empleado_licencia(rs.getInt("id_empleado_licencia"));		
+			lic.setLegajo_adm(rs.getInt("legajo_adm"));
+			lic.setId_empleado_licencia(rs.getInt("id_empleado_licencia"));
+			lic.setEmpleado(rs.getInt("legajo"));			
 		}
 		rs.close();
 		st.close();
 		
 	} catch (SQLException e) { e.printStackTrace();} 
 	finally { DBConnection.closeConnection();}
-return lic;
+	
+	return lic;
+}
+	
+public List<LicenciaVO> getListaLicencias() {
+		List<LicenciaVO> listaLicencias = new ArrayList<LicenciaVO>();
+		con = null;
+		st = null;
+		rs = null;
+		String query = "";
+		query = "select * from licencia"; 
+		
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+			while(rs.next()) {
+				LicenciaVO u = new LicenciaVO();
+				u.setId_licencia(rs.getInt("id_licencia"));
+				u.setDescripcion(rs.getString("descripcion"));
+				u.setFecha_inicio(rs.getDate("fecha_inicio")); 
+				u.setFecha_fin(rs.getDate("fecha_fin"));
+				u.setFecha_solicitud(rs.getDate("fecha_solicitud")); 
+				u.setCant_dias(rs.getInt("cant_dias"));
+				u.setMotivo(rs.getString("motivo"));
+				u.setCertificado(rs.getString("certificado"));
+				u.setLegajo_adm(rs.getInt("legajo_adm"));
+				u.setEmpleado(rs.getInt("legajo"));
+				listaLicencias.add(u);
+			}			
+			rs.close();
+			st.close();
+			} catch (SQLException e) { e.printStackTrace();}
+		 
+		finally { DBConnection.closeConnection(); }
+		
+		//return listaLicencias;
+		return listaLicencias;
+	}
+
+public List<Estado_licVO> getListaLicenciasPendientes() {
+	List<Estado_licVO> listaLicenciasPendientes = new ArrayList<Estado_licVO>();
+	con = null;
+	st = null;
+	rs = null;
+	String query = "";
+	query = "select * from V_LicenciaCU where fecha_finalizacion is null and estado = 'Pendiente'"; 
+	
+	try {
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery(query);
+		while(rs.next()) {
+			LicenciaVO u = new LicenciaVO();
+			Estado_licVO e = new Estado_licVO();
+			u.setId_licencia(rs.getInt("id_licencia"));
+			u.setDescripcion(rs.getString("descripcion"));
+			u.setFecha_inicio(rs.getDate("fecha_inicio")); 
+			u.setFecha_fin(rs.getDate("fecha_fin"));
+			u.setFecha_solicitud(rs.getDate("fecha_solicitud")); 
+			u.setCant_dias(rs.getInt("cant_dias"));
+			u.setMotivo(rs.getString("motivo"));
+			u.setCertificado(rs.getString("certificado"));
+			u.setLegajo_adm(rs.getInt("legajo_adm"));
+			u.setEmpleado(rs.getInt("legajo"));
+			
+			e.setEstado(rs.getString("estado"));
+			e.setFecha_iniciacion(rs.getDate("fecha_iniciacion"));
+			e.setFecha_finalizacion(rs.getDate("fecha_finalizacion"));
+			e.setMotivo_cambio(rs.getString("motivo_cambio"));
+			
+			e.setLicencia(u);
+			
+			
+			listaLicenciasPendientes.add(e);
+		}			
+		rs.close();
+		st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+	 
+	finally { DBConnection.closeConnection(); }
+	
+	//return listaLicencias;
+	return listaLicenciasPendientes;
+}
+
+
+public void modificarLicencia(LicenciaVO licenVO) {	
+
+    java.sql.Date f =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_inicio());
+	java.sql.Date g =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_fin());
+	//java.sql.Date h =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_solicitud());
+    
+    int id_licencia = ((LicenciaVO) licenVO).getId_licencia();
+    String descripcion = ((LicenciaVO) licenVO).getDescripcion();
+ //   Date fecha_inicio = ((LicenciaVO) licenVO).getFecha_inicio();
+ //   Date fecha_fin = ((LicenciaVO) licenVO).getFecha_fin();
+ //   Date fecha_solicitud = ((LicenciaVO) licenVO).getFecha_solicitud();
+    int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
+    String motivo = ((LicenciaVO) licenVO).getMotivo();
+    String certificado = ((LicenciaVO) licenVO).getCertificado();
+    int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
+    int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();
+    //LicenciaVO empleado = ((LicenciaVO) licenVO).getEmpleado();
+    	 
+	try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("update Licencia set descripcion='"+descripcion+"',fecha_inicio='"+f+"' ,fecha_fin='"+g+"',cant_dias='"+cant_dias+"',motivo= '"+motivo+"',certificado='"+certificado+"',legajo_adm="+legajo_adm+",id_empleado_licencia='"+id_empleado_licencia+"' where id_licencia = "+id_licencia+"");
+			
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}	
+	
+
 }
 }

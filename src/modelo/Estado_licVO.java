@@ -9,11 +9,20 @@ public class Estado_licVO {
 	
 	private int id_estado;
 	private String estado;
-	private Date fecha_cambio;
+	private Date fecha_iniciacion;
+	private Date fecha_finalizacion;
 	private String motivo_cambio; //cambiar tipo de dato en el modelo relacional de drive
 	//private int id_licencia;
 	private LicenciaVO licencia;
 	
+	
+	
+	public LicenciaVO getLicencia() {
+		return licencia;
+	}
+	public void setLicencia(LicenciaVO licencia) {
+		this.licencia = licencia;
+	}
 	public int getId_estado() {
 		return id_estado;
 	}
@@ -26,11 +35,18 @@ public class Estado_licVO {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public Date getFecha_cambio() {
-		return fecha_cambio;
+
+	public Date getFecha_iniciacion() {
+		return fecha_iniciacion;
 	}
-	public void setFecha_cambio(Date fecha_cambio) {
-		this.fecha_cambio = fecha_cambio;
+	public void setFecha_iniciacion(Date fecha_iniciacion) {
+		this.fecha_iniciacion = fecha_iniciacion;
+	}
+	public Date getFecha_finalizacion() {
+		return fecha_finalizacion;
+	}
+	public void setFecha_finalizacion(Date fecha_finalizacion) {
+		this.fecha_finalizacion = fecha_finalizacion;
 	}
 	public String getMotivo_cambio() {
 		return motivo_cambio;
@@ -45,13 +61,13 @@ public class Estado_licVO {
 		LicenciaDAO licenDAO = new LicenciaDAO();
 		this.licencia = licenDAO.getLicencia(id_licencia);
 	}
-	/*
+/*	
 	public int getId_licencia() {
 		return id_licencia;
 	}
 	public void setId_licencia(int id_licencia) {
 		this.id_licencia = id_licencia;
 	}
-	*/
 	
+	*/
 }

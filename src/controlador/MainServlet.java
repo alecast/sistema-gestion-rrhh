@@ -1,10 +1,15 @@
 package controlador;
 
+import datos.EmpleadoDAO;
+import datos.LicenciaDAO;
 import datos.UsuarioDAO;
+import modelo.EmpleadoVO;
+import modelo.Estado_licVO;
 import modelo.UsuarioVO;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -89,10 +94,14 @@ public class MainServlet extends HttpServlet {
 	   else if(btn.equals("LicenciasCU")) {
 		   
 		   
-		
+		   LicenciaDAO LicenDAO = new LicenciaDAO();
+			List<Estado_licVO> listaLicenciasPendientes = LicenDAO.getListaLicenciasPendientes();
+			request.setAttribute("listaLicenciasPendientes", listaLicenciasPendientes);
+			
 		request.getRequestDispatcher("/WEB-INF/JSP/CU/LicenciasCU.jsp").forward(request, response);
 		
 		}
+		
 		
 		// Redirección a JSP de cada funcionalidad
 		else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
