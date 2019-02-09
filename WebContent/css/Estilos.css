@@ -12,12 +12,12 @@
 	background-color: lightgray;
 	text-align: center;
 	width: 100%;
-	padding: 1%;
-
+	padding: 1%;	
 }
 .login {
 	width: 330px;
 	text-align: center;
+/*	width: 100%; */	
 }
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
@@ -26,8 +26,15 @@
   align-items: center;
 }
 .titleHeader{
-	float: left;
-	margin: auto;
+	margin:auto;
+	align: left;
+	text-align: center;
 }
 .loginHeader {
+
+}
+
+.botonDerecha
+{
+
 }

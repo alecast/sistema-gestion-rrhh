@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -12,11 +13,14 @@
 </head>
 <body>
 	<div class="container">
+	                                                          
 		<form action="${pageContext.request.contextPath}/EmpleadoServlet" method="post">
 			<h1>Alta Empleado</h1>			
+			   <span class="error">${messages.error}</span>
 			<div class="form-group">
-				<label for="userPass1">Legajo:</label>
-    			<input type="text" class="form-control" name="legajo" id="userPass1" placeholder="${j}" disabled>	
+			                                                   
+				<label for="userPass1">Legajo:  ${j}</label>
+    			
 			</div>
 			<div class="form-group">
 				<label for="userPass1">Nombre:</label>
@@ -93,12 +97,15 @@
 		  	</div>
 
 		  	<div class="form-group">
-		  		
+		  		  
 		  		<button type="submit" class="btn btn-danger" name="btnEmpleado" value="volverOpciones">Cancelar</button>	
 		  		<button type="submit" class="btn btn-success" name="btnEmpleado" value="CargarE">Aceptar</button>  	
+		  		
+                 <input class="btn btn-primary" type="reset" value="Limpiar campos">
 		 			
 		  	</div>			
 		</form>
 	</div>
 </body>
+
 </html>

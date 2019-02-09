@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -21,7 +22,7 @@
 			     <input type="Radio" name= "RadioBusquedaPor" value="dni"checked> DNI
   				 <input type="Radio" name= "RadioBusquedaPor" value="nombre"> Nombre
   				 <input type="Radio" name= "RadioBusquedaPor" value="apellido"> Apellido
-  				 <input type="Radio" name= "RadioBusquedaPor" value="legajo"> Legajo </td>                     <td>  Incluir empleados inactivos <input type="checkbox" name= "Ch_inactivo" value="Inactivo"></tr>
+  				 <input type="Radio" name= "RadioBusquedaPor" value="legajo"> Legajo .....................................................   Incluir empleados inactivos  <input type="checkbox" name= "Ch_inactivo" value="Inactivo"></td> </tr>
 			
 			<tr><td><span class="error">${messages.error}</span></td></tr>
 			<tr><td>
@@ -33,6 +34,7 @@
  	
  	
  <c:if test="${not empty listaEmpleados}">
+ <div class="table-responsive {-xl}">
 				<table class="table">
 					<thead class="thead-dark">
 					    <tr>
@@ -68,8 +70,8 @@
 							<td>${empleado.cant_disponible}</td>
 							
 							<td><input type="hidden" name="nombreEmpleado${empleado.legajo}" value="${empleado.nombre}"></td>
-							<td><button type="submit" name="btnEmpleado" value="modificar${empleado.legajo}" >Modificar</button></td>
-			
+							
+			                   <td>   <button type="submit" name="btnEmpleado" value="modificar${empleado.legajo}" class="btn btn-outline-success">Modificar</button></td>
 							
 							
 							
@@ -81,9 +83,11 @@
 			    	</c:forEach>
 			    	<tr><td><span >${messages.baja}</span></td></tr>
 				</table>
+				</div>
 		</c:if>
 		
 		<c:if test="${not empty listaEmpleadosLike}">
+		<div class="table-responsive {-xl}">
 				<table class="table">
 					<thead class="thead-dark">
 					    <tr>
@@ -118,21 +122,23 @@
 							<td>${empleado.cant_disponible}</td>
 							
 							<td><input type="hidden" name="nombreEmpleado${empleado.legajo}" value="${empleado.nombre}"></td>
-							<td><button type="submit" name="btnEmpleado" value="modificar${empleado.legajo}" >Modificar</button></td>
-						
+						 <td>   <button type="submit" name="btnEmpleado" value="modificar${empleado.legajo}" class="btn btn-outline-success">Modificar</button></td>
 							
 							
 							
 							
-	 
+	
 							
 				        </tr>
 			    	</c:forEach>
 			    	<tr><td><span >${messages.baja}</span></td></tr>
+			    	
 				</table>
+				</div>
 		</c:if>
-			<button type="submit" name="btnEmpleado" value="volverOpciones">Volver</button>
+		    <button type="submit"  name="btnEmpleado" value="volverOpciones" class="btn btn-primary btn-lg btn-block">Volver al menu</button>
+		    
+			
 		</form>
 </div>
-</body>
 </html>
