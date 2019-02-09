@@ -48,6 +48,7 @@
    out.print("<br/>");
    out.print("<br/>");
    out.print("	Certificado: "+ request.getParameter("certificado"));
+   out.print("<br/>");
    
    /*
    out.print("tienes "+ request.getParameter("domicilio") +" de domicilio");
