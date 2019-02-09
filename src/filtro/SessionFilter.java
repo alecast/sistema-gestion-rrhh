@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import modelo.UsuarioVO;
+
 /**
  * Servlet Filter implementation class SessionFilter
  */
@@ -53,8 +55,14 @@ public class SessionFilter implements Filter {
 			messages.put("error", "Su sesión ha expirado. Debe loguear nuevamente.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} else { //Si la sesión existe, sigue la cadena de peticiones normal
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
+		// Seteo la dirección con la que se ingresó al filtro
+		String path = ((HttpServletRequest) request).getRequestURI(); 
+		//Si se ingresó a la página de Login o al MainServlet, se sigue normalmente
+		if (path.startsWith("/Sistema-de-Gestion-RRHH/Login.jsp") || path.startsWith("/Sistema-de-Gestion-RRHH/MainServlet")) { 
+			chain.doFilter(request, response); //Continua la cadena http
+		} else { //Si se ingresó a cualquier no Login, seteo el atributo en sesión del tipo de usuario
+			chain.doFilter(request, response);
+		}
 		}
 	}
 

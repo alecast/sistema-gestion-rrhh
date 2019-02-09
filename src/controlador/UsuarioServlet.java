@@ -79,7 +79,7 @@ public class UsuarioServlet extends HttpServlet {
 						} else {
 							usuVO.setNombre_usuario(nombreUsuario);
 							usuVO.setContraseña(pass);
-							usuVO.setTipoUsuario(((Integer.parseInt(request.getParameter("tipoUsuario"))))); 
+							usuVO.setTipo_usuario(((Integer.parseInt(request.getParameter("tipoUsuario"))))); 
 							usuVO.setEmpleado((Integer.parseInt(legajo))); 
 							UsuarioDAO usuDAO = new UsuarioDAO();
 							if(usuDAO.altaUsuario(usuVO)) {
