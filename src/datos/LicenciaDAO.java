@@ -1,5 +1,6 @@
 package datos;
 import modelo.LicenciaVO;
+
 import java.sql.*;
 import datos.DBConnection;
 
@@ -7,7 +8,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LicenciaDAO {
 	private Connection con = null;
@@ -61,7 +64,7 @@ public class LicenciaDAO {
 public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, usuario_aprobado, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Licencia(fecha_inicio, fecha_fin, fecha_solicitud, cant_dias, descripcion, motivo, certificado, legajo_adm, id_empleado_licencia) values (?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -77,7 +80,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          String descripcion = ((LicenciaVO) licenVO).getDescripcion();
          String motivo = ((LicenciaVO) licenVO).getMotivo();
          String certificado = ((LicenciaVO) licenVO).getCertificado();
-         int usuario_aprobado = ((LicenciaVO) licenVO).getUsuario_aprobado();
+         int legajo_adm = ((LicenciaVO) licenVO).getUsuario_aprobado();
          int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();          
 
 
@@ -110,7 +113,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
          psst.setString         (5, descripcion);
          psst.setString         (6, motivo);
          psst.setString         (7, certificado);
-         psst.setInt            (8, usuario_aprobado);         
+         psst.setInt            (8, legajo_adm);         
          psst.setInt         	(9, id_empleado_licencia);
          
   //       psst.setString         (6, motivo);
@@ -148,7 +151,7 @@ public void AltaLicencia(LicenciaVO licenVO) throws SQLException {
 public void AltaEstadoLicencia (String estado, int id_licencia, Date fecha_solicitud ) {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Estado_lic(estado,fecha_cambio, id_licencia) values (?,?,?)";
+	String query = "INSERT INTO Estado_lic(estado,fecha_iniciacion, id_licencia) values (?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -203,7 +206,7 @@ public LicenciaVO getLicencia(int id_licencia) {
 	st = null;
 	rs = null;
 	
-	try {		
+	try {
 		con = DBConnection.createConnection();
 		st = con.createStatement();
 		rs = st.executeQuery("select * from licencia where id_licencia ='"+id_licencia+"' "); 
@@ -225,6 +228,42 @@ public LicenciaVO getLicencia(int id_licencia) {
 		
 	} catch (SQLException e) { e.printStackTrace();} 
 	finally { DBConnection.closeConnection();}
-return lic;
+	
+	return lic;
 }
+	
+public List<LicenciaVO> getListaLicencias() {
+		List<LicenciaVO> listaLicencias = new ArrayList<LicenciaVO>();
+		con = null;
+		st = null;
+		rs = null;
+		String query = "";
+		query = "select * from licencia"; 
+		
+		try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			rs = st.executeQuery(query);
+			while(rs.next()) {
+				LicenciaVO u = new LicenciaVO();
+				u.setId_licencia(rs.getInt("id_licencia"));
+				u.setDescripcion(rs.getString("descripcion"));
+				u.setFecha_inicio(rs.getDate("fecha_inicio")); 
+				u.setFecha_fin(rs.getDate("fecha_fin"));
+				u.setFecha_solicitud(rs.getDate("fecha_solicitud")); 
+				u.setCant_dias(rs.getInt("cant_dias"));
+				u.setMotivo(rs.getString("motivo"));
+				u.setCertificado(rs.getString("certificado"));
+				u.setUsuario_aprobado(rs.getInt("usuario_aprobado"));
+				listaLicencias.add(u);
+			}			
+			rs.close();
+			st.close();
+			} catch (SQLException e) { e.printStackTrace();}
+		 
+		finally { DBConnection.closeConnection(); }
+		
+		//return listaLicencias;
+		return listaLicencias;
+	}
 }

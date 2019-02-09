@@ -27,7 +27,7 @@ public class Tipo_usuarioDAO {
 				if (!rs.wasNull()) { // Si el getString de arriba no dio nulo, se setea el tipo_usuario
 					tipoUsu.setId_tipo_usuario(id_tipo_usuario);
 					tipoUsu.setDescripcion(desc);
-				} else throw new CustomException("El tipo de usuario selecciona es inválido");
+				} else throw new CustomException("El tipo de usuario seleccionado es inválido");
 			}
 			rs.close();
 			st.close();

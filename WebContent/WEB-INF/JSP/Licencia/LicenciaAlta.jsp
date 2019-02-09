@@ -30,8 +30,7 @@
   				  <input type="text" name="fecha_solicitud" class="form-control" id="fecha_solicitud" placeholder="${fecha_hoy}">
   			</div>
   			<div class="form-group">	  
-  				  <label for="cant_dias">Cantidad de días:</label>
-  				  <input type="number" name="cant_dias" class="form-control" id="cant_dias">
+  				  <input type="hidden" name="cant_dias" class="form-control" id="cant_dias" value="${cant_dias}">
   			</div>
   			<div class="form-group">  
   				  <label for="descripcion">Descripción:</label>
