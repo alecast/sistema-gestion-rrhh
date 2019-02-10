@@ -99,7 +99,7 @@ public class LicenciaVO {
 		 this.setCertificado(certificado);
 		 this.setLegajo_adm(legajo_adm);
 	     this.setId_empleado_licencia(id_empleado_licencia);
-	   //  this.setEmpleado(empleado.getLegajo());
+	     this.setEmpleado(empleado.getLegajo());
 	 }
 	 
 	public LicenciaVO(int id_licencia2, int cant_dias2, Date fecha_inicio2, Date fecha_fin2, Date fecha_solicitud2,	String descripcion2) {

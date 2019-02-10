@@ -123,7 +123,6 @@ public class LicenciaServlet extends HttpServlet {
 			String descripcion = request.getParameter("descripcion");
 			Date fecha_inicio = null;
 			Date fecha_fin = null;
-			Date fecha_solicitud = null;
 			String motivo = request.getParameter("motivo");
 			String certificado = request.getParameter("certificado");
 			
@@ -134,14 +133,11 @@ public class LicenciaServlet extends HttpServlet {
 			} catch (ParseException e) {
 					e.printStackTrace();}
 			
-			UsuarioVO usuVO = new UsuarioVO();
-			
 			int index = Integer.parseInt(btnLicencia.substring(14,btnLicencia.length())); //Índice que saca del value en el JSP, lo usa para modificar ese usuario
 			request.setAttribute("id_licencia", index);
 			
-			LicenciaVO licenVO = new LicenciaVO (index, fecha_inicio, fecha_fin, fecha_solicitud, 1, descripcion, motivo, certificado, 123, 123, usuVO.getEmpleado());
 			LicenciaDAO licenDAO = new LicenciaDAO();
-			licenDAO.modificarLicencia(licenVO);
+			licenDAO.modificarLicencia(index, fecha_inicio, fecha_fin, descripcion, motivo, certificado);
 			
 			request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);		
         	}
@@ -186,7 +182,14 @@ public class LicenciaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("WEB-INF/JSP/Licencia/LicenciaModificar.jsp").forward(request, response);	
 		}
-	
+		else if(btnLicencia.contains("eliminarLicencia")) {
+			int index = Integer.parseInt(btnLicencia.substring(16,btnLicencia.length()));
+			LicenciaDAO licenDAO = new LicenciaDAO();
+		//	request.setAttribute("id_licencia", index);
+			licenDAO.eliminarLicencia(index);
+			
+			request.getRequestDispatcher("WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);			
+		}
 }
          
      /*	else

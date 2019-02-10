@@ -266,32 +266,45 @@ public List<LicenciaVO> getListaLicencias() {
 		return listaLicencias;
 	}
 
-public void modificarLicencia(LicenciaVO licenVO) {	
+public void modificarLicencia(int id_licencia, Date fecha_inicio, Date fecha_fin, String descripcion, String motivo, String certificado) {	
 
-    java.sql.Date f =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_inicio());
-	java.sql.Date g =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_fin());
+    java.sql.Date f =  convertJavaDateToSqlDate(fecha_inicio);
+	java.sql.Date g =  convertJavaDateToSqlDate(fecha_fin);
+	
 	//java.sql.Date h =  convertJavaDateToSqlDate(((LicenciaVO) licenVO).getFecha_solicitud());
     
-    int id_licencia = ((LicenciaVO) licenVO).getId_licencia();
-    String descripcion = ((LicenciaVO) licenVO).getDescripcion();
+  //  int id_licencia = ((LicenciaVO) licenVO).getId_licencia();
+  //  String descripcion = ((LicenciaVO) licenVO).getDescripcion();
  //   Date fecha_inicio = ((LicenciaVO) licenVO).getFecha_inicio();
  //   Date fecha_fin = ((LicenciaVO) licenVO).getFecha_fin();
  //   Date fecha_solicitud = ((LicenciaVO) licenVO).getFecha_solicitud();
-    int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
-    String motivo = ((LicenciaVO) licenVO).getMotivo();
-    String certificado = ((LicenciaVO) licenVO).getCertificado();
-    int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
-    int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();
+  //  int cant_dias = ((LicenciaVO) licenVO).getCant_dias();
+  //  String motivo = ((LicenciaVO) licenVO).getMotivo();
+   // String certificado = ((LicenciaVO) licenVO).getCertificado();
+    //int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
+    //int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();
     //LicenciaVO empleado = ((LicenciaVO) licenVO).getEmpleado();
     	 
 	try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			st.executeUpdate("update Licencia set descripcion='"+descripcion+"',fecha_inicio='"+f+"' ,fecha_fin='"+g+"',cant_dias='"+cant_dias+"',motivo= '"+motivo+"',certificado='"+certificado+"',legajo_adm="+legajo_adm+",id_empleado_licencia='"+id_empleado_licencia+"' where id_licencia = "+id_licencia+"");
+			st.executeUpdate("update Licencia set descripcion='"+descripcion+"',fecha_inicio='"+f+"' ,fecha_fin='"+g+"',motivo= '"+motivo+"',certificado='"+certificado+"' where id_licencia = "+id_licencia+"");
 			
 			st.close();
 		} catch (SQLException e) { e.printStackTrace();} 
-		finally { DBConnection.closeConnection();}	
-	
+		finally { DBConnection.closeConnection();}		
 }
+
+public void eliminarLicencia(int id_licencia){
+	    	 
+	try {
+			con = DBConnection.createConnection();
+			st = con.createStatement();
+			st.executeUpdate("delete from Estado_lic where id_licencia = "+id_licencia+"");
+			st.executeUpdate("delete from Licencia where id_licencia = "+id_licencia+"");
+			st.close();
+		} catch (SQLException e) { e.printStackTrace();} 
+		finally { DBConnection.closeConnection();}	
+}
+
 }
