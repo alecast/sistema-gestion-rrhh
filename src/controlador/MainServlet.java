@@ -8,6 +8,10 @@ import modelo.Estado_licVO;
 import modelo.UsuarioVO;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +76,9 @@ public class MainServlet extends HttpServlet {
 				//Creo una variable de sesión e inserto el Usuario 
 				HttpSession sesion = request.getSession();
 				sesion.setAttribute("usuario", usuVO);
+				LicenciaDAO licenDAO =new LicenciaDAO();
+				int pendientes=licenDAO.contador();
+				request.setAttribute("pendientes", pendientes);
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 				}
 			} else { //User o pass incorrectos
@@ -102,9 +109,58 @@ public class MainServlet extends HttpServlet {
 		
 		}
 		
+       else if(btn.equals("LicenciasAprobadas")) {
+		   
+		   
+		   LicenciaDAO LicenDAO = new LicenciaDAO();
+			List<Estado_licVO> listaLicenciasAprobadas = LicenDAO.getListaLicenciasAprobadas();
+			request.setAttribute("listaLicenciasAprobadas", listaLicenciasAprobadas);
+			
+		request.getRequestDispatcher("/WEB-INF/JSP/CU/ListaLicenciasAprobadas.jsp").forward(request, response);
+		
+		}
+		
+       else if(btn.contains("AceptaPendiente")) {
+    	   int index = Integer.parseInt(btn.substring(15,btn.length()));
+    	   
+    	   request.setAttribute("id_licencia", index);
+		  
+    	   request.getRequestDispatcher("/WEB-INF/JSP/CU/ModificarEstado.jsp").forward(request, response);
+		
+		}
+		
+       else if(btn.contains("aceptaModifica")) {
+    	   int index = Integer.parseInt(btn.substring(14,btn.length()));
+    	   request.setAttribute("id_licencia", index);
+    	   if(request.getParameter("motivo").isEmpty() || request.getParameter("fecha_inicio").isEmpty() || request.getParameter("fecha_fin").isEmpty() ) {
+				
+				request.getRequestDispatcher("/WEB-INF/JSP/CU/ModificarEstado.jsp").forward(request, response);
+			} else {
+    	   DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    	   Date fecha_inicio = null;
+    	   Date fecha_fin = null;
+    	   String motivo = request.getParameter("motivo");
+    		try {
+				fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
+				fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	   
+    	   LicenciaDAO licenDAO = new LicenciaDAO();
+    	   licenDAO.nuevoEstado(index,fecha_inicio,fecha_fin,motivo);
+    	   
+    	   request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
+		
+		}
+	   }
 		
 		// Redirección a JSP de cada funcionalidad
 		else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
+		
+		else if(btn.equals("volver"))  request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
+
 
 		else if(btn.equals("empleado")) request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);		
 

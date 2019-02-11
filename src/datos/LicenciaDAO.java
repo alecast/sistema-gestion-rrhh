@@ -193,6 +193,25 @@ public int ultimoIdLicencia()
 	return p;			
 	}
 
+public int contador()
+{ 
+	int p =0;
+	try {
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery("select count(estado)as numero from Estado_lic where estado ='Pendiente'");
+		
+		while (rs.next()) { //Se fija si hay una fila resultado de la consulta
+			p = rs.getInt("numero"); // Obtengo el nombre_usuario de la consulta			
+		}
+		rs.close();
+		st.close();		
+		
+	} catch (SQLException e) { e.printStackTrace();} 
+	finally { DBConnection.closeConnection();}
+	return p;			
+	}
+
 public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
     return new java.sql.Date(date.getTime());
 }
@@ -313,6 +332,51 @@ public List<Estado_licVO> getListaLicenciasPendientes() {
 	return listaLicenciasPendientes;
 }
 
+public List<Estado_licVO> getListaLicenciasAprobadas() {
+	List<Estado_licVO> listaLicenciasAprobadas = new ArrayList<Estado_licVO>();
+	con = null;
+	st = null;
+	rs = null;
+	String query = "";
+	query = "select * from V_LicenciaCU where fecha_finalizacion is not null and estado = 'Aprobado'"; 
+	
+	try {
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery(query);
+		while(rs.next()) {
+			LicenciaVO u = new LicenciaVO();
+			Estado_licVO e = new Estado_licVO();
+			u.setId_licencia(rs.getInt("id_licencia"));
+			u.setDescripcion(rs.getString("descripcion"));
+			u.setFecha_inicio(rs.getDate("fecha_inicio")); 
+			u.setFecha_fin(rs.getDate("fecha_fin"));
+			u.setFecha_solicitud(rs.getDate("fecha_solicitud")); 
+			u.setCant_dias(rs.getInt("cant_dias"));
+			u.setMotivo(rs.getString("motivo"));
+			u.setCertificado(rs.getString("certificado"));
+			u.setLegajo_adm(rs.getInt("legajo_adm"));
+			u.setEmpleado(rs.getInt("legajo"));
+			
+			e.setEstado(rs.getString("estado"));
+			e.setFecha_iniciacion(rs.getDate("fecha_iniciacion"));
+			e.setFecha_finalizacion(rs.getDate("fecha_finalizacion"));
+			e.setMotivo_cambio(rs.getString("motivo_cambio"));
+			
+			e.setLicencia(u);
+			
+			
+			listaLicenciasAprobadas.add(e);
+		}			
+		rs.close();
+		st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+	 
+	finally { DBConnection.closeConnection(); }
+	
+	//return listaLicencias;
+	return listaLicenciasAprobadas;
+}
 
 public void modificarLicencia(LicenciaVO licenVO) {	
 
@@ -343,4 +407,30 @@ public void modificarLicencia(LicenciaVO licenVO) {
 	
 
 }
+public void nuevoEstado (int id_licencia, Date fecha_inicio, Date fecha_fin, String motivo ) {
+	
+	// TODO Auto-generated method stub
+	String query = "INSERT INTO Estado_lic(estado,fecha_iniciacion,fecha_finalizacion, id_licencia,motivo_cambio) values (?,?,?,?,?)";
+
+	// try {
+		 con = DBConnection.createConnection();
+		 //Connection con = new connection();
+		
+         try {
+        	 java.sql.Date f =  convertJavaDateToSqlDate(fecha_inicio);
+        	 java.sql.Date j =  convertJavaDateToSqlDate(fecha_fin);
+        	 psst = con.prepareStatement(query);         
+        	 psst.setString         (1, "Aprobado");
+        	 psst.setDate  			(2, f);
+        	 psst.setDate  			(3, j);
+        	 psst.setInt            (4, id_licencia);
+        	 psst.setString         (5, motivo);
+        	
+        	 psst.executeUpdate();
+        	 psst.close();
+        	 con.close();
+         } catch (SQLException e) {}
+	
+}
+
 }

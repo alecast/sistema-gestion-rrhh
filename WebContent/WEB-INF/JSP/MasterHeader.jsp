@@ -18,6 +18,7 @@
 					<tr><td>${usuario.nombre_usuario}</td></tr>
 					<tr><td>${usuario.tipo_usuario.descripcion}</td></tr>
 					<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="cerrarSesion">Cerrar Sesión</button></td></tr>
+			
 					
 					
 					
@@ -27,12 +28,14 @@
 		</div>
 		 <form action="${pageContext.request.contextPath}/MainServlet" method="post">
 					<div class="d-flex flex-row-reverse bd-highlight">
+					<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasAprobadas">Licencias Aprobadas</button>
     				<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasCU">
- 					 Licencias <span class="badge badge-light"></span>
+ 					 Licencias <span class="badge badge-danger">${pendientes}</span>
  					 <span class="sr-only">unread messages</span>
 					</button>
 					</div>
 					</form>
+				
 	</div>
 
 </body>
