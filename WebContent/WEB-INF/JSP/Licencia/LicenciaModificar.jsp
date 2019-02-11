@@ -13,29 +13,32 @@
 <body>
 	<div class="container">
 		<form action="${pageContext.request.contextPath}/LicenciaServlet" method="post">
-			<h1>Modificación de Licencia</h1>			
+			<h1>Modificación de Licencia</h1>
+			
+			<span class="error">${messages.error}</span>
+					
 			<div class="form-group">
 				<h3>Licencia: ${id_licencia} - Legajo: ${licencia.empleado.legajo}</h3>	
 			</div>
 			<div class="form-group">
 				<label for="userPass1">Nueva descripción:</label>
-    			<input type="text" class="form-control" name="descripcion" placeholder="Descripción">	
+    			<input type="text" class="form-control" name="descripcion" value="${licencia.descripcion}">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nueva fecha de inicio:</label>
-    			<input type="text" class="form-control" name="fecha_inicio" placeholder="Fecha de inicio">	
+    			<input type="text" class="form-control" name="fecha_inicio" value="${licencia.fecha_inicio}">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nueva fecha de finalización:</label>
-    			<input type="text" class="form-control" name="fecha_fin" placeholder="Fecha de finalización">	
+    			<input type="text" class="form-control" name="fecha_fin" value="${licencia.fecha_fin}">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nuevo motivo:</label>
-    			<input type="text" class="form-control" name="motivo" placeholder="Motivo">	
+    			<input type="text" class="form-control" name="motivo" value="${licencia.motivo}">	
 			</div>
 			<div class="form-group">
 				<label for="userPass2">Nuevo certificado:</label>
-    			<input type="text" class="form-control" name="certificado" placeholder="Certificado">	
+    			<input type="text" class="form-control" name="certificado" value="${licencia.certificado}">	
 			</div>
 		  	
 		    <input type="hidden" name="id_licencia${id_licencia}" value="${Legajo}">
