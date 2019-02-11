@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 	<link rel="stylesheet" href="css/bootstrap.min.css"> 
@@ -17,17 +17,27 @@
 					<tr><td>${usuario.nombre_usuario}</td></tr>
 					<tr><td>${usuario.tipo_usuario.descripcion}</td></tr>
 					<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="cerrarSesion">Cerrar Sesión</button></td></tr>
+					<tr><td>
+						<c:if test="${usuario.tipo_usuario.descripcion == 'Administrador'}">
+							<div class="d-flex flex-row-reverse bd-highlight">
+								<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasCU">
+									Licencias Pendientes
+									<span class="badge badge-light"> ${licenciasPendientes}</span>
+								</button>
+							</div>
+						</c:if>
+						<c:if test="${usuario.tipo_usuario.descripcion == 'Empleado'}">
+							<div class="d-flex flex-row-reverse bd-highlight">
+								<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasCU">
+									Licencias Aprobadas 
+									<span class="badge badge-light"> ${licenciasAprobadas}</span>
+								</button>
+							</div>
+						</c:if>				
+					</td></tr>
 				</table>
 			</form>	 
 		</div>
-	 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
-			<div class="d-flex flex-row-reverse bd-highlight">
-				<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasCU">
-					Licencias <span class="badge badge-light"></span>
-				 	<span class="sr-only">unread messages</span>
-				</button>
-			</div>
-		</form>
 	</div>
 </body>
 </html>

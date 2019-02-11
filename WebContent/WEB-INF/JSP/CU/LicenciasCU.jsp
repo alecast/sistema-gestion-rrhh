@@ -60,15 +60,15 @@
 				          
 				    
 							
-							<td><button type="submit" name="btnLicencia" value="modificarLicencia${licencia.id_licencia}">Modificar</button></td>
-							<td><button type="submit" name="btnLicencia" value="eliminarLicencia${licencia.id_licencia}">Eliminar</button></td>
+							<td><button type="submit" name="btnMain" value="modificarLicencia${licencia.id_licencia}">Modificar</button></td>
+							<td><button type="submit" name="btnMain" value="eliminarLicencia${licencia.id_licencia}">Eliminar</button></td>
 				        </tr>
 			    	</c:forEach>
 			    	<tr><td><span >${messages.baja}</span></td></tr>
 				</table>
 		</c:if>
 		
-	<button type="submit" name="btnLicencia" value="volverMenu">Volver</button>
+	<button type="submit" name="btnMain" value="volverLicenciasCU">Volver</button>
 	</form>
 </div>
 </body>

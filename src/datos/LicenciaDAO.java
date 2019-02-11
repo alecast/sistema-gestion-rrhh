@@ -331,7 +331,6 @@ public void modificarLicencia(LicenciaVO licenVO) {
     int legajo_adm = ((LicenciaVO) licenVO).getLegajo_adm();
     int id_empleado_licencia = ((LicenciaVO) licenVO).getId_empleado_licencia();
     //LicenciaVO empleado = ((LicenciaVO) licenVO).getEmpleado();
-    	 
 	try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
@@ -340,7 +339,27 @@ public void modificarLicencia(LicenciaVO licenVO) {
 			st.close();
 		} catch (SQLException e) { e.printStackTrace();} 
 		finally { DBConnection.closeConnection();}	
+}
+public int getCantidadLicenciasPendientes() {
+	int cantidad = 0;
+	con = null;
+	st = null;
+	rs = null;
+	String query = "";
+	query = "select count(*) from V_LicenciaCU where fecha_finalizacion is null and estado = 'Pendiente'"; 
 	
-
+	try {
+		con = DBConnection.createConnection();
+		st = con.createStatement();
+		rs = st.executeQuery(query);
+		while(rs.next()) {
+			cantidad = rs.getInt(1); 
+		}			
+		rs.close();
+		st.close();
+		} catch (SQLException e) { e.printStackTrace();}
+	 
+	finally { DBConnection.closeConnection(); }
+	return cantidad;
 }
 }

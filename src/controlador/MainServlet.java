@@ -50,8 +50,7 @@ public class MainServlet extends HttpServlet {
         request.setAttribute("messages", messages);
         
         //Nombre del botón para cualquier input a partir del que se programa la lógica del servlet
-		String btn = request.getParameter("btnMain");
-		
+		String btn = request.getParameter("btnMain");		
 		
 		//Manejo del Inicio de sesión
 		if(btn.equals("login")){
@@ -72,6 +71,19 @@ public class MainServlet extends HttpServlet {
 				//Creo una variable de sesión e inserto el Usuario 
 				HttpSession sesion = request.getSession();
 				sesion.setAttribute("usuario", usuVO);
+				
+				// Si es administrador, busco las licencias pendientes de aprobación para mostrar en notificación
+				LicenciaDAO licenDAO = new LicenciaDAO();
+				int licenciasPendientes = 0;
+				int licenciasAprobadas = 0;
+				
+				if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
+					licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
+					sesion.setAttribute("licenciasPendientes", licenciasPendientes);
+				} else {
+					licenciasAprobadas = 5;
+					sesion.setAttribute("licenciasAprobadas", licenciasAprobadas);
+				}
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 				}
 			} else { //User o pass incorrectos
@@ -109,5 +121,7 @@ public class MainServlet extends HttpServlet {
 		else if(btn.equals("empleado")) request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);		
 
 		else if(btn.equals("licencia")) request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);		
+	
+		else if(btn.equals("volverLicenciasCU")) request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 	}
 }

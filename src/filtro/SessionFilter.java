@@ -14,11 +14,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import datos.LicenciaDAO;
 import modelo.UsuarioVO;
 
 /**
  * Servlet Filter implementation class SessionFilter
  */
+@SuppressWarnings("unused")
 //@WebFilter("/SessionFilter")
 @WebFilter(urlPatterns={"/*"})
 public class SessionFilter implements Filter {
@@ -49,16 +51,29 @@ public class SessionFilter implements Filter {
         		
         HttpServletRequest req = (HttpServletRequest) request;
         //HttpServletResponse res = (HttpServletResponse) response;
-        
+        String path = ((HttpServletRequest) request).getRequestURI(); //Url de la petición
 		HttpSession session = req.getSession(false); //Devuelve null si no existe sesión
-		if (session == null) { //Manejo de sesión no existente
+		//Manejo de sesión no existente o usuario no seteado siempre que no se acceda desde el Login o el MainServlet
+		if ((session == null || session.getAttribute("usuario") == null) 
+			&& !(path.startsWith("/Sistema-de-Gestion-RRHH/Login.jsp") || path.startsWith("/Sistema-de-Gestion-RRHH/MainServlet"))){ 
 			messages.put("error", "Su sesión ha expirado. Debe loguear nuevamente.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} else { //Si la sesión existe, sigue la cadena de peticiones normal
-		// Seteo la dirección con la que se ingresó al filtro
-		String path = ((HttpServletRequest) request).getRequestURI(); 
-		//Si se ingresó a la página de Login o al MainServlet, se sigue normalmente
-		if (path.startsWith("/Sistema-de-Gestion-RRHH/Login.jsp") || path.startsWith("/Sistema-de-Gestion-RRHH/MainServlet")) { 
+		//Si no se ingresó a la página de Login o al MainServlet, se sigue normalmente
+		if (!(path.startsWith("/Sistema-de-Gestion-RRHH/Login.jsp") || path.startsWith("/Sistema-de-Gestion-RRHH/MainServlet"))) { 
+			// Seteo de licencias para CU - Aprobar licencia
+			UsuarioVO usuVO = (UsuarioVO) session.getAttribute("usuario");
+			LicenciaDAO licenDAO = new LicenciaDAO();
+			int licenciasPendientes = 0;
+			int licenciasAprobadas = 0;
+			
+			if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
+				licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
+				session.setAttribute("licenciasPendientes", licenciasPendientes);
+			} else {
+				licenciasAprobadas = 5;
+				session.setAttribute("licenciasAprobadas", licenciasAprobadas);
+			}
 			chain.doFilter(request, response); //Continua la cadena http
 		} else { //Si se ingresó a cualquier no Login, seteo el atributo en sesión del tipo de usuario
 			chain.doFilter(request, response);
