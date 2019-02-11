@@ -1,4 +1,5 @@
 package datos;
+import modelo.EmpleadoVO;
 import modelo.LicenciaVO;
 
 import java.sql.*;
@@ -306,5 +307,4 @@ public void eliminarLicencia(int id_licencia){
 		} catch (SQLException e) { e.printStackTrace();} 
 		finally { DBConnection.closeConnection();}	
 }
-
 }

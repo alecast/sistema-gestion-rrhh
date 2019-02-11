@@ -6,7 +6,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
@@ -118,7 +120,15 @@ public class LicenciaServlet extends HttpServlet {
 	
 		if(btnLicencia.contains("aceptaModifica")) {
 			
-			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Map<String, String> messages = new HashMap<String, String>();
+	        request.setAttribute("messages", messages);
+			
+			if(request.getParameter("descripcion").isEmpty() || request.getParameter("motivo").isEmpty() || request.getParameter("certificado").isEmpty() || request.getParameter("fecha_inicio").isEmpty() || request.getParameter("fecha_fin").isEmpty()) {
+				messages.put("error","Debe completar todos los campos.");
+				request.getRequestDispatcher("WEB-INF/JSP/Licencia/LicenciaModificar.jsp").forward(request, response);
+			} else {
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
 			String descripcion = request.getParameter("descripcion");
 			Date fecha_inicio = null;
@@ -141,6 +151,7 @@ public class LicenciaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);		
         	}
+		}
 		
 		if(btnLicencia.equals("volverOpciones")){
 			request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);
