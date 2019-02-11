@@ -66,12 +66,12 @@ public class SessionFilter implements Filter {
 			LicenciaDAO licenDAO = new LicenciaDAO();
 			int licenciasPendientes = 0;
 			int licenciasAprobadas = 0;
-			
+			// Si es administrador busco las licencias pendientes de aprobacion
 			if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
 				licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
 				session.setAttribute("licenciasPendientes", licenciasPendientes);
-			} else {
-				licenciasAprobadas = 5;
+			} else { // Si no lo es, busco las aprobadas para este usuario
+				licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
 				session.setAttribute("licenciasAprobadas", licenciasAprobadas);
 			}
 			chain.doFilter(request, response); //Continua la cadena http

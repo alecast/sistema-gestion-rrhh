@@ -8,6 +8,10 @@ import modelo.Estado_licVO;
 import modelo.UsuarioVO;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +85,7 @@ public class MainServlet extends HttpServlet {
 					licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
 					sesion.setAttribute("licenciasPendientes", licenciasPendientes);
 				} else {
-					licenciasAprobadas = 5;
+					licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
 					sesion.setAttribute("licenciasAprobadas", licenciasAprobadas);
 				}
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
@@ -104,24 +108,56 @@ public class MainServlet extends HttpServlet {
 		
 		
 	   else if(btn.equals("LicenciasCU")) {
-		   
-		   
 		   LicenciaDAO LicenDAO = new LicenciaDAO();
-			List<Estado_licVO> listaLicenciasPendientes = LicenDAO.getListaLicenciasPendientes();
-			request.setAttribute("listaLicenciasPendientes", listaLicenciasPendientes);
-			
-		request.getRequestDispatcher("/WEB-INF/JSP/CU/LicenciasCU.jsp").forward(request, response);
-		
+		   List<Estado_licVO> listaLicenciasPendientes = LicenDAO.getListaLicenciasPendientes();
+		   request.setAttribute("listaLicenciasPendientes", listaLicenciasPendientes);
+		   request.getRequestDispatcher("/WEB-INF/JSP/CU/LicenciasCU.jsp").forward(request, response);
 		}
+       else if(btn.equals("LicenciasAprobadas")) {
+    	   UsuarioVO usuVO = new UsuarioVO();
+    	   HttpSession sesion = request.getSession();
+    	   usuVO = (UsuarioVO) sesion.getAttribute("usuario");
+		   LicenciaDAO LicenDAO = new LicenciaDAO();	
+		   List<Estado_licVO> listaLicenciasAprobadas = LicenDAO.getListaLicenciasAprobadas(usuVO.getEmpleado().getLegajo());
+		   request.setAttribute("listaLicenciasAprobadas", listaLicenciasAprobadas);
+		   request.getRequestDispatcher("/WEB-INF/JSP/CU/ListaLicenciasAprobadas.jsp").forward(request, response);
+		}		
+       else if(btn.contains("AceptaPendiente")) {
+    	   int index = Integer.parseInt(btn.substring(15,btn.length()));
+    	   request.setAttribute("id_licencia", index);
+    	   request.getRequestDispatcher("/WEB-INF/JSP/CU/ModificarEstado.jsp").forward(request, response);
+		}		
+       else if(btn.contains("aceptaModifica")) {
+    	   int index = Integer.parseInt(btn.substring(14,btn.length()));
+    	   request.setAttribute("id_licencia", index);
+    	   if(request.getParameter("motivo").isEmpty() || request.getParameter("fecha_inicio").isEmpty() || request.getParameter("fecha_fin").isEmpty() ) {
+    		   request.getRequestDispatcher("/WEB-INF/JSP/CU/ModificarEstado.jsp").forward(request, response);
+			} else {
+    	   DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    	   Date fecha_inicio = null;
+    	   Date fecha_fin = null;
+    	   String motivo = request.getParameter("motivo");
+    		try {
+				fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
+				fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	   
+    	   LicenciaDAO licenDAO = new LicenciaDAO();
+    	   licenDAO.nuevoEstado(index,fecha_inicio,fecha_fin,motivo);    	   
+    	   request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 		
-		
+			}	
+	   	}
 		// Redirección a JSP de cada funcionalidad
 		else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
 
 		else if(btn.equals("empleado")) request.getRequestDispatcher("/WEB-INF/JSP/Empleado/Empleado Opciones.jsp").forward(request, response);		
 
 		else if(btn.equals("licencia")) request.getRequestDispatcher("/WEB-INF/JSP/Licencia/LicenciaOpciones.jsp").forward(request, response);		
-	
+			
 		else if(btn.equals("volverLicenciasCU")) request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 	}
 }

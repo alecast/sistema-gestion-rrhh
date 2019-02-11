@@ -28,7 +28,7 @@
 						</c:if>
 						<c:if test="${usuario.tipo_usuario.descripcion == 'Empleado'}">
 							<div class="d-flex flex-row-reverse bd-highlight">
-								<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasCU">
+								<button type="submit" class="btn btn-primary" name="btnMain" value="LicenciasAprobadas">
 									Licencias Aprobadas 
 									<span class="badge badge-light"> ${licenciasAprobadas}</span>
 								</button>

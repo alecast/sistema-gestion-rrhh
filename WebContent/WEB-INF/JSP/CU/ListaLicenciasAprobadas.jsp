@@ -17,13 +17,11 @@
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
 		<table>
 			<tr></tr>
-			
 			<tr><td><span class="error">${messages.error}</span></td></tr>
 			<tr><td>
-			
 			</td></tr>
 		</table>
-				<c:if test="${not empty listaLicenciasPendientes}">
+				<c:if test="${not empty listaLicenciasAprobadas}">
 				<table class="table">
 					<thead class="thead-dark">
 					    <tr>
@@ -42,7 +40,7 @@
 					        <th scope="col">Motivo</th>
 					    </tr>
 					</thead>
-				    <c:forEach items="${listaLicenciasPendientes}" var="estado">
+				    <c:forEach items="${listaLicenciasAprobadas}" var="estado">
 				        <tr>
 				            <td>${estado.licencia.id_licencia}</td>
 				            <td>${estado.licencia.descripcion}</td>
@@ -60,7 +58,7 @@
 				          
 				    
 							
-							<td><button type="submit" name="btnMain" value="AceptaPendiente${estado.licencia.id_licencia}">Aceptar</button></td>
+						<!--  	<td><button type="submit" name="btnMain" value="AceptaPendiente${licencia.id_licencia}">Aceptar</button></td> -->
 							
 				        </tr>
 			    	</c:forEach>
