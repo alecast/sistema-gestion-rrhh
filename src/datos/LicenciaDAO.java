@@ -343,7 +343,7 @@ public List<Estado_licVO> getListaLicenciasAprobadas(int legajo) {
 	st = null;
 	rs = null;
 	String query = "";
-	query = "select * from V_LicenciaCU where fecha_finalizacion is not null and estado = 'Aprobado' and legajo = '"+legajo+"'"; 
+	query = "select * from V_LicenciaCU where estado = 'Aprobado' and legajo = '"+legajo+"'"; 
 	
 	try {
 		con = DBConnection.createConnection();
@@ -451,7 +451,7 @@ public int getCantidadLicenciasAprobadasPorUsuario(int legajo) {
 	st = null;
 	rs = null;
 	String query = "";
-	query = "select count(*) from V_LicenciaCU where fecha_finalizacion is null and estado = 'Aprobado' and legajo = '"+legajo+"'"; 
+	query = "select count(*) from V_LicenciaCU where estado = 'Aprobado' and legajo = '"+legajo+"'"; 
 	
 	try {
 		con = DBConnection.createConnection();
@@ -468,10 +468,12 @@ public int getCantidadLicenciasAprobadasPorUsuario(int legajo) {
 	return cantidad;
 }
 public void nuevoEstado (int id_licencia, Date fecha_inicio, Date fecha_fin, String motivo ) {
-	
+	con = null;
+	st = null;
+	rs = null;
 	// TODO Auto-generated method stub
 	String query = "INSERT INTO Estado_lic(estado,fecha_iniciacion,fecha_finalizacion, id_licencia,motivo_cambio) values (?,?,?,?,?)";
-
+	String query2 = "update Estado_lic set fecha_finalizacion=GETDATE(),motivo_cambio='Aprobacion' where id_licencia="+id_licencia+ "and estado = 'Pendiente'";
 	// try {
 		 con = DBConnection.createConnection();
 		 //Connection con = new connection();
@@ -488,9 +490,15 @@ public void nuevoEstado (int id_licencia, Date fecha_inicio, Date fecha_fin, Str
         	
         	 psst.executeUpdate();
         	 psst.close();
+        	 
+        	 st = con.createStatement();
+        	 st.executeUpdate(query2);
+        	 
+        	 st.close();
         	 con.close();
+        	 
          } catch (SQLException e) {}
-	
+         finally { DBConnection.closeConnection(); }
 }
 
 }

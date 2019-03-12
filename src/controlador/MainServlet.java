@@ -78,14 +78,12 @@ public class MainServlet extends HttpServlet {
 				
 				// Si es administrador, busco las licencias pendientes de aprobación para mostrar en notificación
 				LicenciaDAO licenDAO = new LicenciaDAO();
-				int licenciasPendientes = 0;
-				int licenciasAprobadas = 0;
 				
 				if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
-					licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
+					int licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
 					sesion.setAttribute("licenciasPendientes", licenciasPendientes);
 				} else {
-					licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
+					int licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
 					sesion.setAttribute("licenciasAprobadas", licenciasAprobadas);
 				}
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);

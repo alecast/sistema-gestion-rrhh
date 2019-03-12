@@ -34,7 +34,7 @@
     			<input type="text" class="form-control" name="fecha_fin" id="fecha2" >	
 			</div>
 			
-		  		<button type="submit" name="btnMain" value="volver">Volver</button>
+		  		<button type="submit" name="btnMain" value="volverLicenciasCU">Volver</button>
 		  		<button type="submit" name="btnMain" value="aceptaModifica${id_licencia}">Aceptar</button>		  	
 		  			
 		  		

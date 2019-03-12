@@ -55,23 +55,21 @@ public class SessionFilter implements Filter {
 		HttpSession session = req.getSession(false); //Devuelve null si no existe sesión
 		//Manejo de sesión no existente o usuario no seteado siempre que no se acceda desde el Login o el MainServlet
 		if ((session == null || session.getAttribute("usuario") == null) 
-			&& !(path.startsWith("/Sistema-de-Gestion-RRHH/Login.jsp") || path.startsWith("/Sistema-de-Gestion-RRHH/MainServlet"))){ 
+			&& !(path.startsWith("/Sistema_de_Gestion_RRHH/Login.jsp") || path.startsWith("/Sistema_de_Gestion_RRHH/MainServlet"))){ 
 			messages.put("error", "Su sesión ha expirado. Debe loguear nuevamente.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} else { //Si la sesión existe, sigue la cadena de peticiones normal
 		//Si no se ingresó a la página de Login o al MainServlet, se sigue normalmente
-		if (!(path.startsWith("/Sistema-de-Gestion-RRHH/Login.jsp") || path.startsWith("/Sistema-de-Gestion-RRHH/MainServlet"))) { 
+		if (!(path.startsWith("/Sistema_de_Gestion_RRHH/Login.jsp") || path.startsWith("/Sistema_de_Gestion_RRHH/MainServlet"))) { 
 			// Seteo de licencias para CU - Aprobar licencia
 			UsuarioVO usuVO = (UsuarioVO) session.getAttribute("usuario");
 			LicenciaDAO licenDAO = new LicenciaDAO();
-			int licenciasPendientes = 0;
-			int licenciasAprobadas = 0;
 			// Si es administrador busco las licencias pendientes de aprobacion
 			if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
-				licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
+				int licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
 				session.setAttribute("licenciasPendientes", licenciasPendientes);
 			} else { // Si no lo es, busco las aprobadas para este usuario
-				licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
+				int licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
 				session.setAttribute("licenciasAprobadas", licenciasAprobadas);
 			}
 			chain.doFilter(request, response); //Continua la cadena http
