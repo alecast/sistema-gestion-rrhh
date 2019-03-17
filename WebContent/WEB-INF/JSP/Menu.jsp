@@ -15,13 +15,12 @@
 <div class="container" >
 	<h1>Bienvenido ${usuario.nombre_usuario} </h1>
 	<form action="${pageContext.request.contextPath}/MainServlet" method="post">
-		<table>
+		<table class="table table-borderless">
 		<c:if test="${usuario.tipo_usuario.descripcion == 'Administrador'}">
-			<tr><td><button type="submit" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
-	    	<tr><td><button type="submit" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
+			<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="usuario" >Gestión de usuarios</button></td></tr>
+	    	<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="empleado" >Gestión de empleados</button></td></tr>
 	    </c:if>
-	    	<tr><td><button type="submit" name="btnMain" value="licencia" >Gestión de licencias</button></td></tr>
-	    	
+	    	<tr><td><button type="submit" class="btn btn-primary" name="btnMain" value="licencia" >Gestión de licencias</button></td></tr>	    	
 		</table>
 	</form>
 </div>

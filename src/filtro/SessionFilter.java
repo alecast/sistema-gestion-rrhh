@@ -50,33 +50,44 @@ public class SessionFilter implements Filter {
         request.setAttribute("messages", messages);
         		
         HttpServletRequest req = (HttpServletRequest) request;
-        //HttpServletResponse res = (HttpServletResponse) response;
+        
         String path = ((HttpServletRequest) request).getRequestURI(); //Url de la petición
+        
+        //Seteo de URL de inicio válidas
+        String validPaths[] = new String[5];
+        validPaths[0] = "/Sistema-de-Gestion-RRHH/Login.jsp";
+        validPaths[1] = "/Sistema-de-Gestion-RRHH/js/bootstrap.min.js";
+        validPaths[2] = "/Sistema-de-Gestion-RRHH/css/Estilos.css";
+        validPaths[3] = "/Sistema-de-Gestion-RRHH/css/bootstrap.min.css";
+        validPaths[4] = "/Sistema-de-Gestion-RRHH/MainServlet";
+        
 		HttpSession session = req.getSession(false); //Devuelve null si no existe sesión
-		//Manejo de sesión no existente o usuario no seteado siempre que no se acceda desde el Login o el MainServlet
-		if ((session == null || session.getAttribute("usuario") == null) 
-			&& !(path.startsWith("/Sistema_de_Gestion_RRHH/Login.jsp") || path.startsWith("/Sistema_de_Gestion_RRHH/MainServlet"))){ 
-			messages.put("error", "Su sesión ha expirado. Debe loguear nuevamente.");
-			request.getRequestDispatcher("/Login.jsp").forward(request, response);
-		} else { //Si la sesión existe, sigue la cadena de peticiones normal
-		//Si no se ingresó a la página de Login o al MainServlet, se sigue normalmente
-		if (!(path.startsWith("/Sistema_de_Gestion_RRHH/Login.jsp") || path.startsWith("/Sistema_de_Gestion_RRHH/MainServlet"))) { 
-			// Seteo de licencias para CU - Aprobar licencia
-			UsuarioVO usuVO = (UsuarioVO) session.getAttribute("usuario");
-			LicenciaDAO licenDAO = new LicenciaDAO();
-			// Si es administrador busco las licencias pendientes de aprobacion
-			if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
-				int licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
-				session.setAttribute("licenciasPendientes", licenciasPendientes);
-			} else { // Si no lo es, busco las aprobadas para este usuario
-				int licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
-				session.setAttribute("licenciasAprobadas", licenciasAprobadas);
-			}
-			chain.doFilter(request, response); //Continua la cadena http
-		} else { //Si se ingresó a cualquier no Login, seteo el atributo en sesión del tipo de usuario
-			chain.doFilter(request, response);
+        
+        //Si no ingreso de una dirección de inicio válida, se validan los datos en sesión para continuar
+		if (!(path.startsWith(validPaths[0]) || path.startsWith(validPaths[1]) || path.startsWith(validPaths[2]) 
+		|| path.startsWith(validPaths[3]) || path.startsWith(validPaths[4])) ) { 
+
+			//Manejo de sesión no existente o usuario no seteado siempre que no se acceda desde path de inicio válidos
+			if ((session == null || session.getAttribute("usuario") == null)) {
+				messages.put("error", "Su sesión ha expirado. Debe loguear nuevamente.");
+				request.getRequestDispatcher("/Login.jsp").forward(request, response);
+			} else { //Si la sesión existe, sigue la cadena de peticiones normal	
+				// Seteo de licencias para CU - Aprobar licencia
+				UsuarioVO usuVO = (UsuarioVO) session.getAttribute("usuario");
+				LicenciaDAO licenDAO = new LicenciaDAO();
+				// Si es administrador busco las licencias pendientes de aprobacion
+				if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
+					int licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
+					session.setAttribute("licenciasPendientes", licenciasPendientes);
+				} else { // Si no lo es, busco las aprobadas para este usuario
+					int licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
+					session.setAttribute("licenciasAprobadas", licenciasAprobadas);
+				}
+				chain.doFilter(request, response); //Continua la cadena http
+			} 
 		}
-		}
+		// Si se ingresó desde una dirección de inicio válida, se sigue normalmente
+		else chain.doFilter(request, response);	
 	}
 
 	/**

@@ -473,7 +473,7 @@ public void nuevoEstado (int id_licencia, Date fecha_inicio, Date fecha_fin, Str
 	rs = null;
 	// TODO Auto-generated method stub
 	String query = "INSERT INTO Estado_lic(estado,fecha_iniciacion,fecha_finalizacion, id_licencia,motivo_cambio) values (?,?,?,?,?)";
-	String query2 = "update Estado_lic set fecha_finalizacion=GETDATE(),motivo_cambio='Aprobacion' where id_licencia="+id_licencia+ "and estado = 'Pendiente'";
+	String query2 = "update Estado_lic set fecha_finalizacion=GETDATE(),motivo_cambio='Aprobacion' where id_licencia="+id_licencia+ " and estado = 'Pendiente'";
 	// try {
 		 con = DBConnection.createConnection();
 		 //Connection con = new connection();
