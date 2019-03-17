@@ -7,7 +7,7 @@ import javax.activation.*;
 public class SendEmail  
 {  
  public static void main(String [] args){  
-	 send("a.castano.landin@gmail.com","PASS","a.castano.landin@gmail.com","Prueba correo","Si funca promovimos");  
+	 send("FROM","PASS","TO","Prueba correo","Si funca promovimos");  
  }
 public static void send(String from,String password,String to,String sub,String msg){  
       //Get properties object    
