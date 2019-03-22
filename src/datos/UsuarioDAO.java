@@ -1,6 +1,8 @@
 package datos;
 import modelo.LicenciaVO;
 import modelo.UsuarioVO;
+import util.CustomException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,24 +16,35 @@ public class UsuarioDAO {
 	private Statement st = null;
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
-
-	public boolean validarUsuario(String user, String pass) {
-		boolean valido = false;
+	
+	//cambio a customExcepcion
+	//public boolean validarUsuario(String user, String pass) {
+	public void validarUsuario(String user, String pass) throws CustomException {
+		//cambio a customExcepcion
+		//boolean valido = false;
+		// No va nada, se saca porque la funcion ahora es void
 		try {
 			con = DBConnection.createConnection();
-			st = con.createStatement();
-			rs = st.executeQuery("select nombre_usuario,contraseña from usuario where nombre_usuario = '"+user+"' and contraseña = '"+pass+"'");
-
+			// cambio de st a ps
+			//st = con.createStatement(); 
+			ps = con.prepareStatement("select nombre_usuario,contraseña from usuario where nombre_usuario = ? and contraseña = ?");
+			// cambio de st a ps
+			//rs = st.executeQuery("select nombre_usuario,contraseña from usuario where nombre_usuario = '"+user+"' and contraseña = '"+pass+"'");
+			ps.setString(1,user);
+			ps.setString(2,pass);			
+			rs = ps.executeQuery();
 			if(rs.next()) { //Se fija si hay una fila resultado de la consulta
 				String u = rs.getString("nombre_usuario"); // Obtengo el nombre_usuario de la consulta
-				if (!rs.wasNull()) valido = true; // Si el getString de arriba no dio nulo, el usuario es valido
+				//cambio a customExcepcion
+				//if (!rs.wasNull()) valido = true; // Si el getString de arriba no dio nulo, el usuario es valido
+				if (rs.wasNull()) throw new CustomException("Usuario y/o contraseña incorrectos.");
 			}
 			rs.close();
-			st.close();
+			ps.close();
 		} catch (SQLException e) { e.printStackTrace();} 
 		finally { DBConnection.closeConnection();}
-		
-		return valido;
+		//cambio a customExcepcion
+		//return valido;
 	}
 	
 	public boolean altaUsuario(UsuarioVO user) {
@@ -45,6 +58,7 @@ public class UsuarioDAO {
 			ps.setInt(4, user.getEmpleado().getLegajo());
 			ps.setString(5, "Activo");
 			ps.executeUpdate();
+			ps.close();
 			exito = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -166,7 +180,7 @@ public class UsuarioDAO {
 		return listaUsuarios;
 	}
 
-	public UsuarioVO getUsuarioVO(String user, String pass) {
+	public UsuarioVO getUsuarioVO(String user, String pass) throws CustomException {
 		UsuarioVO usuVO = new UsuarioVO();
 		try {
 			con = DBConnection.createConnection();
@@ -180,7 +194,7 @@ public class UsuarioDAO {
 				usuVO.setTipo_usuario(rs.getInt("id_tipo_usuario"));
 				usuVO.setEmpleado(rs.getInt("legajo"));
 				usuVO.setEstado(rs.getString("estado"));
-			}
+			} else throw new CustomException("Usuario y/o contraseña incorrectos.");
 			rs.close();
 			st.close();
 		} catch (SQLException e) { e.printStackTrace();} 

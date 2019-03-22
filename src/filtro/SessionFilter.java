@@ -52,21 +52,27 @@ public class SessionFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         
         String path = ((HttpServletRequest) request).getRequestURI(); //Url de la petición
-        
+
         //Seteo de URL de inicio válidas
-        String validPaths[] = new String[5];
+        String validPaths[] = new String[10];
         validPaths[0] = "/Sistema-de-Gestion-RRHH/Login.jsp";
         validPaths[1] = "/Sistema-de-Gestion-RRHH/js/bootstrap.min.js";
         validPaths[2] = "/Sistema-de-Gestion-RRHH/css/Estilos.css";
         validPaths[3] = "/Sistema-de-Gestion-RRHH/css/bootstrap.min.css";
         validPaths[4] = "/Sistema-de-Gestion-RRHH/MainServlet";
+        validPaths[5] = "/Sistema_de_Gestion_RRHH/Login.jsp";
+        validPaths[6] = "/Sistema_de_Gestion_RRHH/js/bootstrap.min.js";
+        validPaths[7] = "/Sistema_de_Gestion_RRHH/css/Estilos.css";
+        validPaths[8] = "/Sistema_de_Gestion_RRHH/css/bootstrap.min.css";
+        validPaths[9] = "/Sistema_de_Gestion_RRHH/MainServlet";
         
 		HttpSession session = req.getSession(false); //Devuelve null si no existe sesión
         
         //Si no ingreso de una dirección de inicio válida, se validan los datos en sesión para continuar
 		if (!(path.startsWith(validPaths[0]) || path.startsWith(validPaths[1]) || path.startsWith(validPaths[2]) 
-		|| path.startsWith(validPaths[3]) || path.startsWith(validPaths[4])) ) { 
-
+		|| path.startsWith(validPaths[3]) || path.startsWith(validPaths[4]) || path.startsWith(validPaths[5]) 
+		|| path.startsWith(validPaths[6]) || path.startsWith(validPaths[7]) || path.startsWith(validPaths[8]) 
+		|| path.startsWith(validPaths[9])) )  { 
 			//Manejo de sesión no existente o usuario no seteado siempre que no se acceda desde path de inicio válidos
 			if ((session == null || session.getAttribute("usuario") == null)) {
 				messages.put("error", "Su sesión ha expirado. Debe loguear nuevamente.");
