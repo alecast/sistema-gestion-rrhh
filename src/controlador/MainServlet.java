@@ -6,6 +6,7 @@ import datos.UsuarioDAO;
 import modelo.EmpleadoVO;
 import modelo.Estado_licVO;
 import modelo.UsuarioVO;
+import util.CustomException;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -66,7 +67,11 @@ public class MainServlet extends HttpServlet {
 			String user = request.getParameter("userLogin");
 			String pass = request.getParameter("passLogin");
 			UsuarioDAO userDAO = new UsuarioDAO();
-			if (userDAO.validarUsuario(user, pass)) { //Si se ingresaron credenciales correctas
+			
+			//cambio a customExcepcion
+			//if (userDAO.validarUsuario(user, pass)) { //Si se ingresaron credenciales correctas
+			try {
+				//userDAO.validarUsuario(user, pass);
 				UsuarioVO usuVO = userDAO.getUsuarioVO(user,pass);
 				if(usuVO.getEstado().equals("Inactivo")) { //Si el usuario está inactivo
 					messages.put("error","Usuario no activo.");				
@@ -88,8 +93,10 @@ public class MainServlet extends HttpServlet {
 				}
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 				}
-			} else { //User o pass incorrectos
-				messages.put("error","Usuario y/o contraseña incorrectos.");				
+			//cambio a customExcepcion
+			//} else {}
+			} catch (CustomException e) { //User o pass incorrectos
+				messages.put("error",e.getMessage());				
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			}		
 		} 
