@@ -5,8 +5,10 @@ import datos.LicenciaDAO;
 import datos.UsuarioDAO;
 import modelo.EmpleadoVO;
 import modelo.Estado_licVO;
+import modelo.LicenciaVO;
 import modelo.UsuarioVO;
 import util.CustomException;
+import util.SendEmail;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -111,13 +113,16 @@ public class MainServlet extends HttpServlet {
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 		
+		// Manejo del CU: Solicitar Licencia
 		
+		//Listado de licencias pendientes de aprobación (Administrador solo)
 	   else if(btn.equals("LicenciasCU")) {
 		   LicenciaDAO LicenDAO = new LicenciaDAO();
 		   List<Estado_licVO> listaLicenciasPendientes = LicenDAO.getListaLicenciasPendientes();
 		   request.setAttribute("listaLicenciasPendientes", listaLicenciasPendientes);
 		   request.getRequestDispatcher("/WEB-INF/JSP/CU/LicenciasCU.jsp").forward(request, response);
 		}
+		//Listado de licencias aprobadas para el usuario (Empleado solo)
        else if(btn.equals("LicenciasAprobadas")) {
     	   UsuarioVO usuVO = new UsuarioVO();
     	   HttpSession sesion = request.getSession();
@@ -126,36 +131,48 @@ public class MainServlet extends HttpServlet {
 		   List<Estado_licVO> listaLicenciasAprobadas = LicenDAO.getListaLicenciasAprobadas(usuVO.getEmpleado().getLegajo());
 		   request.setAttribute("listaLicenciasAprobadas", listaLicenciasAprobadas);
 		   request.getRequestDispatcher("/WEB-INF/JSP/CU/ListaLicenciasAprobadas.jsp").forward(request, response);
-		}		
+		}	
+		// Aceptación de una licencia pendiente de aprobación lleva a completar los campos necesarios para aprobar
        else if(btn.contains("AceptaPendiente")) {
     	   int index = Integer.parseInt(btn.substring(15,btn.length()));
     	   request.setAttribute("id_licencia", index);
     	   request.getRequestDispatcher("/WEB-INF/JSP/CU/ModificarEstado.jsp").forward(request, response);
 		}		
+		// Confirmación de aceptación de licencia con los campos necesarios
        else if(btn.contains("aceptaModifica")) {
     	   int index = Integer.parseInt(btn.substring(14,btn.length()));
     	   request.setAttribute("id_licencia", index);
     	   if(request.getParameter("motivo").isEmpty() || request.getParameter("fecha_inicio").isEmpty() || request.getParameter("fecha_fin").isEmpty() ) {
     		   request.getRequestDispatcher("/WEB-INF/JSP/CU/ModificarEstado.jsp").forward(request, response);
 			} else {
-    	   DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    	   Date fecha_inicio = null;
-    	   Date fecha_fin = null;
-    	   String motivo = request.getParameter("motivo");
-    		try {
-				fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
-				fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	   
-    	   LicenciaDAO licenDAO = new LicenciaDAO();
-    	   licenDAO.nuevoEstado(index,fecha_inicio,fecha_fin,motivo);    	   
-    	   request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
-		
+	    	   DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    	   Date fecha_inicio = null;
+	    	   Date fecha_fin = null;
+	    	   String motivo = request.getParameter("motivo");
+	    		try {
+					fecha_inicio = dateFormat.parse(request.getParameter("fecha_inicio"));
+					fecha_fin = dateFormat.parse(request.getParameter("fecha_fin"));
+		    	   LicenciaDAO licenDAO = new LicenciaDAO();
+		    	   licenDAO.nuevoEstado(index,fecha_inicio,fecha_fin,motivo);
+		    	   
+		    	   // Se recuperan los datos para dicha licencia y se envian al usuario que la solicito
+		    	   LicenciaVO licenVO = new LicenciaVO();
+		    	   licenVO = licenDAO.getLicencia(index);
+		    	   EmpleadoVO empVO = new EmpleadoVO();
+		    	   EmpleadoDAO empDAO = new EmpleadoDAO();
+		    	   empVO = empDAO.getEmpleado(licenVO.getId_licencia()); //De aca vamos a tener que sacar el correo
+		    	   String msg = "La licencia que solicitó de Nº: "+Integer.toString(licenVO.getId_licencia()) + 
+		    	   " fue aprobada";
+		    	   SendEmail.send("a.castano.landin@gmail.com","Licencia Aprobada",msg);
+		    	   
+				} catch (ParseException e) {
+					e.printStackTrace();
+				} finally {
+					request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
+				}
 			}	
 	   	}
+		
 		// Redirección a JSP de cada funcionalidad
 		else if(btn.equals("usuario")) request.getRequestDispatcher("/WEB-INF/JSP/Usuario/Opciones.jsp").forward(request, response);
 
