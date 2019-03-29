@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import datos.EmpleadoDAO;
 import datos.UsuarioDAO;
 import modelo.EmpleadoVO;
 import modelo.UsuarioVO;
+import util.CustomException;
 
 /**
  * Servlet implementation class UsuarioServlet
@@ -113,13 +115,17 @@ public class UsuarioServlet extends HttpServlet {
 				messages.put("error","Debe completar todos los campos.");
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);	
 			} else {
-				String activo = request.getParameter("chbUsuInactivo"); //Checkbox para buscar usuarios inactivos
-				boolean usuActivo = true; 
-				UsuarioDAO usuDAO = new UsuarioDAO();
-				if (activo != null) usuActivo = false;
-				List<UsuarioVO> listaUsuariosLike = usuDAO.getListaUsuariosPorNombre(nombreLike,usuActivo);
-				request.setAttribute("listaUsuariosLike", listaUsuariosLike);
-				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
+				try {
+					String activo = request.getParameter("chbUsuInactivo"); //Checkbox para buscar usuarios inactivos
+					boolean usuActivo = true; 
+					UsuarioDAO usuDAO = new UsuarioDAO();
+					if (activo != null) usuActivo = false;
+					List<UsuarioVO> listaUsuariosLike = usuDAO.getListaUsuariosPorNombre(nombreLike,usuActivo);
+					request.setAttribute("listaUsuariosLike", listaUsuariosLike);
+				} catch (SQLException e) { //User o pass incorrectos
+					messages.put("error",e.getMessage());				
+					request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
+				}
 			}
 		}
 		//Eliminación de Usuario
@@ -127,14 +133,18 @@ public class UsuarioServlet extends HttpServlet {
 		if(btn.contains("eliminarUsuario")) { //Se fija que se haya apretado alguno de los "eliminarUsuario"
 			int index = Integer.parseInt(btn.substring(15,btn.length())); //Índice que saca del value en el JSP, lo usa para eliminar ese usuario
 			UsuarioDAO usuDAO = new UsuarioDAO();
-			if(usuDAO.bajaUsuario(index)) {
+			try {
+				usuDAO.bajaUsuario(index);
 				messages.put("baja", "Se eliminó al usuario correctamente.");
-				List<UsuarioVO> listaUsuarios = usuDAO.getListaUsuarios(true);
+				List<UsuarioVO> listaUsuarios = usuDAO.getListaUsuarios();
 				request.setAttribute("listaUsuarios", listaUsuarios);
 				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);				
-			} else {
-				messages.put("baja", "No se pudo eliminar el usuario");
-				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);	
+			
+							
+			}
+			catch (SQLException e) { //User o pass incorrectos
+				messages.put("error",e.getMessage());				
+				request.getRequestDispatcher("WEB-INF/JSP/Usuario/Busqueda.jsp").forward(request, response);
 			}
 		}
 		//Modificación de Usuario
