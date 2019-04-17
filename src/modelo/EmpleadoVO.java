@@ -21,7 +21,14 @@ public class EmpleadoVO {
 	private int        antiguedad;
 	private String   estado;
 	private int       cant_disponible;
+	private String email;
 
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getLegajo() {
 		return legajo;
 	}
@@ -95,8 +102,7 @@ public class EmpleadoVO {
 		this.cant_disponible = cant_disponible;
 	}
 	
-	
-	  public EmpleadoVO(int legajo,int dni,String cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible) {
+	  public EmpleadoVO(int legajo,int dni,String cuil, String nombre, String apellido, String domicilio,int telefono, String estado_civil, Date fecha_ingreso, int antiguedad, String estado, int cant_disponible, String email) {
 	     this.setLegajo(legajo) ;
 	     this.setDNI(dni);
 	     this.setNombre(nombre);
@@ -109,6 +115,7 @@ public class EmpleadoVO {
 		 this.setAntiguedad(antiguedad);
 		 this.setEstado(estado);
 		 this.setCant_disponible(cant_disponible);
+		 this.setEmail(email);
 		
 	   
 	  

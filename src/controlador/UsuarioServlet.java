@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import datos.EmpleadoDAO;
 import datos.UsuarioDAO;
 import modelo.EmpleadoVO;
 import modelo.UsuarioVO;
+import util.CustomException;
 
 /**
  * Servlet implementation class UsuarioServlet

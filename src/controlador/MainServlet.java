@@ -70,10 +70,7 @@ public class MainServlet extends HttpServlet {
 			String pass = request.getParameter("passLogin");
 			UsuarioDAO userDAO = new UsuarioDAO();
 			
-			//cambio a customExcepcion
-			//if (userDAO.validarUsuario(user, pass)) { //Si se ingresaron credenciales correctas
 			try {
-				//userDAO.validarUsuario(user, pass);
 				UsuarioVO usuVO = userDAO.getUsuarioVO(user,pass);
 				if(usuVO.getEstado().equals("Inactivo")) { //Si el usuario está inactivo
 					messages.put("error","Usuario no activo.");				
@@ -89,14 +86,12 @@ public class MainServlet extends HttpServlet {
 				if(usuVO.getTipo_usuario().getDescripcion().equals("Administrador")) {
 					int licenciasPendientes = licenDAO.getCantidadLicenciasPendientes();
 					sesion.setAttribute("licenciasPendientes", licenciasPendientes);
-				} else {
+				} else { // Si no es administrador, muestro licencias aprobadas
 					int licenciasAprobadas = licenDAO.getCantidadLicenciasAprobadasPorUsuario(usuVO.getEmpleado().getLegajo());
 					sesion.setAttribute("licenciasAprobadas", licenciasAprobadas);
 				}
 				request.getRequestDispatcher("/WEB-INF/JSP/Menu.jsp").forward(request, response);
 				}
-			//cambio a customExcepcion
-			//} else {}
 			} catch (CustomException e) { //User o pass incorrectos
 				messages.put("error",e.getMessage());				
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);
@@ -160,10 +155,10 @@ public class MainServlet extends HttpServlet {
 		    	   licenVO = licenDAO.getLicencia(index);
 		    	   EmpleadoVO empVO = new EmpleadoVO();
 		    	   EmpleadoDAO empDAO = new EmpleadoDAO();
-		    	   empVO = empDAO.getEmpleado(licenVO.getId_licencia()); //De aca vamos a tener que sacar el correo
-		    	   String msg = "La licencia que solicitó de Nº: "+Integer.toString(licenVO.getId_licencia()) + 
+		    	   empVO = empDAO.getEmpleado(licenVO.getId_licencia()); 
+		    	   String msg = empVO.getNombre()+", la licencia que solicitó de Nº: "+Integer.toString(licenVO.getId_licencia()) + 
 		    	   " fue aprobada";
-		    	   SendEmail.send("a.castano.landin@gmail.com","Licencia Aprobada",msg);
+		    	   SendEmail.send(empVO.getEmail(),"Licencia Aprobada",msg);
 		    	   
 				} catch (ParseException e) {
 					e.printStackTrace();

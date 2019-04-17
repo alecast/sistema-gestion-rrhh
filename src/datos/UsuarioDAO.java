@@ -67,18 +67,18 @@ public class UsuarioDAO {
 		return exito;
 	}
 	
-	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike, boolean activo){
+	public List<UsuarioVO> getListaUsuariosPorNombre(String nombreLike, boolean activo) {
 		List<UsuarioVO> listaUsuarios = new ArrayList<UsuarioVO>();
 		con = null;
-		st = null;
+		ps = null;
 		rs = null;
 		String query = "";
 		if (activo) query = "select * from usuario where nombre_usuario like '%"+nombreLike+"%' and estado != 'Inactivo'"; 
 		else query = "select * from usuario where nombre_usuario like '%"+nombreLike+"%'";
 		try {
 			con = DBConnection.createConnection();
-			st = con.createStatement();
-			rs = st.executeQuery(query);
+			ps = con.prepareStatement(query);		
+			rs = ps.executeQuery(query);
 			while(rs.next()) {
 				UsuarioVO u = new UsuarioVO();
 				u.setContraseña(rs.getString("contraseña"));
@@ -90,7 +90,7 @@ public class UsuarioDAO {
 				listaUsuarios.add(u);
 			}			
 			rs.close();
-			st.close();
+			ps.close();
 		} catch (SQLException e) { e.printStackTrace();}
 		  finally { DBConnection.closeConnection(); }
 		
@@ -102,10 +102,10 @@ public class UsuarioDAO {
 		boolean eliminado = false;
 		try {
 			con = DBConnection.createConnection();
-			st = con.createStatement();
-			st.executeUpdate("update usuario set estado = 'Inactivo' where id_usuario = "+id_usuario);
-			eliminado = true;
-			st.close();
+			ps = con.prepareStatement("update usuario set estado = 'Inactivo' where id_usuario = "+id_usuario);
+			ps.executeUpdate("update usuario set estado = 'Inactivo' where id_usuario = "+id_usuario);
+			//eliminado = true;
+			ps.close();
 		} catch (SQLException e) { e.printStackTrace();} 
 		finally { DBConnection.closeConnection();}
 		

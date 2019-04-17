@@ -56,6 +56,10 @@
     			<input type="text" class="form-control" name="telefono" id="userPass2" placeholder="Telefono">	
 			</div>
 			<div class="form-group">
+				<label for="email">Email:</label>
+    			<input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico">	
+			</div>			
+			<div class="form-group">
 				<label for="userPass2">Estado Civil:</label><br/>
     			 <input type="Radio" name= "estado_civil" value="Soltero" checked> Soltero/a <br/>
   				 <input type="Radio" name= "estado_civil" value="Casado"> Casado/a <br/>

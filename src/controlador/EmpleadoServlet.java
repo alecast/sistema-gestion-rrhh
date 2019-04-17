@@ -69,7 +69,13 @@ public class EmpleadoServlet extends HttpServlet {
 			
 			
 				{ 
-			 if(request.getParameter("Cuil1").isEmpty() || request.getParameter("DNI").isEmpty() || request.getParameter("Cuil2").isEmpty() || request.getParameter("telefono").isEmpty() || request.getParameter("antiguedad").isEmpty() || request.getParameter("cant_disponible").isEmpty() || request.getParameter("tipoEmpleado").isEmpty() || request.getParameter("tipoCategoria").isEmpty() || request.getParameter("fecha_ingreso").isEmpty() || request.getParameter("nombre").isEmpty() || request.getParameter("apellido").isEmpty() || request.getParameter("domicilio").isEmpty() || request.getParameter("estado_civil").isEmpty()  ) {
+			 if(request.getParameter("Cuil1").isEmpty() || request.getParameter("DNI").isEmpty() || request.getParameter("Cuil2").isEmpty() 
+			 || request.getParameter("telefono").isEmpty() || request.getParameter("antiguedad").isEmpty() 
+			 || request.getParameter("cant_disponible").isEmpty() || request.getParameter("tipoEmpleado").isEmpty() 
+			 || request.getParameter("tipoCategoria").isEmpty() || request.getParameter("fecha_ingreso").isEmpty() 
+			 || request.getParameter("nombre").isEmpty() || request.getParameter("apellido").isEmpty() 
+			 || request.getParameter("domicilio").isEmpty() || request.getParameter("estado_civil").isEmpty() 
+			 || request.getParameter("email").isEmpty() ) {
 					messages.put("error","Debe completar todos los campos");
 					int j = empleDAO.getMaxLegajo();
 					request.setAttribute("j", j);
@@ -99,7 +105,9 @@ public class EmpleadoServlet extends HttpServlet {
 			
 			     if( empleDAO.getEmpleadoPorDni(DNI)!=(null)){
 			       
-				   EmpleadoVO empleaVO = new EmpleadoVO (1000 , DNI, Cuil, request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", cant_disponible );
+				   EmpleadoVO empleaVO = new EmpleadoVO (1000 , DNI, Cuil, request.getParameter("nombre"), request.getParameter("apellido"), 
+				   request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, "Activo", 
+				   cant_disponible, request.getParameter("email") );
          
                     try {
 						empleDAO.AltaEmpleado( empleaVO);
@@ -160,6 +168,7 @@ public class EmpleadoServlet extends HttpServlet {
 			request.setAttribute("fecha", EmpleVO.getFecha_ingreso());
 			request.setAttribute("telefono", EmpleVO.getTelefono());
 			request.setAttribute("cuil", EmpleVO.getCuil());
+			request.setAttribute("email", EmpleVO.getEmail());
 			
 			
 			Calendar c = new GregorianCalendar();
@@ -261,7 +270,7 @@ public class EmpleadoServlet extends HttpServlet {
 		   int cant_disponible = Integer.parseInt(request.getParameter("cantidad_dias"));
 		   Date fecha_ingreso = null;
 		   Date fecha_ahora = null;
-		   
+		 
 		
 		   int tipo = Integer.parseInt(request.getParameter("tipo_empleado"));
 		   int categoria = Integer.parseInt(request.getParameter("categoria_empleado"));
@@ -283,7 +292,7 @@ public class EmpleadoServlet extends HttpServlet {
 		}
 		
 		       
-			   EmpleadoVO empleaVO = new EmpleadoVO (legajo , DNI, Cuil, request.getParameter("nombreEmpleado"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, estado, cant_disponible );
+			   EmpleadoVO empleaVO = new EmpleadoVO (legajo , DNI, Cuil, request.getParameter("nombreEmpleado"), request.getParameter("apellido"), request.getParameter("domicilio"), telefono,  request.getParameter("estado_civil"), fecha_ingreso, antiguedad, estado, cant_disponible,request.getParameter("email") );
   
              try {
 					empleDAO.modificarEmpleado( empleaVO );

@@ -42,8 +42,9 @@
 					        <th scope="col">DNI</th>
 					        <th scope="col">Nombre</th>
 					        <th scope="col">Apellido</th>
-					        <th scope="col"> Cuil</th>
+					        <th scope="col">Cuil</th>
 					        <th scope="col">Domicilio</th>
+					        <th scope="col">Email</th>
 					        <th scope="col">Telefono</th>
 					        <th scope="col">Estado Civil</th>
 					        <th scope="col">Fecha Ingreso</th>
@@ -62,6 +63,7 @@
 							<td>${empleado.apellido}</td>
 							<td>${empleado.cuil}</td>
 							<td>${empleado.domicilio}</td>
+							<td>${empleado.email}</td>
 							<td>${empleado.telefono}</td>
 							<td>${empleado.estado_civil}</td>
 							<td>${empleado.fecha_ingreso}</td>
@@ -95,8 +97,9 @@
 					        <th scope="col">DNI</th>
 					        <th scope="col">Nombre</th>
 					        <th scope="col">Apellido</th>
-					        <th scope="col"> Cuil</th>
+					        <th scope="col">Cuil</th>
 					        <th scope="col">Domicilio</th>
+					        <th scope="col">Email</th>
 					        <th scope="col">Telefono</th>
 					        <th scope="col">Estado Civil</th>
 					        <th scope="col">Fecha Ingreso</th>
@@ -114,6 +117,7 @@
 							<td>${empleado.apellido}</td>
 							<td>${empleado.cuil}</td>
 							<td>${empleado.domicilio}</td>
+							<td>${empleado.email}</td>
 							<td>${empleado.telefono}</td>
 							<td>${empleado.estado_civil}</td>
 							<td>${empleado.fecha_ingreso}</td>

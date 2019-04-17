@@ -48,6 +48,10 @@
     			<input type="text" class="form-control" name="telefono" id="telefono" value = "${telefono}">	
 			</div>
 			<div class="form-group">
+				<label for="email">Nuevo Email:</label>
+    			<input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico">	
+			</div>				
+			<div class="form-group">
 			<fieldset>
 				<label for="userPass2">Nuevo Estado Civil:</label><br/>
     			 <input type="Radio" name= "estado_civil" value="Soltero" checked> Soltero/a <br/>

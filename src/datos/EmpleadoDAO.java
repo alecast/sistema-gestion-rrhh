@@ -21,7 +21,7 @@ public class EmpleadoDAO {
 public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
 	
 	// TODO Auto-generated method stub
-	String query = "INSERT INTO Empleado(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible) values (?,?,?,?,?,?,?,?,?,?,?)";
+	String query = "INSERT INTO Empleado(dni, cuil, nombre, apellido, domicilio, telefono, estado_civil, fecha_ingreso, antiguedad, estado, cant_disponible, email) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	// try {
 		 con = DBConnection.createConnection();
@@ -43,7 +43,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
          String estado = ((EmpleadoVO) empleaVO).getEstado();
          int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
-
+         String email = ((EmpleadoVO) empleaVO).getEmail();
       
      
           
@@ -58,6 +58,7 @@ public void AltaEmpleado(EmpleadoVO empleaVO) throws SQLException {
          psst.setInt       (9, antiguedad); 
          psst.setString    (10, estado);
          psst.setInt       (11, cant_disponible);
+         psst.setString	   (12, email);
         
          
 
@@ -97,7 +98,7 @@ public List<EmpleadoVO> getListaEmpleados(){
 			emp.setAntiguedad(rs.getInt("antiguedad")) ;
 			emp.setEstado(rs.getString("estado"));
 			emp.setCant_disponible(rs.getInt("cant_disponible"));
-			
+			emp.setEmail(rs.getString("email"));
 			
 			listaEmpleado.add(emp);
 		}			
@@ -141,6 +142,7 @@ public List<EmpleadoVO> getListaEmpleadosPorNombre(String CampoLike, String Radi
 			emp.setAntiguedad(rs.getInt("antiguedad")) ;
 			emp.setEstado(rs.getString("estado"));
 			emp.setCant_disponible(rs.getInt("cant_disponible"));
+			emp.setEmail(rs.getString("email"));
 			listaEmpleados.add(emp);
 		}			
 		rs.close();
@@ -195,7 +197,7 @@ public EmpleadoVO getEmpleado(int legajo)
 			emp.setAntiguedad(rs.getInt("antiguedad")) ;
 			emp.setEstado(rs.getString("estado"));
 			emp.setCant_disponible(rs.getInt("cant_disponible"));
-			
+			emp.setEmail(rs.getString("email"));
 			
 		}
 		rs.close();
@@ -233,7 +235,7 @@ public EmpleadoVO getEmpleadoPorDni(int dni)
 			emp.setAntiguedad(rs.getInt("antiguedad")) ;
 			emp.setEstado(rs.getString("estado"));
 			emp.setCant_disponible(rs.getInt("cant_disponible"));
-			
+			emp.setEmail(rs.getString("email"));
 			
 		}
 		rs.close();
@@ -283,12 +285,12 @@ public void modificarEmpleado(EmpleadoVO empleaVO) {
     int antiguedad = ((EmpleadoVO) empleaVO).getAntiguedad();
     String estado = ((EmpleadoVO) empleaVO).getEstado();
     int cant_disponible = ((EmpleadoVO) empleaVO).getCant_disponible();
-
+    String email = ((EmpleadoVO) empleaVO).getEmail();
  
 		try {
 			con = DBConnection.createConnection();
 			st = con.createStatement();
-			st.executeUpdate("update Empleado set dni="+dni+",cuil='"+cuil+"' ,nombre='"+nombre+"',apellido='"+apellido+"',domicilio='"+domicilio+"',telefono= "+telefono+",estado_civil='"+estado_civil+"',fecha_ingreso='"+f+"',antiguedad="+antiguedad+",estado='"+estado+"',cant_disponible="+cant_disponible+"  where legajo="+legajo+"");
+			st.executeUpdate("update Empleado set dni="+dni+",cuil='"+cuil+"' ,nombre='"+nombre+"',apellido='"+apellido+"',domicilio='"+domicilio+"',telefono= "+telefono+",estado_civil='"+estado_civil+"',fecha_ingreso='"+f+"',antiguedad="+antiguedad+",estado='"+estado+"',cant_disponible="+cant_disponible+",email='"+email+"'  where legajo="+legajo+"");
 			
 			st.close();
 		} catch (SQLException e) { e.printStackTrace();} 
